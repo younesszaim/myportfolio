@@ -38,6 +38,22 @@
   
 
   
+      ,"page2": {
+          "title": "",
+          "content": "",
+          "url": "https://younesszaim.github.io/myportfolio/",
+          "relUrl": "/",
+          "date": ""
+      }
+      
+  
+
+  
+  
+
+  
+
+  
   
 
   
@@ -46,18 +62,13 @@
   
 
   
-
-  
   
 
   
   
 
   
-  
-
-  
-      ,"page9": {
+      ,"page10": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://younesszaim.github.io/myportfolio/robots.txt",
