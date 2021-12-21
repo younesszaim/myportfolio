@@ -7,7 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: ML Notes
-description: An easy to use blogging platform with support for Jupyter Notebooks.
+description: Documenting my journey in data science.
 github_username: younesszaim
 # you can comment the below line out if your repo name is not different than your baseurl
 github_repo: "myportfolio"
@@ -39,8 +39,9 @@ baseurl: "/myportfolio" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: fastdotai
-    github: fastai
+    #twitter: fastdotai
+    github: https://github.com/younesszaim
+    linkdin: https://www.linkedin.com/in/youness-zaim-9a344b101/
 
 # Set this to true to get LaTeX math equation support
 use_math: true
