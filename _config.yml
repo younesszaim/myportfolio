@@ -40,8 +40,8 @@ baseurl: "/myportfolio" # the subpath of your site, e.g. "/blog".
 minima:
   social_links:
     #twitter: fastdotai
-    github: https://github.com/younesszaim
-    linkdin: https://www.linkedin.com/in/youness-zaim-9a344b101/
+    github: (https://github.com/younesszaim)
+    linkedin: (https://www.linkedin.com/in/youness-zaim-9a344b101/)
 
 # Set this to true to get LaTeX math equation support
 use_math: true
