@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Sickit Learn For Machine Learning | ML Notes</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Sickit Learn For Machine Learning" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sickit-Learn for Machine Learning" />
+<meta property="og:description" content="Sickit-Learn for Machine Learning" />
+<link rel="canonical" href="https://younesszaim.github.io/myportfolio/2021/11/15/Sickit-Learn-for-Machine-Learning.html" />
+<meta property="og:url" content="https://younesszaim.github.io/myportfolio/2021/11/15/Sickit-Learn-for-Machine-Learning.html" />
+<meta property="og:site_name" content="ML Notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-15T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://younesszaim.github.io/myportfolio/2021/11/15/Sickit-Learn-for-Machine-Learning.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://younesszaim.github.io/myportfolio/2021/11/15/Sickit-Learn-for-Machine-Learning.html"},"headline":"Sickit Learn For Machine Learning","dateModified":"2021-11-15T00:00:00-06:00","datePublished":"2021-11-15T00:00:00-06:00","description":"Sickit-Learn for Machine Learning","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/myportfolio/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://younesszaim.github.io/myportfolio/feed.xml" title="ML Notes" /><link rel="shortcut icon" type="image/x-icon" href="/myportfolio/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/myportfolio/">ML Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/myportfolio/about/">About Me</a><a class="page-link" href="/myportfolio/search/">Search</a><a class="page-link" href="/myportfolio/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Sickit Learn For Machine Learning</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-15T00:00:00-06:00" itemprop="datePublished">
+        Nov 15, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      60 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="sickit-learn-for-machine-learning">Sickit-Learn for Machine Learning</h1>
+
+<blockquote>
+  <p>In this notebook we will work through an example project end to end using Sickit Learn library.</p>
+</blockquote>
+
+<h1 id="about">About</h1>
+
+<p>In this chapter we’ll use the <code class="language-plaintext highlighter-rouge">California Housing Prices dataset</code> from the StatLib repository This dataset is based on data from the 1990 California census.</p>
+
+<p>This data includes metrics such as the population, median income, and median housing price for each block group in California. Block groups are the smallest geographical unit for which the US Census Bureau publishes sample data (a block group typical).</p>
+
+<p>Your model should learn from this data and be able to <code class="language-plaintext highlighter-rouge">predict the median housing price in any district</code>, given all the other metrics.</p>
+
+<p>Goal : Your boss answers that your model’s output (a prediction of a district’s median housing price) will be fed to another Machine Learning system , along with many other signals. This downstream system will determine whether it is worth investing in a given area or not. Getting this right is critical, as it directly affects revenue.</p>
+
+<p>First, you need to frame the problem: is it supervised, unsupervised, or Reinforcement Learning? Is it a classification task, a regression task, or something else? Should you use batch learning or online learning techniques?</p>
+
+<p>Let’s see: it is clearly a typical <code class="language-plaintext highlighter-rouge">supervised learning task</code>, since you are given labeled training examples.</p>
+
+<p>It is also a typical <code class="language-plaintext highlighter-rouge">regression task</code>, since you are asked to <code class="language-plaintext highlighter-rouge">predict a value</code>. More specifically, this is a <code class="language-plaintext highlighter-rouge">multiple regression problem</code>, since the system will use <code class="language-plaintext highlighter-rouge">multiple features to make a prediction</code>.</p>
+
+<p>It is also a <code class="language-plaintext highlighter-rouge">univariate regression problem</code>, since we are only trying to predict a <code class="language-plaintext highlighter-rouge">single value</code> for each district. If we were trying to predict multiple values per district, it would be a multivariate regression problem.</p>
+
+<p>Finally, there is no continuous flow of data coming into the system, there is no particular need to adjust to changing data rapidly, and the data is small enough to fit in memory, so plain <code class="language-plaintext highlighter-rouge">batch learning</code> should do just fine.</p>
+
+<h1 id="select-a-performance-measure">Select a Performance Measure</h1>
+
+<h2 id="performance-measures-for-our-univariate-regression-problem">Performance Measures for our univariate regression problem</h2>
+
+<p>Typical performance measure for regression problems :</p>
+
+<ul>
+  <li><em>Root Mean Square Error (RMSE)</em>: it gives an idea of how much error the system typically makes in its predictions, <code class="language-plaintext highlighter-rouge">with a higher weight for large errors</code> : Since the errors are squared before they are averaged, the RMSE gives a relatively high weight to large errors. <code class="language-plaintext highlighter-rouge">This means the RMSE should be more useful when large errors are particularly undesirable.</code></li>
+</ul>
+
+<!-- end list -->
+
+<ul>
+  <li>
+    <p>RMSE is <code class="language-plaintext highlighter-rouge">sensitive to outliers</code> : If we make a single very bad prediction, taking the square will make the error even worse and it may skew the metric towards <code class="language-plaintext highlighter-rouge">overestimating the model’s badness</code>. Actually, it’s hard to realize if our model is good or not by looking at the absolute values of MSE or MSE : We would probably want to measure <code class="language-plaintext highlighter-rouge">how much our model is better than the constant baseline</code> : A model should at least perform better than the RMSE score constant baseline.</p>
+
+    <p>RMSE has the benefit of penalizing large errors more so can be more appropriate in some cases, for example, if being off by 10 is more than twice as bad as being off by 5. But if being off by 10 is just twice as bad as being off by 5, then MAE is more appropriate.</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<ul>
+  <li><em>Root Mean Square Log Error (RMSLE)</em>: It is an extension on root Mean Squared Error (RMSE) that is mainly used when <code class="language-plaintext highlighter-rouge">predictions have large deviations</code></li>
+</ul>
+
+<!-- end list -->
+
+<ul>
+  <li>
+    <p>RMSLE is preferable when :</p>
+
+    <ul>
+      <li>
+        <p>targets having exponential growth, such as population counts, average sales of a commodity over a span of years etc</p>
+      </li>
+      <li>
+        <p>we care about <code class="language-plaintext highlighter-rouge">percentage errors</code> rather than the <code class="language-plaintext highlighter-rouge">absolute value of errors</code> : The reason we use log is because generally, you care not so much about missing by €10 but missing by 10%. So if it was €1000,000 item and you are €100,000 off or if it was a 10,000 item and you are €1,000 off — we would consider those equivalent scale issues.</p>
+      </li>
+      <li>
+        <p>There is a wide range in the target variables and <code class="language-plaintext highlighter-rouge">we don’t want to penalize big differences when both the predicted and the actual are big numbers</code>.</p>
+      </li>
+      <li>
+        <p>We want to <code class="language-plaintext highlighter-rouge">penalize under estimates more than over estimates</code>.</p>
+      </li>
+      <li>
+        <p>Let’s imagine two cases of predictions,</p>
+      </li>
+    </ul>
+
+    <!-- end list -->
+
+    <ul>
+      <li>
+        <p>Case-1: our model makes a prediction of 30 when the actual number is 40 Case-2: our model makes a prediction of 300 when the actual number is 400</p>
+
+        <p>With RMSE the second result is scored as 10 times more than the first result Conversely, with RMSLogE two results are scored the same. RMSLogE takes into account just the ratio of change Lets have a look at the below example</p>
+
+        <p>Case-3 : Prediction = 600, Actual = 1000 (the absolute difference is 400)</p>
+
+        <p>RMSE = 400, RMSLogE = 0.5108</p>
+
+        <p>Case-4 : Prediction = 1400, Actual = 1000 (the absolute difference is 400)</p>
+
+        <p>RMSE = 400, RMSLogE = 0.3365</p>
+
+        <p>When the differences are the same between actual and predicted in both cases. RMSE treated them equally, however RMSLogE <code class="language-plaintext highlighter-rouge">penalized the under estimate more than over estimate</code> (under estimated prediction score is higher than over estimated prediction score). <code class="language-plaintext highlighter-rouge">Often, penalizing the under estimate more than over estimate is important for prediction of sales and inventory demands</code>.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<ul>
+  <li>
+    <p><em>Mean Absolute Error (MAE)</em>: also called <code class="language-plaintext highlighter-rouge">the average absolute deviation</code> : MAE measures the average magnitude of the errors in a set of predictions, without considering their direction.</p>
+  </li>
+  <li>
+    <p>R-Squared (R2) : proportional improvement in prediction of the regression model, compared to the mean model (model predicting all given samples as mean value) : - If we were exactly as effective as just predicting the mean, SSres/SStot = 1 and R² = 0 - If we were perfect (i.e. yi = fi for all cases), SSres/SStot = 0 and R² = 1 However, it does not take into consideration of <code class="language-plaintext highlighter-rouge">overfitting problem</code>.</p>
+
+    <ul>
+      <li>Interpreted as the proportion of total variance that is explained by the model.</li>
+      <li>R² is the ratio between how good your model is (RMSE)vs. how good is the naïve mean model (RMSE).</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="rmse-vs-rmsle-vs-mae">RMSE vs RMSLE vs MAE</h2>
+
+<p>See links below :</p>
+
+<ul>
+  <li>RMSE vs MAE : <a href="https://medium.com/human-in-a-machine-world/mae-and-rmse-which-metric-is-better-e60ac3bde13d">https://medium.com/human-in-a-machine-world/mae-and-rmse-which-metric-is-better-e60ac3bde13d</a></li>
+  <li>RMSLE metric and defining baseline : <a href="https://www.kaggle.com/carlolepelaars/understanding-the-metric-rmsle/notebook">https://www.kaggle.com/carlolepelaars/understanding-the-metric-rmsle/notebook</a></li>
+  <li>Model fot metrics : <a href="https://www.kaggle.com/residentmario/model-fit-metrics">https://www.kaggle.com/residentmario/model-fit-metrics</a></li>
+</ul>
+
+<h2 id="scikit-learn-implementation">Scikit-learn implementation</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>### R-square :
+
+# sklean
+from sklearn.metrics import r2_score
+
+# hand implemetation 
+import numpy as np
+
+def r2_score(y, y_pred):
+    rss_adj = np.sum((y - y_pred)**2)
+    n = len(y)
+    y_bar_adj = (1 / n) * np.sum(y)
+    ess_adj = np.sum((y - y_bar_adj)**2)
+    return 1 - rss_adj / ess_adj
+
+r2_score(y, y_pred)
+
+
+### Root Mean Squared Error (RMSE)
+
+from sklearn.metrics import mean_squared_error
+mean_squared_error(y,y_pred, squared = False)
+
+# hand implemetation 
+import math
+def rmse(y, y_pred):
+    return math.sqrt( ((y-y_pred)**2).mean() )
+
+root_mean_squared_error(y, y_pred)
+
+
+### Root Mean log Squared Error (RMLSE)
+
+from sklearn.metrics import mean_squared_log_error
+mean_squared_error(y,y_pred, squared = False)
+
+# or 
+import numpy as np
+y = np.log(df.y)
+RMSLE = rmse(y,y_pred)
+
+
+### Mean Absolute Error (MAE) 
+from sklearn.metrics import mean_absolute_error
+
+# hand implemetation 
+import numpy as np
+def mae(y,y_pred):
+    return (np.abs(y-y_pred)).mean()
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+&lt;ipython-input-1061-7e2a74a2dd02&gt; in &lt;module&gt;
+     14     return 1 - rss_adj / ess_adj
+     15 
+---&gt; 16 r2_score(y, y_pred)
+     17 
+     18 
+
+NameError: name 'y_pred' is not defined
+</code></pre></div></div>
+
+<h1 id="download-the-data">Download the Data</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PATH = '/Users/rmbp/handson-ml2/datasets/'
+!ls {PATH}
+housing      inception    jsb_chorales lifesat      titanic
+import pandas as pd
+
+housing = pd.read_csv(f'{PATH}/housing/housing.csv')
+housing.head()
+   longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+0    -122.23     37.88                41.0        880.0           129.0   
+1    -122.22     37.86                21.0       7099.0          1106.0   
+2    -122.24     37.85                52.0       1467.0           190.0   
+3    -122.25     37.85                52.0       1274.0           235.0   
+4    -122.25     37.85                52.0       1627.0           280.0   
+
+   population  households  median_income  median_house_value ocean_proximity  
+0       322.0       126.0         8.3252            452600.0        NEAR BAY  
+1      2401.0      1138.0         8.3014            358500.0        NEAR BAY  
+2       496.0       177.0         7.2574            352100.0        NEAR BAY  
+3       558.0       219.0         5.6431            341300.0        NEAR BAY  
+4       565.0       259.0         3.8462            342200.0        NEAR BAY  
+</code></pre></div></div>
+
+<h2 id="automating-the-process-of-fetching-and-loading-the-data">Automating the process of fetching and loading the data</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+import tarfile
+import urllib
+
+DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml2/master/"
+HOUSING_PATH = os.path.join("/Users/rmbp/Desktop", "housing")
+HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
+def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
+    os.makedirs(housing_path, exist_ok=True)
+    tgz_path = os.path.join(housing_path, "housing.tgz")
+    urllib.request.urlretrieve(housing_url, tgz_path)
+    housing_tgz = tarfile.open(tgz_path)
+    housing_tgz.extractall(path=HOUSING_PATH)
+    housing_tgz.close()
+fetch_housing_data(HOUSING_URL,HOUSING_PATH)
+import pandas as pd
+def load_housing_data(housing_path=HOUSING_PATH):
+    csv_path = os.path.join(housing_path, "housing.csv")
+    return pd.read_csv(csv_path)
+load_housing_data().head()
+   longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+0    -122.23     37.88                41.0        880.0           129.0   
+1    -122.22     37.86                21.0       7099.0          1106.0   
+2    -122.24     37.85                52.0       1467.0           190.0   
+3    -122.25     37.85                52.0       1274.0           235.0   
+4    -122.25     37.85                52.0       1627.0           280.0   
+
+   population  households  median_income  median_house_value ocean_proximity  
+0       322.0       126.0         8.3252            452600.0        NEAR BAY  
+1      2401.0      1138.0         8.3014            358500.0        NEAR BAY  
+2       496.0       177.0         7.2574            352100.0        NEAR BAY  
+3       558.0       219.0         5.6431            341300.0        NEAR BAY  
+4       565.0       259.0         3.8462            342200.0        NEAR BAY  
+</code></pre></div></div>
+
+<h2 id="take-a-quick-look-at-the-data-structure">Take a Quick Look at the Data Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.head()
+   longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+0    -122.23     37.88                41.0        880.0           129.0   
+1    -122.22     37.86                21.0       7099.0          1106.0   
+2    -122.24     37.85                52.0       1467.0           190.0   
+3    -122.25     37.85                52.0       1274.0           235.0   
+4    -122.25     37.85                52.0       1627.0           280.0   
+
+   population  households  median_income  median_house_value ocean_proximity  
+0       322.0       126.0         8.3252            452600.0        NEAR BAY  
+1      2401.0      1138.0         8.3014            358500.0        NEAR BAY  
+2       496.0       177.0         7.2574            352100.0        NEAR BAY  
+3       558.0       219.0         5.6431            341300.0        NEAR BAY  
+4       565.0       259.0         3.8462            342200.0        NEAR BAY  
+housing.info()
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 20640 entries, 0 to 20639
+Data columns (total 10 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   longitude           20640 non-null  float64
+ 1   latitude            20640 non-null  float64
+ 2   housing_median_age  20640 non-null  float64
+ 3   total_rooms         20640 non-null  float64
+ 4   total_bedrooms      20433 non-null  float64
+ 5   population          20640 non-null  float64
+ 6   households          20640 non-null  float64
+ 7   median_income       20640 non-null  float64
+ 8   median_house_value  20640 non-null  float64
+ 9   ocean_proximity     20640 non-null  object 
+dtypes: float64(9), object(1)
+memory usage: 1.6+ MB
+</code></pre></div></div>
+
+<p>There are 20,640 instances in the dataset. Notice that the <code class="language-plaintext highlighter-rouge">total_bedrooms</code> attribute has only 20,433 nonnull values, meaning that 207 districts are <code class="language-plaintext highlighter-rouge">missing</code> this feature. All attributes are numerical, except the <code class="language-plaintext highlighter-rouge">ocean_proximity</code> field. Its type is object. Since we loaded this data from a CSV file, it must be a text attribute. : the values in the <code class="language-plaintext highlighter-rouge">ocean_proximity</code> column were repetitive, which means that it is probably a <code class="language-plaintext highlighter-rouge">categorical</code> attribute.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing['ocean_proximity'].value_counts()
+&lt;1H OCEAN     9136
+INLAND        6551
+NEAR OCEAN    2658
+NEAR BAY      2290
+ISLAND           5
+Name: ocean_proximity, dtype: int64
+housing.describe(include='all').T
+                      count unique        top  freq           mean  \
+longitude           20640.0    NaN        NaN   NaN    -119.569704   
+latitude            20640.0    NaN        NaN   NaN      35.631861   
+housing_median_age  20640.0    NaN        NaN   NaN      28.639486   
+total_rooms         20640.0    NaN        NaN   NaN    2635.763081   
+total_bedrooms      20433.0    NaN        NaN   NaN     537.870553   
+population          20640.0    NaN        NaN   NaN    1425.476744   
+households          20640.0    NaN        NaN   NaN      499.53968   
+median_income       20640.0    NaN        NaN   NaN       3.870671   
+median_house_value  20640.0    NaN        NaN   NaN  206855.816909   
+ocean_proximity       20640      5  &lt;1H OCEAN  9136            NaN   
+
+                              std      min       25%       50%       75%  \
+longitude                2.003532  -124.35    -121.8   -118.49   -118.01   
+latitude                 2.135952    32.54     33.93     34.26     37.71   
+housing_median_age      12.585558      1.0      18.0      29.0      37.0   
+total_rooms           2181.615252      2.0   1447.75    2127.0    3148.0   
+total_bedrooms          421.38507      1.0     296.0     435.0     647.0   
+population            1132.462122      3.0     787.0    1166.0    1725.0   
+households             382.329753      1.0     280.0     409.0     605.0   
+median_income            1.899822   0.4999    2.5634    3.5348   4.74325   
+median_house_value  115395.615874  14999.0  119600.0  179700.0  264725.0   
+ocean_proximity               NaN      NaN       NaN       NaN       NaN   
+
+                         max  
+longitude            -114.31  
+latitude               41.95  
+housing_median_age      52.0  
+total_rooms          39320.0  
+total_bedrooms        6445.0  
+population           35682.0  
+households            6082.0  
+median_income        15.0001  
+median_house_value  500001.0  
+ocean_proximity          NaN  
+</code></pre></div></div>
+
+<p>hist() method on the whole dataset will plot a histogram for each numerical attribute</p>
+
+<ul>
+  <li>A <code class="language-plaintext highlighter-rouge">histogram</code> is used for <code class="language-plaintext highlighter-rouge">continuous data</code>, where the <code class="language-plaintext highlighter-rouge">bins</code> represent <code class="language-plaintext highlighter-rouge">ranges of data</code>, counts the data points in each bin, and shows the bins on the x-axis and the counts on the y-axis. : <a href="https://towardsdatascience.com/histograms-and-density-plots-in-python-f6bda88f5ac0">https://towardsdatascience.com/histograms-and-density-plots-in-python-f6bda88f5ac0</a></li>
+  <li>A <code class="language-plaintext highlighter-rouge">bar chart</code> is a plot of <code class="language-plaintext highlighter-rouge">categorical</code> variables.</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   #This tells Jupyter to set up Matplotlib so it uses Jupyter’s own backend.
+%matplotlib inline 
+import matplotlib.pyplot as plt
+housing.hist(bins=60, figsize=(15,10))
+plt.show()
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId33.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># plot 'median_house_value'
+housing['median_house_value'].plot(kind='hist', bins= 60)
+&lt;AxesSubplot:ylabel='Frequency'&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId34.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing['ocean_proximity'].value_counts().plot(kind= 'barh')
+&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId35.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd.DataFrame(housing['median_income'].describe()).T
+                 count      mean       std     min     25%     50%      75%  \
+median_income  20640.0  3.870671  1.899822  0.4999  2.5634  3.5348  4.74325   
+
+                   max  
+median_income  15.0001  
+n, bins, patches = plt.hist(housing.median_income, bins = int((15.000100 - 0.499900)/0.1),edgecolor = 'black'
+                           ,color = 'blue')
+# bins = int((15.000100 - 0.499900)/0.1) : We choose the number of bins with an interval lenght of 100€
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId36.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd.DataFrame(housing['housing_median_age'].describe()).T
+                      count       mean        std  min   25%   50%   75%   max
+housing_median_age  20640.0  28.639486  12.585558  1.0  18.0  29.0  37.0  52.0
+n, bins, patches = plt.hist(housing.housing_median_age, bins = int((52.000000 - 1.000000)/1)
+                           , color = 'blue'
+                           , edgecolor = 'black')
+bins
+array([ 1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10., 11., 12., 13.,
+       14., 15., 16., 17., 18., 19., 20., 21., 22., 23., 24., 25., 26.,
+       27., 28., 29., 30., 31., 32., 33., 34., 35., 36., 37., 38., 39.,
+       40., 41., 42., 43., 44., 45., 46., 47., 48., 49., 50., 51., 52.])
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId37.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Target
+pd.DataFrame(housing['median_house_value'].describe()).T
+                      count           mean            std      min       25%  \
+median_house_value  20640.0  206855.816909  115395.615874  14999.0  119600.0   
+
+                         50%       75%       max  
+median_house_value  179700.0  264725.0  500001.0  
+n, bins, patches = plt.hist(housing.median_house_value , bins = int((500001.000000 - 14999.000000)/10000)
+                           , color = 'blue'
+                           ,edgecolor = 'black')
+bins
+array([ 14999.        ,  25103.20833333,  35207.41666667,  45311.625     ,
+        55415.83333333,  65520.04166667,  75624.25      ,  85728.45833333,
+        95832.66666667, 105936.875     , 116041.08333333, 126145.29166667,
+       136249.5       , 146353.70833333, 156457.91666667, 166562.125     ,
+       176666.33333333, 186770.54166667, 196874.75      , 206978.95833333,
+       217083.16666667, 227187.375     , 237291.58333333, 247395.79166667,
+       257500.        , 267604.20833333, 277708.41666667, 287812.625     ,
+       297916.83333333, 308021.04166667, 318125.25      , 328229.45833333,
+       338333.66666667, 348437.875     , 358542.08333333, 368646.29166667,
+       378750.5       , 388854.70833333, 398958.91666667, 409063.125     ,
+       419167.33333333, 429271.54166667, 439375.75      , 449479.95833333,
+       459584.16666667, 469688.375     , 479792.58333333, 489896.79166667,
+       500001.        ])
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId38.png" alt="" /></p>
+
+<p>From the figure below, we can see <code class="language-plaintext highlighter-rouge">how the data was computed</code> :</p>
+
+<ul>
+  <li>We can see that <code class="language-plaintext highlighter-rouge">median_income</code> was <code class="language-plaintext highlighter-rouge">scaled</code> and <code class="language-plaintext highlighter-rouge">capped</code> at 15 (actually, 15.0001) for higher median incomes, and at 0.5 (actually, 0.4999) for lower median incomes. The numbers represent roughly tens of thousands of dollars.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">housing median age</code> and the <code class="language-plaintext highlighter-rouge">median house value</code> were also <code class="language-plaintext highlighter-rouge">capped</code>. The latter may be a serious problem since it is our target attribute. In this case<code class="language-plaintext highlighter-rouge">our Machine Learning algorithms may learn that prices never go beyond that limit (€500,000)</code>. We need to check with our team to see if this is a problem or not. If the team needs <code class="language-plaintext highlighter-rouge">precise predictions even beyond €500,000</code>, then you have two options:
+    <ul>
+      <li>Collect proper labels for the districts whose labels were capped.</li>
+      <li>Remove those districts from the training set (and also from the test set, since your system should not be evaluated poorly if it predicts values beyond €500,000).</li>
+    </ul>
+  </li>
+</ul>
+
+<p>We can also see that :</p>
+
+<ul>
+  <li>These attributes have very different scales.</li>
+  <li>Many histograms are tail-heavy : they extend much farther to the right of the median than to the left.</li>
+</ul>
+
+<h1 id="create-a-test-set">Create a Test Set</h1>
+
+<p>We ahve only taken a quick glance at the data : numeric / categorical features, missing values, scale of attributes, distribution, how values are computed, distribution of the target variable. It’s enough. Why ?</p>
+
+<ul>
+  <li>if you look at the test set, you may stumble upon some seemingly interesting pattern in the test data that leads you to select a particular kind of Machine Learning model. When you estimate the generalization error using the test set, your estimate will be too optimistic, and you will launch a system that will not perform as well as expected. This is called <code class="language-plaintext highlighter-rouge">data snooping bias</code>.</li>
+</ul>
+
+<h2 id="train-and-test-set-stability">Train and test set stability</h2>
+
+<p>Creating a test set is theoretically simple: pick some instances randomly, typically 20% of the dataset</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+def split_train_test(data, test_ratio):
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    return data.iloc[train_indices], data.iloc[test_indices]
+train_set, test_set = split_train_test(housing,0.2)
+print(len(train_set))
+print(len(test_set))
+16512
+4128
+</code></pre></div></div>
+
+<p>Well, this works, but it is not perfect: if you <code class="language-plaintext highlighter-rouge">run the program again</code>, it will generate a <code class="language-plaintext highlighter-rouge">different test set!</code></p>
+
+<ul>
+  <li>Over time, you (or your Machine Learning algorithms) will get to see the whole dataset, which is what you want to avoid.</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># first run test set
+split_train_test(housing,0.2)[1].head(5)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+12003    -117.57     33.90                 7.0       3797.0           850.0   
+13304    -117.63     34.09                19.0       3490.0           816.0   
+19037    -121.99     38.36                35.0       2728.0           451.0   
+9871     -121.82     36.61                24.0       2437.0           438.0   
+16526    -121.20     37.80                37.0        311.0            61.0   
+
+       population  households  median_income  median_house_value  \
+12003      2369.0       720.0         3.5525            137600.0   
+13304      2818.0       688.0         2.8977            126200.0   
+19037      1290.0       452.0         3.2768            117600.0   
+9871       1430.0       444.0         3.8015            169100.0   
+16526       171.0        54.0         4.0972            101800.0   
+
+      ocean_proximity  
+12003          INLAND  
+13304          INLAND  
+19037          INLAND  
+9871        &lt;1H OCEAN  
+16526          INLAND  
+# second run test set
+split_train_test(housing,0.2)[1].head(5)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+5709     -118.23     34.21                32.0       1464.0           406.0   
+16381    -121.30     38.02                 4.0       1515.0           384.0   
+16458    -121.30     38.13                26.0       2256.0           360.0   
+8613     -118.37     33.87                23.0       1829.0           331.0   
+2738     -115.56     32.78                35.0       1185.0           202.0   
+
+       population  households  median_income  median_house_value  \
+5709        693.0       380.0         2.5463            200000.0   
+16381       491.0       348.0         2.8523             87500.0   
+16458       937.0       372.0         5.0528            153700.0   
+8613        891.0       356.0         6.5755            359900.0   
+2738        615.0       191.0         4.6154             86200.0   
+
+      ocean_proximity  
+5709        &lt;1H OCEAN  
+16381          INLAND  
+16458          INLAND  
+8613        &lt;1H OCEAN  
+2738           INLAND  
+</code></pre></div></div>
+
+<p>Solution :</p>
+
+<ul>
+  <li>One solution is to save the test set on the first run and then load it in subsequent runs.</li>
+  <li>Another option is to set the random number generator’s seed (e.g., with np.ran dom.seed(42))14 before calling np.random.permutation() so that it always generates the same shuffled indices :</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+
+def split_train_test(data, test_ratio):
+    np.random.seed(1997)
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    return data.iloc[train_indices], data.iloc[test_indices]
+# first run test set
+split_train_test(housing,0.2)[1].head(5)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+9009     -118.60     34.07                16.0        319.0            59.0   
+17779    -121.83     37.38                15.0       4430.0           992.0   
+20209    -119.21     34.28                27.0       2219.0           312.0   
+3170     -119.69     36.41                38.0       1016.0           202.0   
+2200     -119.85     36.83                15.0       2563.0           335.0   
+
+       population  households  median_income  median_house_value  \
+9009        149.0        64.0         4.6250            433300.0   
+17779      3278.0      1018.0         4.5533            209900.0   
+20209       937.0       315.0         5.7601            281100.0   
+3170        540.0       187.0         2.2885             75000.0   
+2200       1080.0       356.0         6.7181            160300.0   
+
+      ocean_proximity  
+9009        &lt;1H OCEAN  
+17779       &lt;1H OCEAN  
+20209      NEAR OCEAN  
+3170           INLAND  
+2200           INLAND  
+# second run test set
+split_train_test(housing,0.2)[1].head(5)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+9009     -118.60     34.07                16.0        319.0            59.0   
+17779    -121.83     37.38                15.0       4430.0           992.0   
+20209    -119.21     34.28                27.0       2219.0           312.0   
+3170     -119.69     36.41                38.0       1016.0           202.0   
+2200     -119.85     36.83                15.0       2563.0           335.0   
+
+       population  households  median_income  median_house_value  \
+9009        149.0        64.0         4.6250            433300.0   
+17779      3278.0      1018.0         4.5533            209900.0   
+20209       937.0       315.0         5.7601            281100.0   
+3170        540.0       187.0         2.2885             75000.0   
+2200       1080.0       356.0         6.7181            160300.0   
+
+      ocean_proximity  
+9009        &lt;1H OCEAN  
+17779       &lt;1H OCEAN  
+20209      NEAR OCEAN  
+3170           INLAND  
+2200           INLAND  
+</code></pre></div></div>
+
+<p>But both these solutions will break the next time you fetch an <code class="language-plaintext highlighter-rouge">updated dataset</code>.</p>
+
+<p>If the dataset is updated, we want to ensure that the <code class="language-plaintext highlighter-rouge">test set</code> will remain <code class="language-plaintext highlighter-rouge">consistent across multiple runs</code>, even if you refresh the dataset : The <code class="language-plaintext highlighter-rouge">new test set</code> will contain <code class="language-plaintext highlighter-rouge">20% of the new instances</code>, but <code class="language-plaintext highlighter-rouge">it will not contain any instance that was previously in the training set.</code></p>
+
+<p>To have a stable train/test split even after updating the dataset, a common solution is to <code class="language-plaintext highlighter-rouge">use each instance’s identifier to decide whether or not it should go in the test set</code> (assuming instances have a unique and immutable identifier). For example, we could compute a <code class="language-plaintext highlighter-rouge">hash</code> of each instance’s identifier and <code class="language-plaintext highlighter-rouge">put that instance in the test set</code> if <code class="language-plaintext highlighter-rouge">the hash is lower than or equal to 20% of the maximum hash value.</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+from zlib import crc32
+
+def test_set_check(identifier, test_ratio):
+    return crc32(np.int64(identifier)) &amp; 0xffffffff &lt; test_ratio * 2**32
+
+# crc32(np.int64(identifier)) = create a hash from a given value
+# crc32(np.int64(identifier)) &amp; 0xffffffff = make sure the hash value does not exceed 2^32 (or 4294967296).
+# crc32(np.int64(identifier)) &amp; 0xffffffff &lt; test_ratio * 2**32. 
+# crc32(np.int64(identifier)) &amp; 0xffffffff &lt; test_ratio * 2**32
+#    This line returns True or False. Let test_ratio be 0.2. 
+#    Then, any hash value less than 0.2 * 4294967296 returns True and will be 
+#    added to the test set; otherwise, it returns False and will be added to the training set. */
+def split_train_test_by_id(data, test_ratio, id_column):
+    ids = data[id_column] # compute a hash of each instance’s identifier
+    in_test_set = ids.apply(lambda id_: test_set_check(id_, test_ratio)) # if hash is lower than or equal to 20% of the maximum hash value
+    return data.loc[~in_test_set], data.loc[in_test_set]
+</code></pre></div></div>
+
+<p>Unfortunately, the housing dataset does not have an identifier column. The simplest solution is to use the row index as the ID:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_with_id = housing.reset_index() # adds an `index` column
+train_set, test_set = split_train_test_by_id(housing_with_id, 0.2, "index")
+</code></pre></div></div>
+
+<p>If we use the <code class="language-plaintext highlighter-rouge">row index</code> as a <code class="language-plaintext highlighter-rouge">unique identifier</code>, <code class="language-plaintext highlighter-rouge">you need to make sure that new data gets appended to the end of the dataset and that no row ever gets deleted</code>. If this is not possible, then we can try to use <code class="language-plaintext highlighter-rouge">the most stable features to build a unique identifier</code>.</p>
+
+<p>For example, a district’s latitude and longitude are guaranteed to be stable for a few million years, so you could combine them into an ID like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_with_id["id"] = housing["longitude"] * 1000 + housing["latitude"]
+train_set, test_set = split_train_test_by_id(housing_with_id, 0.2, "id")
+</code></pre></div></div>
+
+<p>See explanation of this method in : <a href="https://ichi.pro/fr/ameliorez-la-repartition-des-tests-de-train-avec-la-fonction-de-hachage-267796356735483">https://ichi.pro/fr/ameliorez-la-repartition-des-tests-de-train-avec-la-fonction-de-hachage-267796356735483</a> and <a href="https://datascience.stackexchange.com/questions/51348/splitting-train-test-sets-by-an-identifier">https://datascience.stackexchange.com/questions/51348/splitting-train-test-sets-by-an-identifier</a></p>
+
+<h2 id="train--test-split-using-sckit-learn">Train / Test split using Sckit-learn</h2>
+
+<p>Scikit-Learn provides a few functions to split datasets into multiple subsets in various ways. The simplest function is <code class="language-plaintext highlighter-rouge">train_test_split()</code>, which does pretty much the same thing as the function <code class="language-plaintext highlighter-rouge">split_train_test()</code>, with a couple of additional features :</p>
+
+<ul>
+  <li>First, there is a random_state parameter <code class="language-plaintext highlighter-rouge">random_state</code> that allows you to set the random generator seed and a test size <code class="language-plaintext highlighter-rouge">test_size</code>.</li>
+  <li>Second, we can pass it multiple datasets with an <code class="language-plaintext highlighter-rouge">identical number of rows</code>, and it will split them on the <code class="language-plaintext highlighter-rouge">same indices</code> (this is very useful, for example, if you have a separate DataFrame for labels):</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import train_test_split
+
+train_set, test_set = train_test_split(housing, test_size=0.2, random_state = 1997)
+</code></pre></div></div>
+
+<h1 id="sampling-bias-in-test-set">Sampling bias in Test set</h1>
+
+<p>Using <code class="language-plaintext highlighter-rouge">train_test_split</code>method, we using purely random sampling methods to generate our test set. This is generally fine <code class="language-plaintext highlighter-rouge">if our dataset is large enough</code> (especially relative to the number of attributes), but if it is not, we run the <code class="language-plaintext highlighter-rouge">risk of introducing a significant sampling bias</code>.</p>
+
+<p>If an attribute (continues or categorical) is important (after discussing with experts for exemple) : We may want to ensure that the test set is representative of the <code class="language-plaintext highlighter-rouge">various categories</code> of that variable in the whole dataset.</p>
+
+<p>Suppose that the <code class="language-plaintext highlighter-rouge">median income</code> is a very important attribute to predict median housing prices.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing['median_income'].describe()
+count    20640.000000
+mean         3.870671
+std          1.899822
+min          0.499900
+25%          2.563400
+50%          3.534800
+75%          4.743250
+max         15.000100
+Name: median_income, dtype: float64
+plt.hist(housing['median_income']
+         #, bins = int( (housing['median_income'].max() - housing['median_income'].min()) / 0.5)
+         , bins = 60
+         , color = 'blue'
+         ,edgecolor = 'black'
+        )
+plt.show()
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId45.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing["income_cat"] = pd.cut(housing["median_income"],
+bins=[0., 1.5, 3.0, 4.5, 6., np.inf],
+labels=[1, 2, 3, 4, 5])
+housing['income_cat'] = pd.cut( housing['median_income']
+                               , bins = [0., 1.5, 3.0, 4.5, 6., np.inf]
+                               , labels = [1, 2, 3, 4, 5]
+                        )
+housing["income_cat"].hist()
+&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId46.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing["income_cat"].value_counts() / len(housing)
+3    0.350581
+2    0.318847
+4    0.176308
+5    0.114438
+1    0.039826
+Name: income_cat, dtype: float64
+from sklearn.model_selection import StratifiedShuffleSplit
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing["income_cat"]):
+        strat_train_set = housing.loc[train_index]
+        strat_test_set = housing.loc[test_index]
+strat_train_set["income_cat"].value_counts() / len(strat_train_set)
+3    0.350594
+2    0.318859
+4    0.176296
+5    0.114462
+1    0.039789
+Name: income_cat, dtype: float64
+strat_test_set["income_cat"].value_counts() / len(strat_test_set)
+3    0.350533
+2    0.318798
+4    0.176357
+5    0.114341
+1    0.039971
+Name: income_cat, dtype: float64
+def income_cat_proportions(data):
+    return data["income_cat"].value_counts() / len(data)
+
+train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
+
+compare_props = pd.DataFrame({
+    "Overall": income_cat_proportions(housing),
+    "Stratified": income_cat_proportions(strat_test_set),
+    "Random": income_cat_proportions(test_set),
+}).sort_index()
+compare_props["Rand. %error"] = 100 * compare_props["Random"] / compare_props["Overall"] - 100
+compare_props["Strat. %error"] = 100 * compare_props["Stratified"] / compare_props["Overall"] - 100
+compare_props
+    Overall  Stratified    Random  Rand. %error  Strat. %error
+1  0.039826    0.039971  0.040213      0.973236       0.364964
+2  0.318847    0.318798  0.324370      1.732260      -0.015195
+3  0.350581    0.350533  0.358527      2.266446      -0.013820
+4  0.176308    0.176357  0.167393     -5.056334       0.027480
+5  0.114438    0.114341  0.109496     -4.318374      -0.084674
+</code></pre></div></div>
+
+<ul>
+  <li>Further analysis later</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for set_ in (strat_train_set, strat_test_set):
+    set_.drop("income_cat", axis=1, inplace=True)
+</code></pre></div></div>
+
+<h1 id="discover-and-visualize-the-data-to-gain-insights">Discover and Visualize the Data to Gain Insights</h1>
+
+<p>First, we make sure that we have put <code class="language-plaintext highlighter-rouge">the test set aside</code> and we are only <code class="language-plaintext highlighter-rouge">exploring the training set.</code> Also, if the training set is very large, you may want to sample an exploration set, to make manipulations easy and fast. In our case, the set is quite small, so we can just work directly on the full set.</p>
+
+<ul>
+  <li>Let’s create a <code class="language-plaintext highlighter-rouge">copy</code> so that you can play with it <code class="language-plaintext highlighter-rouge">without harming the training set</code>:</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing = strat_train_set.copy()
+housing.head(5)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+12655    -121.46     38.52                29.0       3873.0           797.0   
+15502    -117.23     33.09                 7.0       5320.0           855.0   
+2908     -119.04     35.37                44.0       1618.0           310.0   
+14053    -117.13     32.75                24.0       1877.0           519.0   
+20496    -118.70     34.28                27.0       3536.0           646.0   
+
+       population  households  median_income  median_house_value  \
+12655      2237.0       706.0         2.1736             72100.0   
+15502      2015.0       768.0         6.3373            279600.0   
+2908        667.0       300.0         2.8750             82700.0   
+14053       898.0       483.0         2.2264            112500.0   
+20496      1837.0       580.0         4.4964            238300.0   
+
+      ocean_proximity income_cat  
+12655          INLAND          2  
+15502      NEAR OCEAN          5  
+2908           INLAND          2  
+14053      NEAR OCEAN          2  
+20496       &lt;1H OCEAN          3  
+</code></pre></div></div>
+
+<ul>
+  <li>Since we have <code class="language-plaintext highlighter-rouge">geographic information</code> (lon / lat), let’s create a <code class="language-plaintext highlighter-rouge">scatterplot</code> of all districts to visualize the data : doc of a scatterplot parameter <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html">https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html</a></li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.plot(kind = 'scatter', x = 'longitude', y = 'latitude')
+&lt;AxesSubplot:xlabel='longitude', ylabel='latitude'&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId49.png" alt="" /></p>
+
+<p>Scatter plots work well for hundreds of observations but overplotting becomes an issue once the number of observations gets into tens of thousands.</p>
+
+<p>We can see that in some areas, there are vast numbers of dots, so it is hard to see any particular pattern.</p>
+
+<p>Simple options to address overplotting :</p>
+
+<ul>
+  <li>reducing the point size : usisng the <code class="language-plaintext highlighter-rouge">s</code> parameter - This parameter indicates the marker size.</li>
+  <li>alpha blending : using <code class="language-plaintext highlighter-rouge">alpha</code> parameter This option indicates the blending value, between 0 (transparent) and 1 (opaque).</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.plot(kind = 'scatter' ,x = 'longitude' ,y = 'latitude' , s= 0.2)
+&lt;AxesSubplot:xlabel='longitude', ylabel='latitude'&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId50.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.plot(kind = 'scatter' ,x = 'longitude' ,y = 'latitude' , alpha= 0.1)
+&lt;AxesSubplot:xlabel='longitude', ylabel='latitude'&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId51.png" alt="" /></p>
+
+<p>We can get the names of the cities in the map and conclude which have the highest density - Many article covers this subject - we will do it later</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># To save a picture in our folder project :
+IMAGES_PATH = "/Users/rmbp/Desktop/housing"
+
+def save_fig(fig_id, tight_layout=True, fig_extension="png", resolution=300):
+    path = os.path.join(IMAGES_PATH, fig_id + "." + fig_extension)
+    print("Saving figure", fig_id)
+    if tight_layout:
+        plt.tight_layout()
+    plt.savefig(path, format=fig_extension, dpi=resolution)
+    
+housing.plot(kind = 'scatter' ,x = 'longitude' ,y = 'latitude' , alpha= 0.1, c='black')
+save_fig("better_visualization_plot")
+
+ 
+Saving figure better_visualization_plot
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId52.png" alt="" /></p>
+
+<p>We can see the houses price crossing with the population on the map below :</p>
+
+<ul>
+  <li>the parameter <code class="language-plaintext highlighter-rouge">s</code> re presenting the <code class="language-plaintext highlighter-rouge">radius of each circle</code> will represents the `district’s population``</li>
+  <li>the paramter <code class="language-plaintext highlighter-rouge">c</code> representing the <code class="language-plaintext highlighter-rouge">color</code> will represents the <code class="language-plaintext highlighter-rouge">price</code>.</li>
+  <li>We will use a <code class="language-plaintext highlighter-rouge">predefined color map</code> (option <code class="language-plaintext highlighter-rouge">cmap</code>) called <code class="language-plaintext highlighter-rouge">jet</code>, which ranges from <code class="language-plaintext highlighter-rouge">blue</code> (<code class="language-plaintext highlighter-rouge">low values</code>) to <code class="language-plaintext highlighter-rouge">red</code> (<code class="language-plaintext highlighter-rouge">high prices</code>):</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.4,
+        s=housing["population"]/100, label="population", figsize=(10,7),
+        c="median_house_value", cmap=plt.get_cmap("jet"), colorbar=True,
+        )
+plt.legend()
+&lt;matplotlib.legend.Legend at 0x12f4d1650&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId53.png" alt="" /></p>
+
+<ul>
+  <li>This image tells us that the housing prices are very much related to the location (e.g., close to the ocean) and to the population density.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">clustering algorithm</code> should be useful for detecting <code class="language-plaintext highlighter-rouge">the main cluster</code> and for adding <code class="language-plaintext highlighter-rouge">new features that measure the proximity to the cluster centers</code>. See later.. Check this blog : <a href="https://dev.to/travelleroncode/analyzing-a-dataset-with-unsupervised-learning-31ld">https://dev.to/travelleroncode/analyzing-a-dataset-with-unsupervised-learning-31ld</a></li>
+  <li>The <code class="language-plaintext highlighter-rouge">ocean proximity</code> attribute may be useful as well, although in Northern California the housing prices in coastal districts are not too high, so it is not a simple rule.</li>
+</ul>
+
+<h2 id="looking-for-correlations">Looking for correlations</h2>
+
+<p>If we want to explore our data it is good to compute correlation between numeric variable : <code class="language-plaintext highlighter-rouge">Spearman</code> S and <code class="language-plaintext highlighter-rouge">Pearon</code> P. W can compute them both since the relation between the Spearman (S) and Pearson (P) correlations will give some good information :</p>
+
+<ul>
+  <li>
+    <p>Briefly, <code class="language-plaintext highlighter-rouge">S is computed on ranks</code> and so depicts <code class="language-plaintext highlighter-rouge">monotonic relationships</code> while <code class="language-plaintext highlighter-rouge">P is on true values</code> and depicts <code class="language-plaintext highlighter-rouge">linear relationships</code>.</p>
+  </li>
+  <li>
+    <p>We the <code class="language-plaintext highlighter-rouge">corr</code> method : By default, method = ‘Pearson’</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s = {}
+for x in range(1,100):
+    s[x] = math.exp(x)
+s = pd.DataFrame(s.items())  
+s.corr('pearson') 
+          0         1
+0  1.000000  0.253274
+1  0.253274  1.000000
+s.corr('spearman')
+     0    1
+0  1.0  1.0
+1  1.0  1.0
+</code></pre></div></div>
+
+<p>This is because 𝑦 increases <code class="language-plaintext highlighter-rouge">monotonically</code> with 𝑥 so the <code class="language-plaintext highlighter-rouge">Spearman correlation is perfect</code>, but <code class="language-plaintext highlighter-rouge">not linearly</code>, so the <code class="language-plaintext highlighter-rouge">Pearson correlation is imperfect</code>.</p>
+
+<p>Doing both is interesting because if we have <code class="language-plaintext highlighter-rouge">S &gt; P</code>, that means that we have a <code class="language-plaintext highlighter-rouge">correlation</code> that is <code class="language-plaintext highlighter-rouge">monotonic</code> but <code class="language-plaintext highlighter-rouge">not linear</code>. Since it is good to have linearity in statistics (it is easier) we can try to <code class="language-plaintext highlighter-rouge">apply a transformation on 𝑦</code>(such a log).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>corr_matrix = housing.corr()
+corr_matrix
+                    longitude  latitude  housing_median_age  total_rooms  \
+longitude            1.000000 -0.924478           -0.105823     0.048909   
+latitude            -0.924478  1.000000            0.005737    -0.039245   
+housing_median_age  -0.105823  0.005737            1.000000    -0.364535   
+total_rooms          0.048909 -0.039245           -0.364535     1.000000   
+total_bedrooms       0.076686 -0.072550           -0.325101     0.929391   
+population           0.108071 -0.115290           -0.298737     0.855103   
+households           0.063146 -0.077765           -0.306473     0.918396   
+median_income       -0.019615 -0.075146           -0.111315     0.200133   
+median_house_value  -0.047466 -0.142673            0.114146     0.135140   
+
+                    total_bedrooms  population  households  median_income  \
+longitude                 0.076686    0.108071    0.063146      -0.019615   
+latitude                 -0.072550   -0.115290   -0.077765      -0.075146   
+housing_median_age       -0.325101   -0.298737   -0.306473      -0.111315   
+total_rooms               0.929391    0.855103    0.918396       0.200133   
+total_bedrooms            1.000000    0.876324    0.980167      -0.009643   
+population                0.876324    1.000000    0.904639       0.002421   
+households                0.980167    0.904639    1.000000       0.010869   
+median_income            -0.009643    0.002421    0.010869       1.000000   
+median_house_value        0.047781   -0.026882    0.064590       0.687151   
+
+                    median_house_value  
+longitude                    -0.047466  
+latitude                     -0.142673  
+housing_median_age            0.114146  
+total_rooms                   0.135140  
+total_bedrooms                0.047781  
+population                   -0.026882  
+households                    0.064590  
+median_income                 0.687151  
+median_house_value            1.000000  
+</code></pre></div></div>
+
+<p>Now let’s look at how much each attribute correlates with <code class="language-plaintext highlighter-rouge">the median house value</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>corr_matrix['median_house_value'].sort_values(ascending = False)
+median_house_value    1.000000
+median_income         0.687151
+total_rooms           0.135140
+housing_median_age    0.114146
+households            0.064590
+total_bedrooms        0.047781
+population           -0.026882
+longitude            -0.047466
+latitude             -0.142673
+Name: median_house_value, dtype: float64
+corr_matrix = housing.corr('spearman')
+corr_matrix['median_house_value'].sort_values(ascending = False)
+median_house_value    1.000000
+median_income         0.675714
+total_rooms           0.204476
+households            0.110722
+total_bedrooms        0.084284
+housing_median_age    0.083301
+population            0.001309
+longitude            -0.071562
+latitude             -0.162283
+Name: median_house_value, dtype: float64
+</code></pre></div></div>
+
+<p>Another way to check for correlation between attributes is to use the pandas <code class="language-plaintext highlighter-rouge">scatter_matrix()</code> function, which plots every numerical attribute against every other numerical attribute. ( if we have 11 attribiute, we will plot 11**2 plots )</p>
+
+<p>From the pearson coefficient below, we focus on a few promising attributes that seem most correlated with the median housing value :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from pandas.plotting import scatter_matrix
+
+attributes = ['median_house_value', 'median_income', 'total_rooms', 'housing_median_age' ]
+
+scatter_matrix(housing[attributes], figsize=(10,6), )
+array([[&lt;AxesSubplot:xlabel='median_house_value', ylabel='median_house_value'&gt;,
+        &lt;AxesSubplot:xlabel='median_income', ylabel='median_house_value'&gt;,
+        &lt;AxesSubplot:xlabel='total_rooms', ylabel='median_house_value'&gt;,
+        &lt;AxesSubplot:xlabel='housing_median_age', ylabel='median_house_value'&gt;],
+       [&lt;AxesSubplot:xlabel='median_house_value', ylabel='median_income'&gt;,
+        &lt;AxesSubplot:xlabel='median_income', ylabel='median_income'&gt;,
+        &lt;AxesSubplot:xlabel='total_rooms', ylabel='median_income'&gt;,
+        &lt;AxesSubplot:xlabel='housing_median_age', ylabel='median_income'&gt;],
+       [&lt;AxesSubplot:xlabel='median_house_value', ylabel='total_rooms'&gt;,
+        &lt;AxesSubplot:xlabel='median_income', ylabel='total_rooms'&gt;,
+        &lt;AxesSubplot:xlabel='total_rooms', ylabel='total_rooms'&gt;,
+        &lt;AxesSubplot:xlabel='housing_median_age', ylabel='total_rooms'&gt;],
+       [&lt;AxesSubplot:xlabel='median_house_value', ylabel='housing_median_age'&gt;,
+        &lt;AxesSubplot:xlabel='median_income', ylabel='housing_median_age'&gt;,
+        &lt;AxesSubplot:xlabel='total_rooms', ylabel='housing_median_age'&gt;,
+        &lt;AxesSubplot:xlabel='housing_median_age', ylabel='housing_median_age'&gt;]],
+      dtype=object)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId56.png" alt="" /></p>
+
+<p>The main diagonal (top left to bottom right) would be full of straight lines if pandas plotted each variable against itself, which would not be very useful. So instead pandas displays a histogram of each attribute. The <code class="language-plaintext highlighter-rouge">diagonal</code> option in scatter_matrix pick between ‘kde’ and ‘hist’ for either <code class="language-plaintext highlighter-rouge">Kernel Density Estimation</code> or <code class="language-plaintext highlighter-rouge">Histogram plot</code> in the diagonal.</p>
+
+<p>The most promising attribute to predict <code class="language-plaintext highlighter-rouge">the median house value</code> is <code class="language-plaintext highlighter-rouge">the median income</code>( Pearson and Spearman correlation coefficient = 0.67 ), so let’s zoom in on their correlation scatterplot :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.plot( kind = 'scatter'
+            ,x = 'median_income'
+            ,y = 'median_house_value'
+            ,alpha = 0.2)
+&lt;AxesSubplot:xlabel='median_income', ylabel='median_house_value'&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId57.png" alt="" /></p>
+
+<p>This plot reveals a few things :</p>
+
+<ul>
+  <li>First, the correlation is indeed very strong; we can clearly see the upward trend, and the points are not too dispersed.</li>
+  <li>Second, the price cap that we noticed earlier is clearly visible as a horizontal line at $500,000. But this plot reveals other less obvious straight lines: a horizontal line around $450,000, another around $350,000, perhaps one around $280,000, and a few more below that, we can see this picks in the histogram above: As result, we may want to try <code class="language-plaintext highlighter-rouge">removing the corresponding districts</code> to prevent our algorithms from learning to <code class="language-plaintext highlighter-rouge">reproduce these data quirks</code>.</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing['median_house_value'].describe()
+count     16512.000000
+mean     207005.322372
+std      115701.297250
+min       14999.000000
+25%      119800.000000
+50%      179500.000000
+75%      263900.000000
+max      500001.000000
+Name: median_house_value, dtype: float64
+# Data picks in the target variable
+plt.hist(housing['median_house_value']
+         #, bins = int( (housing['median_income'].max() - housing['median_income'].min()) / 0.5)
+         , bins = int ((500001.000000 - 14999.000000)/1000)
+         , color = 'blue'
+         ,edgecolor = 'black'
+        )
+(array([  3.,   0.,   0.,   0.,   0.,   0.,   0.,   3.,   0.,   0.,   0.,
+          2.,   1.,   1.,   0.,   1.,   0.,   4.,   1.,   3.,   1.,   2.,
+          4.,   2.,   3.,   4.,   5.,  10.,  13.,  11.,  14.,  11.,  19.,
+         17.,  21.,  27.,  24.,  36.,  33.,  39.,  59.,  30.,  53.,  50.,
+         38.,  43.,  39.,  45.,  45.,  35.,  54.,  48.,  74.,  59.,  62.,
+         54.,  47.,  61.,  51.,  39.,  51.,  41.,  33.,  47.,  37.,  39.,
+         64.,  43.,  54.,  59.,  63.,  55., 106.,  73.,  55.,  86.,  53.,
+         84.,  74.,  73.,  81.,  70.,  77.,  71.,  64.,  79.,  59.,  45.,
+         73.,  50.,  55.,  49.,  55.,  68.,  65.,  62.,  72., 110.,  78.,
+         54.,  56.,  66.,  55.,  79.,  53.,  57.,  55.,  60.,  59.,  43.,
+         83.,  61.,  54.,  45.,  59.,  52.,  61.,  51.,  55.,  65.,  59.,
+         68., 144.,  51.,  75.,  72.,  65.,  75.,  74.,  64.,  68.,  79.,
+         57.,  52.,  38., 111.,  76.,  64.,  67.,  77.,  63.,  94.,  75.,
+         83.,  76.,  96.,  74., 145.,  73.,  74.,  92.,  88.,  55.,  61.,
+         61.,  79.,  68.,  52.,  64.,  53.,  91.,  50.,  57.,  63.,  68.,
+         52.,  69.,  59.,  84.,  74.,  65.,  70., 114.,  44.,  56.,  63.,
+         70.,  69.,  57.,  51.,  64.,  52.,  37.,  49.,  40.,  59.,  41.,
+         35.,  32.,  52.,  47.,  45.,  34.,  47.,  51.,  41.,  37.,  51.,
+         53.,  50.,  51.,  44.,  49.,  66.,  44.,  55.,  50.,  49.,  46.,
+         38., 107.,  56.,  50.,  48.,  48.,  52.,  60.,  51.,  44.,  52.,
+         40.,  41.,  49.,  44.,  43.,  53.,  49.,  27.,  51.,  39.,  43.,
+         30.,  47.,  37.,  22.,  50.,  33.,  36.,  42.,  43.,  35.,  20.,
+         34.,  40.,  29.,  29.,  37.,  44.,  41.,  39.,  38.,  40.,  40.,
+         39.,  35.,  30.,  43.,  34.,  34.,  65.,  21.,  33.,  25.,  29.,
+         38.,  22.,  23.,  26.,  30.,  20.,  22.,  24.,  36.,  22.,  25.,
+         28.,  26.,  26.,  21.,  24.,  26.,  16.,  15.,   9.,  31.,  12.,
+         17.,  19.,  19.,  18.,  17.,  18.,  14.,  15.,  19.,  11.,  22.,
+         14.,  18.,  21.,  23.,  15.,   9.,  24.,  16.,  17.,  18.,  23.,
+         20.,  28.,  12.,  12.,  21.,  11.,  22.,  17.,  22.,  19.,  22.,
+         19.,  25.,  21.,  15.,  14.,  20.,  25.,  22.,  20.,  18.,  22.,
+         22.,  16.,  13.,  22.,  75.,  14.,  19.,  19.,  19.,  15.,  22.,
+         13.,  18.,  16.,  21.,  16.,  19.,  24.,  11.,  13.,  16.,  17.,
+         13.,  11.,  15.,   4.,  18.,   9.,   8.,  26.,   8.,  14.,   6.,
+          8.,  12.,  12.,  11.,  10.,  12.,  14.,   5.,  13.,  16.,   7.,
+          7.,  11.,  10.,  12.,  14.,  15.,   9.,  11.,  10.,  10.,  22.,
+          4.,   2.,  12.,   2.,  10.,  12.,  11.,   2.,   4.,  14.,   9.,
+         10.,  10.,   5.,  13.,   5.,  13.,   8.,  13.,   7.,   9.,   3.,
+          8.,   8.,  12.,   5.,   5.,   5.,   5.,   2.,  11.,   7.,   6.,
+          9.,  11.,   7.,   7.,   7.,   9.,   7.,   7.,   6.,   7.,   8.,
+          9.,   6.,   7.,   5.,   2.,  28.,   6.,   5.,   7.,   6.,   5.,
+          3.,   6.,  10.,   6.,   6.,   1.,   6.,   4.,   4.,   3.,   3.,
+          6.,   5.,   3.,   5.,   3.,   4.,   6.,   3.,  10.,   1.,   2.,
+          8.,   4.,   1.,   3.,   1.,   3.,  10.,   7.,   2.,   4.,   4.,
+          3.,   3.,   4.,   3.,   4.,   4.,   2.,   6.,   2.,   2.,   5.,
+        810.]),
+ array([ 14999.        ,  15999.00412371,  16999.00824742,  17999.01237113,
+         18999.01649485,  19999.02061856,  20999.02474227,  21999.02886598,
+         22999.03298969,  23999.0371134 ,  24999.04123711,  25999.04536082,
+         26999.04948454,  27999.05360825,  28999.05773196,  29999.06185567,
+         30999.06597938,  31999.07010309,  32999.0742268 ,  33999.07835052,
+         34999.08247423,  35999.08659794,  36999.09072165,  37999.09484536,
+         38999.09896907,  39999.10309278,  40999.10721649,  41999.11134021,
+         42999.11546392,  43999.11958763,  44999.12371134,  45999.12783505,
+         46999.13195876,  47999.13608247,  48999.14020619,  49999.1443299 ,
+         50999.14845361,  51999.15257732,  52999.15670103,  53999.16082474,
+         54999.16494845,  55999.16907216,  56999.17319588,  57999.17731959,
+         58999.1814433 ,  59999.18556701,  60999.18969072,  61999.19381443,
+         62999.19793814,  63999.20206186,  64999.20618557,  65999.21030928,
+         66999.21443299,  67999.2185567 ,  68999.22268041,  69999.22680412,
+         70999.23092784,  71999.23505155,  72999.23917526,  73999.24329897,
+         74999.24742268,  75999.25154639,  76999.2556701 ,  77999.25979381,
+         78999.26391753,  79999.26804124,  80999.27216495,  81999.27628866,
+         82999.28041237,  83999.28453608,  84999.28865979,  85999.29278351,
+         86999.29690722,  87999.30103093,  88999.30515464,  89999.30927835,
+         90999.31340206,  91999.31752577,  92999.32164948,  93999.3257732 ,
+         94999.32989691,  95999.33402062,  96999.33814433,  97999.34226804,
+         98999.34639175,  99999.35051546, 100999.35463918, 101999.35876289,
+        102999.3628866 , 103999.36701031, 104999.37113402, 105999.37525773,
+        106999.37938144, 107999.38350515, 108999.38762887, 109999.39175258,
+        110999.39587629, 111999.4       , 112999.40412371, 113999.40824742,
+        114999.41237113, 115999.41649485, 116999.42061856, 117999.42474227,
+        118999.42886598, 119999.43298969, 120999.4371134 , 121999.44123711,
+        122999.44536082, 123999.44948454, 124999.45360825, 125999.45773196,
+        126999.46185567, 127999.46597938, 128999.47010309, 129999.4742268 ,
+        130999.47835052, 131999.48247423, 132999.48659794, 133999.49072165,
+        134999.49484536, 135999.49896907, 136999.50309278, 137999.50721649,
+        138999.51134021, 139999.51546392, 140999.51958763, 141999.52371134,
+        142999.52783505, 143999.53195876, 144999.53608247, 145999.54020619,
+        146999.5443299 , 147999.54845361, 148999.55257732, 149999.55670103,
+        150999.56082474, 151999.56494845, 152999.56907216, 153999.57319588,
+        154999.57731959, 155999.5814433 , 156999.58556701, 157999.58969072,
+        158999.59381443, 159999.59793814, 160999.60206186, 161999.60618557,
+        162999.61030928, 163999.61443299, 164999.6185567 , 165999.62268041,
+        166999.62680412, 167999.63092784, 168999.63505155, 169999.63917526,
+        170999.64329897, 171999.64742268, 172999.65154639, 173999.6556701 ,
+        174999.65979381, 175999.66391753, 176999.66804124, 177999.67216495,
+        178999.67628866, 179999.68041237, 180999.68453608, 181999.68865979,
+        182999.69278351, 183999.69690722, 184999.70103093, 185999.70515464,
+        186999.70927835, 187999.71340206, 188999.71752577, 189999.72164948,
+        190999.7257732 , 191999.72989691, 192999.73402062, 193999.73814433,
+        194999.74226804, 195999.74639175, 196999.75051546, 197999.75463918,
+        198999.75876289, 199999.7628866 , 200999.76701031, 201999.77113402,
+        202999.77525773, 203999.77938144, 204999.78350515, 205999.78762887,
+        206999.79175258, 207999.79587629, 208999.8       , 209999.80412371,
+        210999.80824742, 211999.81237113, 212999.81649485, 213999.82061856,
+        214999.82474227, 215999.82886598, 216999.83298969, 217999.8371134 ,
+        218999.84123711, 219999.84536082, 220999.84948454, 221999.85360825,
+        222999.85773196, 223999.86185567, 224999.86597938, 225999.87010309,
+        226999.8742268 , 227999.87835052, 228999.88247423, 229999.88659794,
+        230999.89072165, 231999.89484536, 232999.89896907, 233999.90309278,
+        234999.90721649, 235999.91134021, 236999.91546392, 237999.91958763,
+        238999.92371134, 239999.92783505, 240999.93195876, 241999.93608247,
+        242999.94020619, 243999.9443299 , 244999.94845361, 245999.95257732,
+        246999.95670103, 247999.96082474, 248999.96494845, 249999.96907216,
+        250999.97319588, 251999.97731959, 252999.9814433 , 253999.98556701,
+        254999.98969072, 255999.99381443, 256999.99793814, 258000.00206186,
+        259000.00618557, 260000.01030928, 261000.01443299, 262000.0185567 ,
+        263000.02268041, 264000.02680412, 265000.03092784, 266000.03505155,
+        267000.03917526, 268000.04329897, 269000.04742268, 270000.05154639,
+        271000.0556701 , 272000.05979381, 273000.06391753, 274000.06804124,
+        275000.07216495, 276000.07628866, 277000.08041237, 278000.08453608,
+        279000.08865979, 280000.09278351, 281000.09690722, 282000.10103093,
+        283000.10515464, 284000.10927835, 285000.11340206, 286000.11752577,
+        287000.12164948, 288000.1257732 , 289000.12989691, 290000.13402062,
+        291000.13814433, 292000.14226804, 293000.14639175, 294000.15051546,
+        295000.15463918, 296000.15876289, 297000.1628866 , 298000.16701031,
+        299000.17113402, 300000.17525773, 301000.17938144, 302000.18350515,
+        303000.18762887, 304000.19175258, 305000.19587629, 306000.2       ,
+        307000.20412371, 308000.20824742, 309000.21237113, 310000.21649485,
+        311000.22061856, 312000.22474227, 313000.22886598, 314000.23298969,
+        315000.2371134 , 316000.24123711, 317000.24536082, 318000.24948454,
+        319000.25360825, 320000.25773196, 321000.26185567, 322000.26597938,
+        323000.27010309, 324000.2742268 , 325000.27835052, 326000.28247423,
+        327000.28659794, 328000.29072165, 329000.29484536, 330000.29896907,
+        331000.30309278, 332000.30721649, 333000.31134021, 334000.31546392,
+        335000.31958763, 336000.32371134, 337000.32783505, 338000.33195876,
+        339000.33608247, 340000.34020619, 341000.3443299 , 342000.34845361,
+        343000.35257732, 344000.35670103, 345000.36082474, 346000.36494845,
+        347000.36907216, 348000.37319588, 349000.37731959, 350000.3814433 ,
+        351000.38556701, 352000.38969072, 353000.39381443, 354000.39793814,
+        355000.40206186, 356000.40618557, 357000.41030928, 358000.41443299,
+        359000.4185567 , 360000.42268041, 361000.42680412, 362000.43092784,
+        363000.43505155, 364000.43917526, 365000.44329897, 366000.44742268,
+        367000.45154639, 368000.4556701 , 369000.45979381, 370000.46391753,
+        371000.46804124, 372000.47216495, 373000.47628866, 374000.48041237,
+        375000.48453608, 376000.48865979, 377000.49278351, 378000.49690722,
+        379000.50103093, 380000.50515464, 381000.50927835, 382000.51340206,
+        383000.51752577, 384000.52164948, 385000.5257732 , 386000.52989691,
+        387000.53402062, 388000.53814433, 389000.54226804, 390000.54639175,
+        391000.55051546, 392000.55463918, 393000.55876289, 394000.5628866 ,
+        395000.56701031, 396000.57113402, 397000.57525773, 398000.57938144,
+        399000.58350515, 400000.58762887, 401000.59175258, 402000.59587629,
+        403000.6       , 404000.60412371, 405000.60824742, 406000.61237113,
+        407000.61649485, 408000.62061856, 409000.62474227, 410000.62886598,
+        411000.63298969, 412000.6371134 , 413000.64123711, 414000.64536082,
+        415000.64948454, 416000.65360825, 417000.65773196, 418000.66185567,
+        419000.66597938, 420000.67010309, 421000.6742268 , 422000.67835052,
+        423000.68247423, 424000.68659794, 425000.69072165, 426000.69484536,
+        427000.69896907, 428000.70309278, 429000.70721649, 430000.71134021,
+        431000.71546392, 432000.71958763, 433000.72371134, 434000.72783505,
+        435000.73195876, 436000.73608247, 437000.74020619, 438000.7443299 ,
+        439000.74845361, 440000.75257732, 441000.75670103, 442000.76082474,
+        443000.76494845, 444000.76907216, 445000.77319588, 446000.77731959,
+        447000.7814433 , 448000.78556701, 449000.78969072, 450000.79381443,
+        451000.79793814, 452000.80206186, 453000.80618557, 454000.81030928,
+        455000.81443299, 456000.8185567 , 457000.82268041, 458000.82680412,
+        459000.83092784, 460000.83505155, 461000.83917526, 462000.84329897,
+        463000.84742268, 464000.85154639, 465000.8556701 , 466000.85979381,
+        467000.86391753, 468000.86804124, 469000.87216495, 470000.87628866,
+        471000.88041237, 472000.88453608, 473000.88865979, 474000.89278351,
+        475000.89690722, 476000.90103093, 477000.90515464, 478000.90927835,
+        479000.91340206, 480000.91752577, 481000.92164948, 482000.9257732 ,
+        483000.92989691, 484000.93402062, 485000.93814433, 486000.94226804,
+        487000.94639175, 488000.95051546, 489000.95463918, 490000.95876289,
+        491000.9628866 , 492000.96701031, 493000.97113402, 494000.97525773,
+        495000.97938144, 496000.98350515, 497000.98762887, 498000.99175258,
+        499000.99587629, 500001.        ]),
+ &lt;BarContainer object of 485 artists&gt;)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId58.png" alt="" /></p>
+
+<p>Check docs on how to detect picks :</p>
+
+<ul>
+  <li>
+    <p>Finding peaks in the histograms of the variables : <a href="https://www.kaggle.com/simongrest/finding-peaks-in-the-histograms-of-the-variables">https://www.kaggle.com/simongrest/finding-peaks-in-the-histograms-of-the-variables</a></p>
+  </li>
+  <li>
+    <p>Peak-finding algorithm for Python/SciPy : <a href="https://stackoverflow.com/questions/1713335/peak-finding-algorithm-for-python-scipy">https://stackoverflow.com/questions/1713335/peak-finding-algorithm-for-python-scipy</a></p>
+  </li>
+</ul>
+
+<h2 id="experimenting-with-attribute-combinations">Experimenting with Attribute Combinations</h2>
+
+<ul>
+  <li>We identified a <code class="language-plaintext highlighter-rouge">few data quirks</code> that we may want to clean up before feeding the data to a Machine Learning algorithm,</li>
+  <li>We found interesting <code class="language-plaintext highlighter-rouge">correlations between attributes</code>, in particular with <code class="language-plaintext highlighter-rouge">the target attribute</code>.</li>
+  <li>We also noticed that some attributes have a <code class="language-plaintext highlighter-rouge">tail-heavy distribution</code>, so you may want to transform them (e.g., by computing their logarithm).</li>
+  <li>One last thing we may want to do before preparing the data for Machine Learning algorithms is to <code class="language-plaintext highlighter-rouge">try out various attribute combinations</code> : For example, the <code class="language-plaintext highlighter-rouge">total number of rooms</code> in a district is not very useful if we don’t know how many <code class="language-plaintext highlighter-rouge">households</code> there are. What we really want is <code class="language-plaintext highlighter-rouge">the number of rooms per household</code>. Similarly, the <code class="language-plaintext highlighter-rouge">total number of bedrooms</code> by itself is not very useful: you probably want to compare it to <code class="language-plaintext highlighter-rouge">the number of rooms</code>. And <code class="language-plaintext highlighter-rouge">the population per household</code> also seems like an interesting attribute combination to look at. Let’s create these new attributes:</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># We can see that some attributes are very linked to each others
+housing[['total_rooms','total_bedrooms','households','population' ]].corr()
+                total_rooms  total_bedrooms  households  population
+total_rooms        1.000000        0.930380    0.918484    0.857126
+total_bedrooms     0.930380        1.000000    0.979728    0.877747
+households         0.918484        0.979728    1.000000    0.907222
+population         0.857126        0.877747    0.907222    1.000000
+</code></pre></div></div>
+
+<p>To highlight the matrix correlation, we can use <code class="language-plaintext highlighter-rouge">heatmap</code> from <code class="language-plaintext highlighter-rouge">seaborn</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import seaborn as sns
+cor= housing[['total_rooms','total_bedrooms','households','population' ]].corr()
+sns.heatmap(cor, cmap='Blues', annot= True)
+&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId62.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing["rooms_per_household"] = housing["total_rooms"]/housing["households"]
+housing["bedrooms_per_room"] = housing["total_bedrooms"]/housing["total_rooms"]
+housing["population_per_household"]=housing["population"]/housing["households"] # nbre of person per houshold
+housing["bedrooms_per_room"].describe()
+count    20433.000000
+mean         0.213039
+std          0.057983
+min          0.100000
+25%          0.175427
+50%          0.203162
+75%          0.239821
+max          1.000000
+Name: bedrooms_per_room, dtype: float64
+# on average, we have 21 bedrooms for 100 rooms
+from fractions import Fraction
+z = Fraction(0.21).limit_denominator()
+z
+Fraction(21, 100)
+corr_matrix = housing.corr()
+corr_matrix['median_house_value'].sort_values(ascending = False)
+median_house_value          1.000000
+median_income               0.688075
+rooms_per_household         0.151948
+total_rooms                 0.134153
+housing_median_age          0.105623
+households                  0.065843
+total_bedrooms              0.049686
+population_per_household   -0.023737
+population                 -0.024650
+longitude                  -0.045967
+latitude                   -0.144160
+bedrooms_per_room          -0.255880
+Name: median_house_value, dtype: float64
+</code></pre></div></div>
+
+<p>The new <code class="language-plaintext highlighter-rouge">bedrooms_per_room attribute</code> is much more correlated (0.25)with the <code class="language-plaintext highlighter-rouge">median house value</code> than <code class="language-plaintext highlighter-rouge">the total number of rooms</code>(0.13) or bedrooms (0.04) :</p>
+
+<ul>
+  <li>Apparently houses with a lower bedroom/room ratio tend to be more expensive.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">number of rooms per household</code> is also more informative than <code class="language-plaintext highlighter-rouge">the total number of rooms</code> in a district—obviously the larger the houses, the more expensive they are.</li>
+</ul>
+
+<h1 id="prepare-the-data-for-machine-learning-algorithms">Prepare the Data for Machine Learning Algorithms</h1>
+
+<ul>
+  <li>let’s revert to a <code class="language-plaintext highlighter-rouge">clean training set</code> (by copying strat_train_set once again).</li>
+  <li>Let’s also <code class="language-plaintext highlighter-rouge">separate the predictors</code> and <code class="language-plaintext highlighter-rouge">the labels</code>, since we don’t necessarily want to apply the same transformations to the predictors and the target values.</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># drop() creates a copy of the data and does not affect strat_train_set
+housing = strat_train_set.drop("median_house_value", axis=1) 
+housing_labels = strat_train_set["median_house_value"].copy()
+housing = strat_train_set.drop('median_house_value', axis = 1)
+housing_labels = strat_train_set['median_house_value'].copy()
+</code></pre></div></div>
+
+<h2 id="data-cleaning">Data Cleaning</h2>
+
+<p>For<code class="language-plaintext highlighter-rouge">missing values</code> (like for <code class="language-plaintext highlighter-rouge">total_bedrooms</code>), we have three options:</p>
+
+<ol>
+  <li>Get rid of the corresponding districts.</li>
+  <li>Get rid of the whole attribute.</li>
+  <li>Set the values to some value (zero, the mean, the median, etc.)</li>
+</ol>
+
+<p>We can accomplish these easily using DataFrame’s dropna(), drop(), and fillna()</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing['total_bedrooms'].describe()
+count    16354.000000
+mean       534.914639
+std        412.665649
+min          2.000000
+25%        295.000000
+50%        433.000000
+75%        644.000000
+max       6210.000000
+Name: total_bedrooms, dtype: float64
+# in bar chart, NanN's are filled with 0's
+plt.hist(housing['total_bedrooms']
+        , bins = int ((6210.000000 - 2.000000 )/500)
+        , color = 'blue'
+        , edgecolor = 'black' 
+        )
+(array([1.0221e+04, 4.7670e+03, 9.1400e+02, 2.6100e+02, 9.9000e+01,
+        5.1000e+01, 1.7000e+01, 1.1000e+01, 7.0000e+00, 3.0000e+00,
+        2.0000e+00, 1.0000e+00]),
+ array([2.00000000e+00, 5.19333333e+02, 1.03666667e+03, 1.55400000e+03,
+        2.07133333e+03, 2.58866667e+03, 3.10600000e+03, 3.62333333e+03,
+        4.14066667e+03, 4.65800000e+03, 5.17533333e+03, 5.69266667e+03,
+        6.21000000e+03]),
+ &lt;BarContainer object of 12 artists&gt;)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-15-Sickit-Learn-for-Machine-Learning/media/rId65.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># to count the number of Nan's
+housing['total_bedrooms'].isna().sum()
+158
+housing.isna().sum()
+longitude               0
+latitude                0
+housing_median_age      0
+total_rooms             0
+total_bedrooms        158
+population              0
+households              0
+median_income           0
+ocean_proximity         0
+income_cat              0
+dtype: int64
+# option 1 : Get rid of the corresponding districts
+housing.dropna(subset = ['total_bedrooms']) # drop from 16512 to 16354 using len()
+
+# option 2 : Get rid of the whole attribute
+housing.drop('total_bedrooms', axis = 1)
+
+# option 3 : Set the values to some value (zero, the mean, the median, etc.)
+median = housing['total_bedrooms'].median()
+housing['total_bedrooms'].fillna(median, inplace = True)
+       longitude  latitude  housing_median_age  total_rooms  population  \
+12655    -121.46     38.52                29.0       3873.0      2237.0   
+15502    -117.23     33.09                 7.0       5320.0      2015.0   
+2908     -119.04     35.37                44.0       1618.0       667.0   
+14053    -117.13     32.75                24.0       1877.0       898.0   
+20496    -118.70     34.28                27.0       3536.0      1837.0   
+...          ...       ...                 ...          ...         ...   
+15174    -117.07     33.03                14.0       6665.0      2026.0   
+12661    -121.42     38.51                15.0       7901.0      4769.0   
+19263    -122.72     38.44                48.0        707.0       458.0   
+19140    -122.70     38.31                14.0       3155.0      1208.0   
+19773    -122.14     39.97                27.0       1079.0       625.0   
+
+       households  median_income ocean_proximity income_cat  
+12655       706.0         2.1736          INLAND          2  
+15502       768.0         6.3373      NEAR OCEAN          5  
+2908        300.0         2.8750          INLAND          2  
+14053       483.0         2.2264      NEAR OCEAN          2  
+20496       580.0         4.4964       &lt;1H OCEAN          3  
+...           ...            ...             ...        ...  
+15174      1001.0         5.0900       &lt;1H OCEAN          4  
+12661      1418.0         2.8139          INLAND          2  
+19263       172.0         3.1797       &lt;1H OCEAN          3  
+19140       501.0         4.1964       &lt;1H OCEAN          3  
+19773       197.0         3.1319          INLAND          3  
+
+[16512 rows x 9 columns]
+</code></pre></div></div>
+
+<p>For ‘option’ 3 : fill missings with some value, the median for example, we should :</p>
+
+<ul>
+  <li>Compute the median value on <code class="language-plaintext highlighter-rouge">the training</code> and use it to <code class="language-plaintext highlighter-rouge">fill the missing values</code> in the training set.</li>
+  <li><code class="language-plaintext highlighter-rouge">Save the median value</code> that you have computed.</li>
+  <li><code class="language-plaintext highlighter-rouge">Using later</code> for <code class="language-plaintext highlighter-rouge">to replace missing values</code> in the <code class="language-plaintext highlighter-rouge">test set</code> when we want to <code class="language-plaintext highlighter-rouge">evaluate our system</code></li>
+  <li>Using it once the <code class="language-plaintext highlighter-rouge">system goes live</code> to <code class="language-plaintext highlighter-rouge">replace missing values in new data</code>.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Scikit-Learn</code> provides a handy class to take care of missing values: <code class="language-plaintext highlighter-rouge">SimpleImputer</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.impute import SimpleImputer
+</code></pre></div></div>
+
+<p>First, you need to create a <code class="language-plaintext highlighter-rouge">SimpleImputer instance</code>, specifying that we want to replace <code class="language-plaintext highlighter-rouge">each numeric attribute’s missing values</code> with <code class="language-plaintext highlighter-rouge">the median of that attribute</code> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imputer = SimpleImputer(strategy = 'median')
+housing.dtypes
+longitude             float64
+latitude              float64
+housing_median_age    float64
+total_rooms           float64
+total_bedrooms        float64
+population            float64
+households            float64
+median_income         float64
+ocean_proximity        object
+dtype: object
+# We drop the categorical variables since the median can only be computed on numerical attributes
+housing_num = housing.drop(['ocean_proximity'], axis = 1)
+</code></pre></div></div>
+
+<p>Now you can <code class="language-plaintext highlighter-rouge">fit</code> the <code class="language-plaintext highlighter-rouge">imputer instance</code> to the <code class="language-plaintext highlighter-rouge">training data</code> using the <code class="language-plaintext highlighter-rouge">fit()</code> method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imputer.fit(housing_num)
+SimpleImputer(strategy='median')
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">imputer</code> has <code class="language-plaintext highlighter-rouge">simply computed the median</code> of each <code class="language-plaintext highlighter-rouge">attribute</code> and stored the result in its <code class="language-plaintext highlighter-rouge">statistics_</code> instance variable. We apply the <code class="language-plaintext highlighter-rouge">imputer to all the numerical attributes</code> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imputer.statistics_
+array([-118.51   ,   34.26   ,   29.     , 2119.     ,  433.     ,
+       1164.     ,  408.     ,    3.54155])
+housing_num.columns
+Index(['longitude', 'latitude', 'housing_median_age', 'total_rooms',
+       'total_bedrooms', 'population', 'households', 'median_income'],
+      dtype='object')
+# equivalant to imputer.statistics_ : we have the median for each numeric variable
+housing_num.median().values
+array([-118.51   ,   34.26   ,   29.     , 2119.     ,  433.     ,
+       1164.     ,  408.     ,    3.54155])
+</code></pre></div></div>
+
+<p>Now we can use this <code class="language-plaintext highlighter-rouge">trained</code> imputer to <code class="language-plaintext highlighter-rouge">transform the training set</code> by <code class="language-plaintext highlighter-rouge">replacing</code> missing values with the <code class="language-plaintext highlighter-rouge">learned medians</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># The result is a plain NumPy array containing the transformed features. 
+X = imputer.transform(housing_num)
+
+
+#If you want to put it back into a pandas DataFrame, it’s simple:
+housing_tr = pd.DataFrame(X, columns=housing_num.columns,
+                            index=housing_num.index)
+</code></pre></div></div>
+
+<p>Alternative method to <code class="language-plaintext highlighter-rouge">fit()</code> and <code class="language-plaintext highlighter-rouge">transform()</code> method is using directy <code class="language-plaintext highlighter-rouge">fit_transform()</code> method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X = imputer.fit_transform(housing_num)
+
+housing_tr = pd.DataFrame( X, columns = housing_num.columns
+                         , index = housing_num.index)
+housing_tr
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+12655    -121.46     38.52                29.0       3873.0           797.0   
+15502    -117.23     33.09                 7.0       5320.0           855.0   
+2908     -119.04     35.37                44.0       1618.0           310.0   
+14053    -117.13     32.75                24.0       1877.0           519.0   
+20496    -118.70     34.28                27.0       3536.0           646.0   
+...          ...       ...                 ...          ...             ...   
+15174    -117.07     33.03                14.0       6665.0          1231.0   
+12661    -121.42     38.51                15.0       7901.0          1422.0   
+19263    -122.72     38.44                48.0        707.0           166.0   
+19140    -122.70     38.31                14.0       3155.0           580.0   
+19773    -122.14     39.97                27.0       1079.0           222.0   
+
+       population  households  median_income  
+12655      2237.0       706.0         2.1736  
+15502      2015.0       768.0         6.3373  
+2908        667.0       300.0         2.8750  
+14053       898.0       483.0         2.2264  
+20496      1837.0       580.0         4.4964  
+...           ...         ...            ...  
+15174      2026.0      1001.0         5.0900  
+12661      4769.0      1418.0         2.8139  
+19263       458.0       172.0         3.1797  
+19140      1208.0       501.0         4.1964  
+19773       625.0       197.0         3.1319  
+
+[16512 rows x 8 columns]
+</code></pre></div></div>
+
+<h2 id="handling-text-and-categorical-attributes">Handling Text and Categorical Attributes</h2>
+
+<p>So far we have only dealt with <code class="language-plaintext highlighter-rouge">numerical attributes</code>, but now let’s look at <code class="language-plaintext highlighter-rouge">text attributes</code>. In this dataset, there is just one: the <code class="language-plaintext highlighter-rouge">ocean_proximity</code> attribute. Let’s look at its value for the first 10 instances:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_cat = housing[['ocean_proximity']]
+housing_cat.head(10)
+housing_cat.nunique()
+ocean_proximity    5
+dtype: int64
+housing['ocean_proximity'].unique()
+array(['INLAND', 'NEAR OCEAN', '&lt;1H OCEAN', 'NEAR BAY', 'ISLAND'],
+      dtype=object)
+</code></pre></div></div>
+
+<p>It’s <code class="language-plaintext highlighter-rouge">not arbitrary text</code>: there are a <code class="language-plaintext highlighter-rouge">limited number of possible values</code>, each of which represents a <code class="language-plaintext highlighter-rouge">category</code>. So this attribute is a <code class="language-plaintext highlighter-rouge">categorical attribute</code>. Most Machine Learning algorithms prefer to work with <code class="language-plaintext highlighter-rouge">numbers</code>, so <code class="language-plaintext highlighter-rouge">let’s convert these categories from text to numbers</code>. For this, we can use <code class="language-plaintext highlighter-rouge">Scikit-Learn’s OrdinalEncoder</code> class :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.preprocessing import OrdinalEncoder
+ordinal_encoder = OrdinalEncoder()
+housing_cat_encoded = ordinal_encoder.fit_transform(housing_cat) # categorical dataframe
+housing_cat_encoded[:10]
+array([[1.],
+       [4.],
+       [1.],
+       [4.],
+       [0.],
+       [3.],
+       [0.],
+       [0.],
+       [0.],
+       [0.]])
+housing_cat_encoded.shape
+(16512, 1)
+# we  can get the list of categories using the categories_ instance variable. It is a list containing a 1D array 
+   #of categories for each categorical attribute
+    
+ordinal_encoder.categories_
+[array(['&lt;1H OCEAN', 'INLAND', 'ISLAND', 'NEAR BAY', 'NEAR OCEAN'],
+       dtype=object)]
+np.unique(housing_cat_encoded)
+array([0., 1., 2., 3., 4.])
+</code></pre></div></div>
+
+<p>One issue with this representation is that ML algorithms ( OrdinaEncoder) <code class="language-plaintext highlighter-rouge">will assume that two nearby values</code> are <code class="language-plaintext highlighter-rouge">more similar</code> than <code class="language-plaintext highlighter-rouge">two distant values</code>. This may be fine in some cases (e.g., for <code class="language-plaintext highlighter-rouge">ordered categories</code> such as “bad,” “average,” “good,” and “excellent”) : <code class="language-plaintext highlighter-rouge">ordinal encoding for categorical variables that have a natural rank ordering</code> but it is obviously not the case for the <code class="language-plaintext highlighter-rouge">ocean_proximity column</code> (for example, <code class="language-plaintext highlighter-rouge">categories 0 and 4 are clearly more similar</code> than categories 0 and 1).</p>
+
+<p>To fix this issue, a common solution is to create <code class="language-plaintext highlighter-rouge">one binary attribute per category</code>: one attribute equal to 1 when the category is “&lt;1H OCEAN” (and 0 otherwise), another attribute equal to 1 when the category is “INLAND” (and 0 otherwise), and so on. This is called <code class="language-plaintext highlighter-rouge">one-hot encoding</code>. The <code class="language-plaintext highlighter-rouge">new attributes</code> are sometimes called <code class="language-plaintext highlighter-rouge">dummy attributes</code>. Scikit-Learn provides a <code class="language-plaintext highlighter-rouge">OneHotEncoder class</code> to convert <code class="language-plaintext highlighter-rouge">categorical values</code> into <code class="language-plaintext highlighter-rouge">one-hot vectors</code></p>
+
+<p>See this blogpost : <a href="https://machinelearningmastery.com/one-hot-encoding-for-categorical-data/">https://machinelearningmastery.com/one-hot-encoding-for-categorical-data/</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.preprocessing import OneHotEncoder
+cat_encoder = OneHotEncoder()
+housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
+housing_cat_1hot
+&lt;16512x5 sparse matrix of type '&lt;class 'numpy.float64'&gt;'
+	with 16512 stored elements in Compressed Sparse Row format&gt;
+</code></pre></div></div>
+
+<p>Notice that the <code class="language-plaintext highlighter-rouge">output is a SciPy sparse matrix</code>, instead of a NumPy array. This is <code class="language-plaintext highlighter-rouge">very useful when you have categorical attributes with thousands of categories</code>. After onehot encoding, we get a matrix with thousands of columns, and the matrix is full of 0s except for a single 1 per row. Using up tons of memory mostly to store zeros would be very wasteful, so instead <code class="language-plaintext highlighter-rouge">a sparse matrix only stores the location of the nonzero elements</code>. we can use it mostly like a normal 2D array,but if we really want to convert it to a (dense) NumPy array, we call the <code class="language-plaintext highlighter-rouge">toarray()</code> method:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_cat_1hot.toarray()
+array([[0., 1., 0., 0., 0.],
+       [0., 0., 0., 0., 1.],
+       [0., 1., 0., 0., 0.],
+       ...,
+       [1., 0., 0., 0., 0.],
+       [1., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.]])
+housing_cat.head(3)
+      ocean_proximity
+12655          INLAND
+15502      NEAR OCEAN
+2908           INLAND
+# to get the list of categories
+cat_encoder.categories_
+[array(['&lt;1H OCEAN', 'INLAND', 'ISLAND', 'NEAR BAY', 'NEAR OCEAN'],
+       dtype=object)]
+</code></pre></div></div>
+
+<p>If a <code class="language-plaintext highlighter-rouge">categorical attribute</code> has a <code class="language-plaintext highlighter-rouge">large number of possible categories</code> (e.g., country code, profession, species), then <code class="language-plaintext highlighter-rouge">one-hot encoding will result in a large number of input features</code>. This may slow down <code class="language-plaintext highlighter-rouge">training</code> and <code class="language-plaintext highlighter-rouge">degrade performance</code>.</p>
+
+<p>If this happens, we may want to replace <code class="language-plaintext highlighter-rouge">the categorical input</code> with <code class="language-plaintext highlighter-rouge">useful numerical features</code> related to the categories: for example, we could replace the <code class="language-plaintext highlighter-rouge">ocean_proximity feature</code> with <code class="language-plaintext highlighter-rouge">the distance to the ocean</code> (similarly, a country code could be replaced with the country’s population and GDP per capita). Alternatively, we could replace each category with a learnable, low-dimensional vector called an <code class="language-plaintext highlighter-rouge">embedding</code>.</p>
+
+<p>Each category’s representation would be learned during training. This is an example of <code class="language-plaintext highlighter-rouge">representation learning</code>.</p>
+
+<h2 id="custom-transformers">Custom Transformers</h2>
+
+<p>retun back for more details ? see blogpost : <a href="https://towardsdatascience.com/pipelines-custom-transformers-in-scikit-learn-the-step-by-step-guide-with-python-code-4a7d9b068156">https://towardsdatascience.com/pipelines-custom-transformers-in-scikit-learn-the-step-by-step-guide-with-python-code-4a7d9b068156</a></p>
+
+<p>and this : <a href="https://github.com/ageron/handson-ml2/blob/master/02_end_to_end_machine_learning_project.ipynb">https://github.com/ageron/handson-ml2/blob/master/02_end_to_end_machine_learning_project.ipynb</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing.values[: ,4:]
+array([[797.0, 2237.0, 706.0, 2.1736, 'INLAND', 2],
+       [855.0, 2015.0, 768.0, 6.3373, 'NEAR OCEAN', 5],
+       [310.0, 667.0, 300.0, 2.875, 'INLAND', 2],
+       ...,
+       [166.0, 458.0, 172.0, 3.1797, '&lt;1H OCEAN', 3],
+       [580.0, 1208.0, 501.0, 4.1964, '&lt;1H OCEAN', 3],
+       [222.0, 625.0, 197.0, 3.1319, 'INLAND', 3]], dtype=object)
+housing.head(3)
+       longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+12655    -121.46     38.52                29.0       3873.0           797.0   
+15502    -117.23     33.09                 7.0       5320.0           855.0   
+2908     -119.04     35.37                44.0       1618.0           310.0   
+
+       population  households  median_income ocean_proximity income_cat  
+12655      2237.0       706.0         2.1736          INLAND          2  
+15502      2015.0       768.0         6.3373      NEAR OCEAN          5  
+2908        667.0       300.0         2.8750          INLAND          2  
+from sklearn.base import BaseEstimator, TransformerMixin
+
+rooms_ix, bedrooms_ix, population_ix, households_ix = 3, 4, 5, 6
+
+class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
+    def __init__(self, add_bedrooms_per_room = True): # no *args or **kargs
+        self.add_bedrooms_per_room = add_bedrooms_per_room
+        
+    def fit(self, X, y=None):
+        return self # nothing else to do
+    
+    def transform(self, X):
+        rooms_per_household = X[:, rooms_ix] / X[:, households_ix]
+        population_per_household = X[:, population_ix] / X[:, households_ix]
+        if self.add_bedrooms_per_room:
+            bedrooms_per_room = X[:, bedrooms_ix] / X[:, rooms_ix]
+            return np.c_[X, rooms_per_household, population_per_household,
+                            bedrooms_per_room]
+        else:
+            return np.c_[X, rooms_per_household, population_per_household]
+attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False )
+housing_extra_attribs = attr_adder.transform(housing.values)
+housing_extra_attribs
+array([[-121.46, 38.52, 29.0, ..., 2, 5.485835694050992,
+        3.168555240793201],
+       [-117.23, 33.09, 7.0, ..., 5, 6.927083333333333,
+        2.6236979166666665],
+       [-119.04, 35.37, 44.0, ..., 2, 5.3933333333333335,
+        2.223333333333333],
+       ...,
+       [-122.72, 38.44, 48.0, ..., 3, 4.1104651162790695,
+        2.6627906976744184],
+       [-122.7, 38.31, 14.0, ..., 3, 6.297405189620759,
+        2.411177644710579],
+       [-122.14, 39.97, 27.0, ..., 3, 5.477157360406092,
+        3.1725888324873095]], dtype=object)
+</code></pre></div></div>
+
+<h2 id="feature-scaling">Feature Scaling</h2>
+
+<p>One of the most important transformations you need to apply to your data is <code class="language-plaintext highlighter-rouge">feature scaling</code>. With few exceptions, <code class="language-plaintext highlighter-rouge">Machine Learning algorithms</code> don’t perform well when <code class="language-plaintext highlighter-rouge">the input numerical attributes</code> have <code class="language-plaintext highlighter-rouge">very different scales</code> . This is the case for the housing data: <code class="language-plaintext highlighter-rouge">total_rooms</code> ranges from about 6 to 39320, while <code class="language-plaintext highlighter-rouge">median_income</code> only range from 0 to 15 :</p>
+
+<p><code class="language-plaintext highlighter-rouge">Note that scaling the target values is generally not required</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_num.describe().T
+                      count         mean          std       min         25%  \
+longitude           16512.0  -119.575635     2.001828 -124.3500  -121.80000   
+latitude            16512.0    35.639314     2.137963   32.5400    33.94000   
+housing_median_age  16512.0    28.653404    12.574819    1.0000    18.00000   
+total_rooms         16512.0  2622.539789  2138.417080    6.0000  1443.00000   
+total_bedrooms      16512.0   533.939438   410.806260    2.0000   296.00000   
+population          16512.0  1419.687379  1115.663036    3.0000   784.00000   
+households          16512.0   497.011810   375.696156    2.0000   279.00000   
+median_income       16512.0     3.875884     1.904931    0.4999     2.56695   
+
+                           50%          75%         max  
+longitude           -118.51000  -118.010000   -114.3100  
+latitude              34.26000    37.720000     41.9500  
+housing_median_age    29.00000    37.000000     52.0000  
+total_rooms         2119.00000  3141.000000  39320.0000  
+total_bedrooms       433.00000   641.000000   6210.0000  
+population          1164.00000  1719.000000  35682.0000  
+households           408.00000   602.000000   5358.0000  
+median_income          3.54155     4.745325     15.0001  
+</code></pre></div></div>
+
+<p>There are two common ways to get all attributes to have the same scale:</p>
+
+<ul>
+  <li>
+    <p>min-max scaling : ranging from <code class="language-plaintext highlighter-rouge">0 to 1</code>. Scikit-Learn provides a transformer called <code class="language-plaintext highlighter-rouge">MinMaxScaler</code> for this. It has a <code class="language-plaintext highlighter-rouge">feature_range</code> hyperparameter that lets you change the range if, for some reason, you don’t want 0–1 : <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html</a></p>
+  </li>
+  <li>
+    <p>Standardization : returns has <code class="language-plaintext highlighter-rouge">unit variance</code> and unlike min-max scaling, standardization <code class="language-plaintext highlighter-rouge">does not bound values to a specific range</code>, which may be a problem for some algorithms (e.g., <code class="language-plaintext highlighter-rouge">neural networks often expect an input value ranging from 0 to 1</code>).However, standardization is <code class="language-plaintext highlighter-rouge">much less affected by outliers</code>. Scikit-Learn provides a transformer called <code class="language-plaintext highlighter-rouge">StandardScaler</code> for standardization : <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html</a></p>
+  </li>
+</ul>
+
+<h1 id="transformation-pipelines">Transformation Pipelines</h1>
+
+<p>As we can see, there are many data transformation steps that need to be executed in the right order. Fortunately, <code class="language-plaintext highlighter-rouge">Scikit-Learn</code> provides the <code class="language-plaintext highlighter-rouge">Pipeline class</code> to help with such sequences of transformations.</p>
+
+<p>Here is a <code class="language-plaintext highlighter-rouge">small pipeline</code> for the <code class="language-plaintext highlighter-rouge">numerical attributes</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler,MinMaxScaler
+# plus the class add attribure that we created 
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Pipeline constructor</code> takes a list of <code class="language-plaintext highlighter-rouge">name/estimator pairs</code> defining a sequence of steps. All but the last estimator <code class="language-plaintext highlighter-rouge">must be transformers</code> (i.e., they must have a fit_transform() method).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># This pipeline is for numeric pipeline, we call is num_pipeline
+num_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy = 'median')),
+    #('attribs_adder', CombinedAttributesAdder()),
+    ('std_scaler', StandardScaler())
+    
+    
+])
+housing_num_tr = num_pipeline.fit_transform(housing_num)
+</code></pre></div></div>
+
+<p>So far, we have handled <code class="language-plaintext highlighter-rouge">the categorical columns and the numerical columns separately</code>. It would be more convenient to have a single transformer able to handle all columns, applying the appropriate transformations to each column. In version 0.20, Scikit-Learn introduced the <code class="language-plaintext highlighter-rouge">ColumnTransformer</code> for this purpose, and the good news is that it works great with pandas DataFrames. Let’s use it to apply all the transformations to the housing data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.compose import ColumnTransformer
+num_attribs = list(housing_num)
+cat_attribs = ['ocean_proximity']
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+&lt;ipython-input-2-344d101417c2&gt; in &lt;module&gt;
+----&gt; 1 num_attribs = list(housing_num)
+      2 cat_attribs = ['ocean_proximity']
+
+NameError: name 'housing_num' is not defined
+full_pipeline = ColumnTransformer([
+    ('num', num_pipeline, num_attribs),
+    ('cat', OneHotEncoder(), cat_attribs)
+]
+)
+housing_prepared = full_pipeline.fit_transform(housing)
+housing_prepared
+array([[-0.94135046,  1.34743822,  0.02756357, ...,  0.        ,
+         0.        ,  0.        ],
+       [ 1.17178212, -1.19243966, -1.72201763, ...,  0.        ,
+         0.        ,  1.        ],
+       [ 0.26758118, -0.1259716 ,  1.22045984, ...,  0.        ,
+         0.        ,  0.        ],
+       ...,
+       [-1.5707942 ,  1.31001828,  1.53856552, ...,  0.        ,
+         0.        ,  0.        ],
+       [-1.56080303,  1.2492109 , -1.1653327 , ...,  0.        ,
+         0.        ,  0.        ],
+       [-1.28105026,  2.02567448, -0.13148926, ...,  0.        ,
+         0.        ,  0.        ]])
+housing_prepared[0].shape
+(13,)
+housing_prepared.shape
+(16512, 13)
+</code></pre></div></div>
+
+<p>to read carefully for later :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>First we import the ColumnTransformer class, next we get the list of numerical column
+</code></pre></div></div>
+
+<p>names and the list of categorical column names, and then we construct a Colum nTransformer. The constructor requires a list of tuples, where each tuple contains a name,22 a transformer, and a list of names (or indices) of columns that the transformer should be applied to. In this example, we specify that the numerical columns should be transformed using the num_pipeline that we defined earlier, and the categorical columns should be transformed using a OneHotEncoder. Finally, we apply this ColumnTransformer to the housing data: it applies each transformer to the appropriate columns and concatenates the outputs along the second axis (the transformers must return the same number of rows). Note that the OneHotEncoder returns a sparse matrix, while the num_pipeline returns a dense matrix. When there is such a mix of sparse and dense matrices, the Colum nTransformer estimates the density of the final matrix (i.e., the ratio of nonzero cells), and it returns a sparse matrix if the density is lower than a given threshold (by default, sparse_threshold=0.3). In this example, it returns a dense matrix. And that’s it! We have a preprocessing pipeline that takes the full housing data and applies the appropriate transformations to each column. Instead of using a transformer, you can specify the string “drop” if you want the columns to be dropped, or you can specify “pass through” if you want the columns to be left untouched. By default, the remaining columns (i.e., the ones that were not listed) will be dropped, but you can set the remainder hyperparameter to any transformer (or to “passthrough”) if you want these columns to be handled differently. If you are using Scikit-Learn 0.19 or earlier, you can use a third-party library such as sklearn-pandas, or you can roll out your own custom transformer to get the same functionality as the ColumnTransformer. Alternatively, you can use the FeatureUnion class, which can apply different transformers and concatenate their outputs. But you cannot specify different columns for each transformer; they all apply to the whole data. It is possible to work around this limitation using a custom transformer for column selection (see the Jupyter notebook for an example).</p>
+
+<p>see link : <a href="https://github.com/ageron/handson-ml2/blob/master/02_end_to_end_machine_learning_project.ipynb">https://github.com/ageron/handson-ml2/blob/master/02_end_to_end_machine_learning_project.ipynb</a></p>
+
+<h1 id="select-and-train-a-model">Select and Train a Model</h1>
+
+<ul>
+  <li>we framed the problem</li>
+  <li>we got the data and explored it</li>
+  <li>we sampled a training set and a test set</li>
+  <li>we wrote transformation pipelines to clean up and prepare your data for Machine Learning algorithms automatically.</li>
+</ul>
+
+<h2 id="training-and-evaluating-on-the-training-set">Training and Evaluating on the Training Set</h2>
+
+<p>Let’s first train a Linear Regression model</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_prepared.shape
+(16512, 13)
+from sklearn.linear_model import LinearRegression
+
+lin_reg = LinearRegression()
+lin_reg.fit(housing_prepared, housing_labels)
+LinearRegression()
+</code></pre></div></div>
+
+<p>Let’s try it out on a few instances from the training set:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># let's try the full preprocessing pipeline on a few training instances
+some_data = housing.iloc[:5]
+some_labels = housing_labels.iloc[:5]
+some_data_prepared = full_pipeline.transform(some_data)
+
+print("Predictions:", lin_reg.predict(some_data_prepared))
+Predictions: [ 88983.14806384 305351.35385026 153334.71183453 184302.55162102
+ 246840.18988841]
+print("Labels:", list(some_labels))
+Labels: [72100.0, 279600.0, 82700.0, 112500.0, 238300.0]
+some_data_prepared.shape
+(5, 13)
+</code></pre></div></div>
+
+<ul>
+  <li>Some remarks :
+    <ul>
+      <li>If we encotered missing values are in the test set ? ( OneHotEncode() has a paramete : handle_unknown = ‘ignore’)</li>
+      <li>Indexing and selection data : if we want to modifiy a certain column in the dataframe, we should not proceed in this way : df[‘ocean_proxemity][0]= np.nan but rather copy the dataset first and then df.loc[0,’ocean_proxemity’]=np.nan. Read : <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy">https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>More on sklearn pipelines : <a href="https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html">https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html</a></p>
+
+<ul>
+  <li>The iloc indexer for Pandas Dataframe is used for <code class="language-plaintext highlighter-rouge">integer-location based indexing</code> / <code class="language-plaintext highlighter-rouge">selection by position</code>.</li>
+  <li>The Pandas loc indexer can be used with DataFrames for two different use cases:
+    <ul>
+      <li>Selecting rows by <code class="language-plaintext highlighter-rouge">label/index</code></li>
+      <li>Selecting rows with a boolean / conditional lookup</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Read : <a href="https://www.shanelynn.ie/pandas-iloc-loc-select-rows-and-columns-dataframe/">https://www.shanelynn.ie/pandas-iloc-loc-select-rows-and-columns-dataframe/</a></p>
+
+<p>Let’s measure this regression <code class="language-plaintext highlighter-rouge">model’s RMSE</code> on the whole training set using Scikit-Learn’s mean_squared_error() function :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.metrics import mean_squared_error
+#
+housing_predictions = lin_reg.predict(housing_prepared)
+housing_predictions[:4]
+array([ 88983.14806384, 305351.35385026, 153334.71183453, 184302.55162102])
+housing_labels
+12655     72100.0
+15502    279600.0
+2908      82700.0
+14053    112500.0
+20496    238300.0
+           ...   
+15174    268500.0
+12661     90400.0
+19263    140400.0
+19140    258100.0
+19773     62700.0
+Name: median_house_value, Length: 16512, dtype: float64
+#RMSE
+lin_rmse = mean_squared_error(housing_predictions,housing_labels, squared= False)
+lin_rmse
+69050.56219504567
+</code></pre></div></div>
+
+<p>Most districts’ median_housing_values range between <code class="language-plaintext highlighter-rouge">$120,000 and $265,000</code>, so a typical prediction error of $69,050 is not very satisfying:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>housing_labels.describe()
+count     16512.000000
+mean     207005.322372
+std      115701.297250
+min       14999.000000
+25%      119800.000000
+50%      179500.000000
+75%      263900.000000
+max      500001.000000
+Name: median_house_value, dtype: float64
+</code></pre></div></div>
+
+<p>This is an example of a <code class="language-plaintext highlighter-rouge">model underfitting</code> the training data : When this happens it can mean that <code class="language-plaintext highlighter-rouge">the features do not provide enough information</code> to make good predictions, or that <code class="language-plaintext highlighter-rouge">the model is not powerful enough</code>. As we saw in the previous chapter, the main ways to fix underfitting are <code class="language-plaintext highlighter-rouge">to select a more powerful model</code>, to feed the training algorithm with better features, or <code class="language-plaintext highlighter-rouge">to reduce the constraints on the model</code>.</p>
+
+<ul>
+  <li>Let’s train a DecisionTreeRegressor. This is a powerful model, capable of finding complex nonlinear relationships in the data</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.tree import DecisionTreeRegressor
+tree_reg = DecisionTreeRegressor()
+tree_reg.fit(housing_prepared, housing_labels)
+DecisionTreeRegressor()
+#Now that the model is trained, let’s evaluate it on the training set:
+housing_predictions = tree_reg.predict(housing_prepared)
+tree_rmse = mean_squared_error(housing_labels, housing_predictions, squared=False)
+tree_rmse
+
+0.0
+</code></pre></div></div>
+
+<p>As we saw earlier, <code class="language-plaintext highlighter-rouge">we don’t want to touch the test set until we are ready to launch a model</code> we are confident about, so we need to <code class="language-plaintext highlighter-rouge">use part of the training set for training and part of it for model validation</code>.</p>
+
+<h1 id="better-evaluation-using-cross-validation">Better Evaluation Using Cross-Validation</h1>
+
+<ul>
+  <li>
+    <p>One way to evaluate the Decision Tree model would be to use the <code class="language-plaintext highlighter-rouge">train_test_split()</code> function to split the training set into a smaller training set and a validation set, then train our models against the smaller training set and evaluate them against the validation set.</p>
+  </li>
+  <li>
+    <p>A great alternative is to use <code class="language-plaintext highlighter-rouge">Scikit-Learn’s K-fold cross-validation feature</code> : The following code <code class="language-plaintext highlighter-rouge">randomly splits the training set into 10 distinct subsets called folds</code>, then it <code class="language-plaintext highlighter-rouge">trains and evaluates the Decision Tree model 10 times</code>, <code class="language-plaintext highlighter-rouge">picking a different fold for evaluation every time</code> and <code class="language-plaintext highlighter-rouge">training on the other 9 folds</code>. The result is an array containing the 10 evaluation scores:</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import cross_val_score
+# to get the 'scoring' options, use ssorted(sklearn.metrics.SCORERS.keys())
+
+scores = - cross_val_score(tree_reg, housing_prepared, housing_labels, scoring='neg_root_mean_squared_error', cv=10)
+scores
+array([71270.15951523, 68888.32011559, 64997.85188763, 69263.03318422,
+       68197.14503697, 68963.98885461, 73536.17215975, 69183.4936482 ,
+       66243.08004208, 71783.50940468])
+</code></pre></div></div>
+
+<ul>
+  <li>to get the ‘scoring’ options, use ssorted(sklearn.metrics.SCORERS.keys())</li>
+  <li>Scikit-Learn’s cross-validation features <code class="language-plaintext highlighter-rouge">expect a utility function (greater is better)</code> rather than a <code class="language-plaintext highlighter-rouge">cost function (lower is better)</code>, so <code class="language-plaintext highlighter-rouge">the scoring function is actually the opposite of the MSE (i.e., a negative value)</code></li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># display the results 
+def display_scores(scores):
+    print('Scores :',scores)
+    print('Mean :',scores.mean())
+    print('Standard deviation :',scores.std())
+display_scores(scores)
+Scores : [71270.15951523 68888.32011559 64997.85188763 69263.03318422
+ 68197.14503697 68963.98885461 73536.17215975 69183.4936482
+ 66243.08004208 71783.50940468]
+Mean : 69232.67538489516
+Standard deviation : 2394.0765898258674
+</code></pre></div></div>
+
+<ul>
+  <li>Cross-validation allows you to get <code class="language-plaintext highlighter-rouge">not only an estimate of the performance of your model</code>, but also <code class="language-plaintext highlighter-rouge">a measure of how precise this estimate is (i.e., its standard deviation)</code>. The Decision Tree has a score of approximately 69,232, generally ±2,394. We would not have this information if we just used one validation set.</li>
+  <li>Let’s compute the same scores for the Linear Regression model just to be sure:</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lin_scores = - cross_val_score(lin_reg,housing_prepared, housing_labels, scoring='neg_root_mean_squared_error', cv = 10)
+lin_scores
+array([72229.03469752, 65318.2240289 , 67706.39604745, 69368.53738998,
+       66767.61061621, 73003.75273869, 70522.24414582, 69440.77896541,
+       66930.32945876, 70756.31946074])
+display_scores(lin_scores)
+Scores : [72229.03469752 65318.2240289  67706.39604745 69368.53738998
+ 66767.61061621 73003.75273869 70522.24414582 69440.77896541
+ 66930.32945876 70756.31946074]
+Mean : 69204.32275494766
+Standard deviation : 2372.07079105592
+</code></pre></div></div>
+
+<p>The Decision Tree model is <code class="language-plaintext highlighter-rouge">overfitting so badly that it performs worse than the Linear Regression model</code>.</p>
+
+<p>Let’s try one last model now: the RandomForestRegressor : <code class="language-plaintext highlighter-rouge">Random Forests work by training many Decision Trees on random subsets of the features, then averaging out their predictions</code>. Building a model on top of many other models is called <code class="language-plaintext highlighter-rouge">Ensemble Learning</code>, and it is often a great way to push ML algorithms even further.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.ensemble import RandomForestRegressor
+forest_reg = RandomForestRegressor()
+forest_reg.fit(housing_prepared, housing_labels)
+RandomForestRegressor()
+forest_reg_scores = - cross_val_score(forest_reg,housing_prepared, housing_labels, scoring='neg_root_mean_squared_error', cv = 10)
+forest_reg_scores
+array([50311.08798022, 49043.69572163, 46081.95238283, 50467.56214907,
+       47657.84153211, 49419.96274189, 51772.42197545, 49030.57976501,
+       47498.17482111, 53167.33074077])
+display_scores(forest_reg_scores)
+Scores : [50311.08798022 49043.69572163 46081.95238283 50467.56214907
+ 47657.84153211 49419.96274189 51772.42197545 49030.57976501
+ 47498.17482111 53167.33074077]
+Mean : 49445.06098101039
+Standard deviation : 1992.3842490271882
+forest_predictions = forest_reg.predict(housing_prepared)
+forst_rmse = mean_squared_error(housing_labels, forest_predictions, squared=False)
+forst_rmse
+18266.74368085342
+</code></pre></div></div>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">the score on the training set</code>(18,266) is still <code class="language-plaintext highlighter-rouge">much lower</code> than on <code class="language-plaintext highlighter-rouge">the validation sets</code>(49,445 +/-1992.38), meaning that the model is <code class="language-plaintext highlighter-rouge">still overfitting the training set</code>.</p>
+
+<ul>
+  <li>
+    <p>We should <code class="language-plaintext highlighter-rouge">save every model</code> we experiment with so that er can come back easily to any model you want. Make sure you <code class="language-plaintext highlighter-rouge">save both the hyperparameters and the trained parameters</code>, as well as <code class="language-plaintext highlighter-rouge">the cross-validation scores and perhaps the actual predictions as well</code>. This will allow you to easily compare scores across model types, and compare the types of errors they make.</p>
+  </li>
+  <li>
+    <p>We can easily save Scikit-Learn models by using Python’s pickle module or by using <code class="language-plaintext highlighter-rouge">the joblib library</code>, which is more efficient at serializing large NumPy arrays (you can install this library using pip):</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install joblib
+Requirement already satisfied: joblib in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (1.1.0)
+Note: you may need to restart the kernel to use updated packages.
+import joblib
+# random forest :
+
+joblib.dump(forest_reg,'rmd_forest.pkl') # saving the model as pkl file and named 'rmd_forest.pkl
+model_reload = joblib.load('rmd_forest.pkl') # loading the model
+rmd_forest_prediction = model_reload.predict(housing_prepared) # saving the predictions
+rmd_forest_rmse = mean_squared_error(rmd_forest_prediction, housing_labels) # saving the rmse on the train test to check overfit
+rmd_forest_cross_validation = -cross_val_score(model_reload, housing_prepared, housing_labels,
+                             scoring='neg_root_mean_squared_error', cv = 10) # rmse on validation to check overfit
+display_scores(rmd_forest_cross_validation) # cross validation score
+Scores : [50992.51555592 49288.84220573 46237.11091931 50248.85062075
+ 47806.3116179  49272.797347   51801.0468531  48800.83283468
+ 47540.31917616 53091.63650718]
+Mean : 49508.0263637728
+Standard deviation : 1972.8867918884973
+</code></pre></div></div>
+
+<h1 id="fine-tune-our-model">Fine-Tune Our Model</h1>
+
+<h2 id="grid-search">Grid Search</h2>
+
+<p>Using Scikit-Learn’s GridSearchCV, All we need to do is <code class="language-plaintext highlighter-rouge">tell it which hyperparameters</code> we want it to experiment with and <code class="language-plaintext highlighter-rouge">what values</code>to try out, and it will use <code class="language-plaintext highlighter-rouge">cross-validation</code> to evaluate all the possible <code class="language-plaintext highlighter-rouge">combinations</code> of hyperparameter values :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import GridSearchCV
+
+param_grid = [
+{'n_estimators': [3, 10, 30], 'max_features': [2, 4, 6, 8]},
+{'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
+]
+
+forest_reg = RandomForestRegressor()
+
+grid_search = GridSearchCV(forest_reg, param_grid, cv=5,
+                          scoring='neg_root_mean_squared_error',
+                          return_train_score = True)
+grid_search.fit(housing_prepared, housing_labels)
+GridSearchCV(cv=5, estimator=RandomForestRegressor(),
+             param_grid=[{'max_features': [2, 4, 6, 8],
+                          'n_estimators': [3, 10, 30]},
+                         {'bootstrap': [False], 'max_features': [2, 3, 4],
+                          'n_estimators': [3, 10]}],
+             return_train_score=True, scoring='neg_root_mean_squared_error')
+?GridSearchCV
+</code></pre></div></div>
+
+<ul>
+  <li>This <code class="language-plaintext highlighter-rouge">param_grid</code> tells Scikit-Learn to first evaluate all <code class="language-plaintext highlighter-rouge">3 × 4 = 12 combinations</code> of <code class="language-plaintext highlighter-rouge">n_estimators</code> and <code class="language-plaintext highlighter-rouge">max_features</code> hyperparameter values specified in the first dict. -Then try all <code class="language-plaintext highlighter-rouge">2 × 3 = 6 combinations</code> of hyperparameter values in the second dict, but this time with <code class="language-plaintext highlighter-rouge">the bootstrap hyperparameter</code> set to False instead of True</li>
+  <li>The grid search will explore <code class="language-plaintext highlighter-rouge">12 + 6 = 18</code> combinations of `RandomForestRegressor hyperparameter values``</li>
+  <li>And it will train each model 5 times (cv=5).In other words, all in all, there will be <code class="language-plaintext highlighter-rouge">18 × 5 = 90</code> rounds of training.</li>
+</ul>
+
+<p>We can get the best combination of parameters like this :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grid_search.best_params_
+
+#we should probably try searching again with higher values; the score may continue to improve.
+{'max_features': 8, 'n_estimators': 30}
+grid_search.best_estimator_
+RandomForestRegressor(max_features=8, n_estimators=30)
+cvres = grid_search.cv_results_
+for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
+        print(-mean_score, params)
+64530.85647414619 {'max_features': 2, 'n_estimators': 3}
+55067.77832337284 {'max_features': 2, 'n_estimators': 10}
+52781.7167175866 {'max_features': 2, 'n_estimators': 30}
+60327.066875895776 {'max_features': 4, 'n_estimators': 3}
+52586.95798629394 {'max_features': 4, 'n_estimators': 10}
+50346.63948997191 {'max_features': 4, 'n_estimators': 30}
+58398.87657548992 {'max_features': 6, 'n_estimators': 3}
+52075.368300249116 {'max_features': 6, 'n_estimators': 10}
+50093.621910952315 {'max_features': 6, 'n_estimators': 30}
+58628.430409285626 {'max_features': 8, 'n_estimators': 3}
+51936.797178963665 {'max_features': 8, 'n_estimators': 10}
+50089.501357132904 {'max_features': 8, 'n_estimators': 30}
+62303.627420601595 {'bootstrap': False, 'max_features': 2, 'n_estimators': 3}
+54183.89357722118 {'bootstrap': False, 'max_features': 2, 'n_estimators': 10}
+60004.47703668058 {'bootstrap': False, 'max_features': 3, 'n_estimators': 3}
+52603.81684475204 {'bootstrap': False, 'max_features': 3, 'n_estimators': 10}
+58002.985249363366 {'bootstrap': False, 'max_features': 4, 'n_estimators': 3}
+52121.979634950054 {'bootstrap': False, 'max_features': 4, 'n_estimators': 10}
+</code></pre></div></div>
+
+<p>Rq: Don’t forget that we can treat some of the data preparation steps as hyperparameters. The grid search will automatically find out whether or not to add a feature you were not sure about. Ex : using the add_bedrooms_per_room hyperparameter of your CombinedAttributesAdder transformer).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/myportfolio/2021/11/15/Sickit-Learn-for-Machine-Learning.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/myportfolio/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/myportfolio/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/myportfolio/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Documenting my journey in data science.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/younesszaim" title="younesszaim"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/youness-zaim-9a344b101" title="youness-zaim-9a344b101"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#linkedin"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
