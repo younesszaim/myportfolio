@@ -1,0 +1,2674 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Us Cencus Income Ensembles, Bagging And Shap Values | ML Notes</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Us Cencus Income Ensembles, Bagging And Shap Values" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="US cencus income : Ensembles, Bagging and Shap Values" />
+<meta property="og:description" content="US cencus income : Ensembles, Bagging and Shap Values" />
+<link rel="canonical" href="https://younesszaim.github.io/myportfolio/2021/11/20/US-cencus-income-Ensembles,-Bagging-and-Shap-Values.html" />
+<meta property="og:url" content="https://younesszaim.github.io/myportfolio/2021/11/20/US-cencus-income-Ensembles,-Bagging-and-Shap-Values.html" />
+<meta property="og:site_name" content="ML Notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-20T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://younesszaim.github.io/myportfolio/2021/11/20/US-cencus-income-Ensembles,-Bagging-and-Shap-Values.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://younesszaim.github.io/myportfolio/2021/11/20/US-cencus-income-Ensembles,-Bagging-and-Shap-Values.html"},"headline":"Us Cencus Income Ensembles, Bagging And Shap Values","dateModified":"2021-11-20T00:00:00-06:00","datePublished":"2021-11-20T00:00:00-06:00","description":"US cencus income : Ensembles, Bagging and Shap Values","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/myportfolio/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://younesszaim.github.io/myportfolio/feed.xml" title="ML Notes" /><link rel="shortcut icon" type="image/x-icon" href="/myportfolio/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/myportfolio/">ML Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/myportfolio/about/">About Me</a><a class="page-link" href="/myportfolio/search/">Search</a><a class="page-link" href="/myportfolio/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Us Cencus Income   Ensembles, Bagging And Shap Values</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-20T00:00:00-06:00" itemprop="datePublished">
+        Nov 20, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      65 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="us-cencus-income--ensembles-bagging-and-shap-values">US cencus income : Ensembles, Bagging and Shap Values</h1>
+
+<h1 id="problem-framework">Problem Framework</h1>
+
+<p>Our task is to determine the income level for the person represented by the record. Incomes have been binned at the $50K level to present a <strong>binary classification problem</strong>.</p>
+
+<p>The dataset used in this analysis was extracted from the census bureau database found at. The data was split into train/test in approximately 2/3, 1/3 proportions.</p>
+
+<p>The following mappings of the data is as follow :</p>
+
+<blockquote>
+  <p>Datasets can be found in this link : <a href="https://github.com/younesszaim/myportfolio/tree/master/_notebooks/Datasets">https://github.com/younesszaim/myportfolio/tree/master/_notebooks/Datasets</a></p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pandas as pd
+from pandas.api.types import is_string_dtype, is_numeric_dtype, is_categorical_dtype
+import numpy as np
+PATH = '/Users/rmbp/Desktop/Dataiku Data Scientist Technical Assessment'
+df_labels = pd.read_csv(f'{PATH}/census_income_metadata_column.csv', sep=';')
+df_labels.head(5)
+                  column_name       dtype
+0                         age  continuous
+1             class_of_worker     nominal
+2    detailed_industry_recode     nominal
+3  detailed_occupation_recode     nominal
+4                   education     nominal
+</code></pre></div></div>
+
+<p>In any sort of data science work, it’s important to look at our data directly to make sure we understand the format, how it’s stored, what types of values it holds, etc. Even if we’ve read a description of the data, the actual data may not be what we expect. We’ll start by reading the training set into a Pandas DataFrame :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Loading the train data 
+df = pd.read_csv(f'{PATH}/census_income_learn.csv', names = df_labels['column_name'])
+df.shape
+(199523, 42)
+</code></pre></div></div>
+
+<p>Let’s have a look at the columns, their types defined by Pandas and compared it to their actual mapping types :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Chekcing the mapping of the data 
+d1 = df.dtypes.apply(lambda x: x.name).to_dict()
+d2 = {c: d for c,d in zip(df_labels['column_name'],df_labels['dtype'])}
+mapping = [d1, d2]
+d = {}
+for k in d1.keys():
+    d[k] = tuple(d[k] for d in mapping)
+d
+{'age': ('int64', 'continuous'),
+ 'class_of_worker': ('object', 'nominal'),
+ 'detailed_industry_recode': ('int64', 'nominal'),
+ 'detailed_occupation_recode': ('int64', 'nominal'),
+ 'education': ('object', 'nominal'),
+ 'wage_per_hour': ('int64', 'continuous'),
+ 'enroll_in_edu_inst_last_wk': ('object', 'nominal'),
+ 'marital_stat': ('object', 'nominal'),
+ 'major_industry_code': ('object', 'nominal'),
+ 'major_occupation_code': ('object', 'nominal'),
+ 'race': ('object', 'nominal'),
+ 'hispanic_origin': ('object', 'nominal'),
+ 'sex': ('object', 'nominal'),
+ 'member_of_a_labor_union': ('object', 'nominal'),
+ 'reason_for_unemployment': ('object', 'nominal'),
+ 'full_or_part_time_employment_stat': ('object', 'nominal'),
+ 'capital_gains': ('int64', 'continuous'),
+ 'capital_losses': ('int64', 'continuous'),
+ 'dividends_from_stocks': ('int64', 'continuous'),
+ 'tax_filer_stat': ('object', 'nominal'),
+ 'region_of_previous_residence': ('object', 'nominal'),
+ 'state_of_previous_residence': ('object', 'nominal'),
+ 'detailed_household_and_family_stat': ('object', 'nominal'),
+ 'detailed_household_summary_in_household': ('object', 'nominal'),
+ 'ignore': ('float64', 'continuous'),
+ 'migration_code-change_in_msa': ('object', 'nominal'),
+ 'migration_code-change_in_reg': ('object', 'nominal'),
+ 'migration_code-move_within_reg': ('object', 'nominal'),
+ 'live_in_this_house_1_year_ago': ('object', 'nominal'),
+ 'migration_prev_res_in_sunbelt': ('object', 'nominal'),
+ 'num_persons_worked_for_employer': ('int64', 'continuous'),
+ 'family_members_under_18': ('object', 'nominal'),
+ 'country_of_birth_father': ('object', 'nominal'),
+ 'country_of_birth_mother': ('object', 'nominal'),
+ 'country_of_birth_self': ('object', 'nominal'),
+ 'citizenship': ('object', 'nominal'),
+ 'own_business_or_self_employed': ('int64', 'nominal'),
+ "fill_inc_questionnaire_for_veteran's_admin": ('object', 'nominal'),
+ 'veterans_benefits': ('int64', 'nominal'),
+ 'weeks_worked_in_year': ('int64', 'continuous'),
+ 'year': ('int64', 'nominal'),
+ 'income_level': ('object', 'nominal')}
+</code></pre></div></div>
+
+<p>We can see that <strong>detailed_industry_recode</strong>, <strong>detailed_occupation_recode</strong>, <strong>own_business_or_self_employed</strong>, <strong>veterans_benefits</strong> and <strong>year</strong> is set by default as a continuos category.</p>
+
+<p>Let’s redifined their types :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Correcting data types
+d1['detailed_industry_recode']='object'
+d1['detailed_occupation_recode']='object'
+d1['own_business_or_self_employed']='object'
+d1['veterans_benefits']='object'
+d1['year']='object'
+</code></pre></div></div>
+
+<p>Let’s reload the data with its correspind feature’s mapping :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># reload data with coorexted types
+df = pd.read_csv(f'{PATH}/census_income_learn.csv', names =df_labels['column_name'],
+                 dtype= d1)
+</code></pre></div></div>
+
+<p>The <strong>info()</strong> method is useful to get a quick description of the data, in particular the total number of rows, each attribute’s type, and the number of nonnull values :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df.info()
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 199523 entries, 0 to 199522
+Data columns (total 42 columns):
+ #   Column                                      Non-Null Count   Dtype  
+---  ------                                      --------------   -----  
+ 0   age                                         199523 non-null  int64  
+ 1   class_of_worker                             199523 non-null  object 
+ 2   detailed_industry_recode                    199523 non-null  object 
+ 3   detailed_occupation_recode                  199523 non-null  object 
+ 4   education                                   199523 non-null  object 
+ 5   wage_per_hour                               199523 non-null  int64  
+ 6   enroll_in_edu_inst_last_wk                  199523 non-null  object 
+ 7   marital_stat                                199523 non-null  object 
+ 8   major_industry_code                         199523 non-null  object 
+ 9   major_occupation_code                       199523 non-null  object 
+ 10  race                                        199523 non-null  object 
+ 11  hispanic_origin                             199523 non-null  object 
+ 12  sex                                         199523 non-null  object 
+ 13  member_of_a_labor_union                     199523 non-null  object 
+ 14  reason_for_unemployment                     199523 non-null  object 
+ 15  full_or_part_time_employment_stat           199523 non-null  object 
+ 16  capital_gains                               199523 non-null  int64  
+ 17  capital_losses                              199523 non-null  int64  
+ 18  dividends_from_stocks                       199523 non-null  int64  
+ 19  tax_filer_stat                              199523 non-null  object 
+ 20  region_of_previous_residence                199523 non-null  object 
+ 21  state_of_previous_residence                 199523 non-null  object 
+ 22  detailed_household_and_family_stat          199523 non-null  object 
+ 23  detailed_household_summary_in_household     199523 non-null  object 
+ 24  ignore                                      199523 non-null  float64
+ 25  migration_code-change_in_msa                199523 non-null  object 
+ 26  migration_code-change_in_reg                199523 non-null  object 
+ 27  migration_code-move_within_reg              199523 non-null  object 
+ 28  live_in_this_house_1_year_ago               199523 non-null  object 
+ 29  migration_prev_res_in_sunbelt               199523 non-null  object 
+ 30  num_persons_worked_for_employer             199523 non-null  int64  
+ 31  family_members_under_18                     199523 non-null  object 
+ 32  country_of_birth_father                     199523 non-null  object 
+ 33  country_of_birth_mother                     199523 non-null  object 
+ 34  country_of_birth_self                       199523 non-null  object 
+ 35  citizenship                                 199523 non-null  object 
+ 36  own_business_or_self_employed               199523 non-null  object 
+ 37  fill_inc_questionnaire_for_veteran's_admin  199523 non-null  object 
+ 38  veterans_benefits                           199523 non-null  object 
+ 39  weeks_worked_in_year                        199523 non-null  int64  
+ 40  year                                        199523 non-null  object 
+ 41  income_level                                199523 non-null  object 
+dtypes: float64(1), int64(7), object(34)
+memory usage: 63.9+ MB
+# dispplay first rows 
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):  
+        display(df.head(3))
+   age                  class_of_worker detailed_industry_recode  \
+0   73                  Not in universe                        0   
+1   58   Self-employed-not incorporated                        4   
+2   18                  Not in universe                        0   
+
+  detailed_occupation_recode                    education  wage_per_hour  \
+0                          0         High school graduate              0   
+1                         34   Some college but no degree              0   
+2                          0                   10th grade              0   
+
+  enroll_in_edu_inst_last_wk    marital_stat           major_industry_code  \
+0            Not in universe         Widowed   Not in universe or children   
+1            Not in universe        Divorced                  Construction   
+2                High school   Never married   Not in universe or children   
+
+                  major_occupation_code                        race  \
+0                       Not in universe                       White   
+1   Precision production craft &amp; repair                       White   
+2                       Not in universe   Asian or Pacific Islander   
+
+  hispanic_origin      sex member_of_a_labor_union reason_for_unemployment  \
+0       All other   Female         Not in universe         Not in universe   
+1       All other     Male         Not in universe         Not in universe   
+2       All other   Female         Not in universe         Not in universe   
+
+  full_or_part_time_employment_stat  capital_gains  capital_losses  \
+0                Not in labor force              0               0   
+1          Children or Armed Forces              0               0   
+2                Not in labor force              0               0   
+
+   dividends_from_stocks      tax_filer_stat region_of_previous_residence  \
+0                      0            Nonfiler              Not in universe   
+1                      0   Head of household                        South   
+2                      0            Nonfiler              Not in universe   
+
+  state_of_previous_residence         detailed_household_and_family_stat  \
+0             Not in universe   Other Rel 18+ ever marr not in subfamily   
+1                    Arkansas                                Householder   
+2             Not in universe    Child 18+ never marr Not in a subfamily   
+
+  detailed_household_summary_in_household   ignore  \
+0           Other relative of householder  1700.09   
+1                             Householder  1053.55   
+2                       Child 18 or older   991.95   
+
+  migration_code-change_in_msa migration_code-change_in_reg  \
+0                            ?                            ?   
+1                   MSA to MSA                  Same county   
+2                            ?                            ?   
+
+  migration_code-move_within_reg      live_in_this_house_1_year_ago  \
+0                              ?   Not in universe under 1 year old   
+1                    Same county                                 No   
+2                              ?   Not in universe under 1 year old   
+
+  migration_prev_res_in_sunbelt  num_persons_worked_for_employer  \
+0                             ?                                0   
+1                           Yes                                1   
+2                             ?                                0   
+
+  family_members_under_18 country_of_birth_father country_of_birth_mother  \
+0         Not in universe           United-States           United-States   
+1         Not in universe           United-States           United-States   
+2         Not in universe                 Vietnam                 Vietnam   
+
+  country_of_birth_self                           citizenship  \
+0         United-States     Native- Born in the United States   
+1         United-States     Native- Born in the United States   
+2               Vietnam   Foreign born- Not a citizen of U S    
+
+  own_business_or_self_employed fill_inc_questionnaire_for_veteran's_admin  \
+0                             0                            Not in universe   
+1                             0                            Not in universe   
+2                             0                            Not in universe   
+
+  veterans_benefits  weeks_worked_in_year year income_level  
+0                 2                     0   95     - 50000.  
+1                 2                    52   94     - 50000.  
+2                 2                     0   95     - 50000.  
+# drop 'ignore' column
+df.drop('ignore', axis=1,inplace=True)
+# list columns
+df.columns
+Index(['age', 'class_of_worker', 'detailed_industry_recode',
+       'detailed_occupation_recode', 'education', 'wage_per_hour',
+       'enroll_in_edu_inst_last_wk', 'marital_stat', 'major_industry_code',
+       'major_occupation_code', 'race', 'hispanic_origin', 'sex',
+       'member_of_a_labor_union', 'reason_for_unemployment',
+       'full_or_part_time_employment_stat', 'capital_gains', 'capital_losses',
+       'dividends_from_stocks', 'tax_filer_stat',
+       'region_of_previous_residence', 'state_of_previous_residence',
+       'detailed_household_and_family_stat',
+       'detailed_household_summary_in_household',
+       'migration_code-change_in_msa', 'migration_code-change_in_reg',
+       'migration_code-move_within_reg', 'live_in_this_house_1_year_ago',
+       'migration_prev_res_in_sunbelt', 'num_persons_worked_for_employer',
+       'family_members_under_18', 'country_of_birth_father',
+       'country_of_birth_mother', 'country_of_birth_self', 'citizenship',
+       'own_business_or_self_employed',
+       'fill_inc_questionnaire_for_veteran's_admin', 'veterans_benefits',
+       'weeks_worked_in_year', 'year', 'income_level'],
+      dtype='object')
+</code></pre></div></div>
+
+<p>We load the test set with the same training data types :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># loading the test set 
+test = pd.read_csv(f'{PATH}/census_income_test.csv', names =df_labels['column_name'], dtype= d1 )
+test.info()
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 99762 entries, 0 to 99761
+Data columns (total 42 columns):
+ #   Column                                      Non-Null Count  Dtype  
+---  ------                                      --------------  -----  
+ 0   age                                         99762 non-null  int64  
+ 1   class_of_worker                             99762 non-null  object 
+ 2   detailed_industry_recode                    99762 non-null  object 
+ 3   detailed_occupation_recode                  99762 non-null  object 
+ 4   education                                   99762 non-null  object 
+ 5   wage_per_hour                               99762 non-null  int64  
+ 6   enroll_in_edu_inst_last_wk                  99762 non-null  object 
+ 7   marital_stat                                99762 non-null  object 
+ 8   major_industry_code                         99762 non-null  object 
+ 9   major_occupation_code                       99762 non-null  object 
+ 10  race                                        99762 non-null  object 
+ 11  hispanic_origin                             99762 non-null  object 
+ 12  sex                                         99762 non-null  object 
+ 13  member_of_a_labor_union                     99762 non-null  object 
+ 14  reason_for_unemployment                     99762 non-null  object 
+ 15  full_or_part_time_employment_stat           99762 non-null  object 
+ 16  capital_gains                               99762 non-null  int64  
+ 17  capital_losses                              99762 non-null  int64  
+ 18  dividends_from_stocks                       99762 non-null  int64  
+ 19  tax_filer_stat                              99762 non-null  object 
+ 20  region_of_previous_residence                99762 non-null  object 
+ 21  state_of_previous_residence                 99762 non-null  object 
+ 22  detailed_household_and_family_stat          99762 non-null  object 
+ 23  detailed_household_summary_in_household     99762 non-null  object 
+ 24  ignore                                      99762 non-null  float64
+ 25  migration_code-change_in_msa                99762 non-null  object 
+ 26  migration_code-change_in_reg                99762 non-null  object 
+ 27  migration_code-move_within_reg              99762 non-null  object 
+ 28  live_in_this_house_1_year_ago               99762 non-null  object 
+ 29  migration_prev_res_in_sunbelt               99762 non-null  object 
+ 30  num_persons_worked_for_employer             99762 non-null  int64  
+ 31  family_members_under_18                     99762 non-null  object 
+ 32  country_of_birth_father                     99762 non-null  object 
+ 33  country_of_birth_mother                     99762 non-null  object 
+ 34  country_of_birth_self                       99762 non-null  object 
+ 35  citizenship                                 99762 non-null  object 
+ 36  own_business_or_self_employed               99762 non-null  object 
+ 37  fill_inc_questionnaire_for_veteran's_admin  99762 non-null  object 
+ 38  veterans_benefits                           99762 non-null  object 
+ 39  weeks_worked_in_year                        99762 non-null  int64  
+ 40  year                                        99762 non-null  object 
+ 41  income_level                                99762 non-null  object 
+dtypes: float64(1), int64(7), object(34)
+memory usage: 32.0+ MB
+</code></pre></div></div>
+
+<p>We verify if we got the same columns both on the train and the test set :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># checking columns on test set which not in train
+set(test.columns).difference(set(df.columns))
+{'ignore'}
+# dropping 'ignore' columns
+test.drop('ignore', inplace=True, axis=1)
+test.columns
+Index(['age', 'class_of_worker', 'detailed_industry_recode',
+       'detailed_occupation_recode', 'education', 'wage_per_hour',
+       'enroll_in_edu_inst_last_wk', 'marital_stat', 'major_industry_code',
+       'major_occupation_code', 'race', 'hispanic_origin', 'sex',
+       'member_of_a_labor_union', 'reason_for_unemployment',
+       'full_or_part_time_employment_stat', 'capital_gains', 'capital_losses',
+       'dividends_from_stocks', 'tax_filer_stat',
+       'region_of_previous_residence', 'state_of_previous_residence',
+       'detailed_household_and_family_stat',
+       'detailed_household_summary_in_household',
+       'migration_code-change_in_msa', 'migration_code-change_in_reg',
+       'migration_code-move_within_reg', 'live_in_this_house_1_year_ago',
+       'migration_prev_res_in_sunbelt', 'num_persons_worked_for_employer',
+       'family_members_under_18', 'country_of_birth_father',
+       'country_of_birth_mother', 'country_of_birth_self', 'citizenship',
+       'own_business_or_self_employed',
+       'fill_inc_questionnaire_for_veteran's_admin', 'veterans_benefits',
+       'weeks_worked_in_year', 'year', 'income_level'],
+      dtype='object')
+# display first rows of the test set
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        display(test.head(3))
+   age                  class_of_worker detailed_industry_recode  \
+0   38                          Private                        6   
+1   44   Self-employed-not incorporated                       37   
+2    2                  Not in universe                        0   
+
+  detailed_occupation_recode                             education  \
+0                         36              1st 2nd 3rd or 4th grade   
+1                         12   Associates degree-occup /vocational   
+2                          0                              Children   
+
+   wage_per_hour enroll_in_edu_inst_last_wk                      marital_stat  \
+0              0            Not in universe   Married-civilian spouse present   
+1              0            Not in universe   Married-civilian spouse present   
+2              0            Not in universe                     Never married   
+
+             major_industry_code                   major_occupation_code  \
+0    Manufacturing-durable goods   Machine operators assmblrs &amp; inspctrs   
+1   Business and repair services                  Professional specialty   
+2    Not in universe or children                         Not in universe   
+
+     race      hispanic_origin      sex member_of_a_labor_union  \
+0   White   Mexican (Mexicano)   Female         Not in universe   
+1   White            All other   Female         Not in universe   
+2   White     Mexican-American     Male         Not in universe   
+
+  reason_for_unemployment full_or_part_time_employment_stat  capital_gains  \
+0         Not in universe               Full-time schedules              0   
+1         Not in universe    PT for econ reasons usually PT              0   
+2         Not in universe          Children or Armed Forces              0   
+
+   capital_losses  dividends_from_stocks                 tax_filer_stat  \
+0               0                      0   Joint one under 65 &amp; one 65+   
+1               0                   2500            Joint both under 65   
+2               0                      0                       Nonfiler   
+
+  region_of_previous_residence state_of_previous_residence  \
+0              Not in universe             Not in universe   
+1              Not in universe             Not in universe   
+2              Not in universe             Not in universe   
+
+       detailed_household_and_family_stat  \
+0                   Spouse of householder   
+1                   Spouse of householder   
+2   Child &lt;18 never marr not in subfamily   
+
+  detailed_household_summary_in_household migration_code-change_in_msa  \
+0                   Spouse of householder                            ?   
+1                   Spouse of householder                            ?   
+2            Child under 18 never married                            ?   
+
+  migration_code-change_in_reg migration_code-move_within_reg  \
+0                            ?                              ?   
+1                            ?                              ?   
+2                            ?                              ?   
+
+       live_in_this_house_1_year_ago migration_prev_res_in_sunbelt  \
+0   Not in universe under 1 year old                             ?   
+1   Not in universe under 1 year old                             ?   
+2   Not in universe under 1 year old                             ?   
+
+   num_persons_worked_for_employer family_members_under_18  \
+0                                4         Not in universe   
+1                                1         Not in universe   
+2                                0    Both parents present   
+
+  country_of_birth_father country_of_birth_mother country_of_birth_self  \
+0                  Mexico                  Mexico                Mexico   
+1           United-States           United-States         United-States   
+2           United-States           United-States         United-States   
+
+                            citizenship own_business_or_self_employed  \
+0   Foreign born- Not a citizen of U S                              0   
+1     Native- Born in the United States                             0   
+2     Native- Born in the United States                             0   
+
+  fill_inc_questionnaire_for_veteran's_admin veterans_benefits  \
+0                            Not in universe                 2   
+1                            Not in universe                 2   
+2                            Not in universe                 0   
+
+   weeks_worked_in_year year income_level  
+0                    12   95     - 50000.  
+1                    26   95     - 50000.  
+2                     0   95     - 50000.  
+df.shape, test.shape
+((199523, 41), (99762, 41))
+</code></pre></div></div>
+
+<h1 id="looking-at-the-data">Looking at the data</h1>
+
+<p>The most important data column is the <strong>dependent variable</strong>—that is, the one we want to predict which is <strong>income_level</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dep_var = 'income_level'
+</code></pre></div></div>
+
+<p>Let’s see its distribution :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(df[dep_var].value_counts(normalize = True))
+df[dep_var].value_counts(normalize = True).plot(kind='bar',
+                                 edgecolor='black',
+                                 color='blue',
+                                 title='income_level')
+ - 50000.    0.937942
+ 50000+.     0.062058
+Name: income_level, dtype: float64
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x124bace90&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId24.png" alt="" /></p>
+
+<p>We have an <strong>imbalanced dataset</strong> where the income level of -50k is representing more than 93% of the total records.</p>
+
+<p>Next, we automatically handle which columns are <strong>continuous</strong> and which are <strong>categorical</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># get categorical and numerical variables
+def cont_cat_split(df, dep_var=None):
+    "Helper function that returns column names of cont and cat variables from given `df`."
+    cont_names, cat_names = [], []
+    for label in df:
+        if label in [dep_var]: continue
+        if (pd.api.types.is_integer_dtype(df[label].dtype) or
+            pd.api.types.is_float_dtype(df[label].dtype)):
+            cont_names.append(label)
+        else: cat_names.append(label)
+    return cont_names, cat_names
+
+cont, cat = cont_cat_split(df, dep_var= dep_var)
+cont , cat
+(['age',
+  'wage_per_hour',
+  'capital_gains',
+  'capital_losses',
+  'dividends_from_stocks',
+  'num_persons_worked_for_employer',
+  'weeks_worked_in_year'],
+ ['class_of_worker',
+  'detailed_industry_recode',
+  'detailed_occupation_recode',
+  'education',
+  'enroll_in_edu_inst_last_wk',
+  'marital_stat',
+  'major_industry_code',
+  'major_occupation_code',
+  'race',
+  'hispanic_origin',
+  'sex',
+  'member_of_a_labor_union',
+  'reason_for_unemployment',
+  'full_or_part_time_employment_stat',
+  'tax_filer_stat',
+  'region_of_previous_residence',
+  'state_of_previous_residence',
+  'detailed_household_and_family_stat',
+  'detailed_household_summary_in_household',
+  'migration_code-change_in_msa',
+  'migration_code-change_in_reg',
+  'migration_code-move_within_reg',
+  'live_in_this_house_1_year_ago',
+  'migration_prev_res_in_sunbelt',
+  'family_members_under_18',
+  'country_of_birth_father',
+  'country_of_birth_mother',
+  'country_of_birth_self',
+  'citizenship',
+  'own_business_or_self_employed',
+  "fill_inc_questionnaire_for_veteran's_admin",
+  'veterans_benefits',
+  'year'])
+</code></pre></div></div>
+
+<p>Let’s start by checking the modalties of our categorical variables :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Check modalities of categorical varaiblies
+for c in cat :
+       print(pd.DataFrame({c : df[c].value_counts()/len(df)}))
+                                 class_of_worker
+ Not in universe                        0.502423
+ Private                                0.361001
+ Self-employed-not incorporated         0.042326
+ Local government                       0.039013
+ State government                       0.021186
+ Self-employed-incorporated             0.016364
+ Federal government                     0.014660
+ Never worked                           0.002200
+ Without pay                            0.000827
+     detailed_industry_recode
+ 0                   0.504624
+ 33                  0.085554
+ 43                  0.041514
+ 4                   0.029992
+ 42                  0.023471
+ 45                  0.022464
+ 29                  0.021095
+ 37                  0.020158
+ 41                  0.019867
+ 32                  0.018023
+ 35                  0.016940
+ 39                  0.014720
+ 34                  0.013858
+ 44                  0.012775
+ 2                   0.011006
+ 11                  0.008841
+ 50                  0.008540
+ 40                  0.008275
+ 47                  0.008240
+ 38                  0.008164
+ 24                  0.007533
+ 12                  0.006766
+ 19                  0.006746
+ 30                  0.005919
+ 31                  0.005904
+ 25                  0.005433
+ 9                   0.004977
+ 22                  0.004771
+ 36                  0.004736
+ 13                  0.004506
+ 1                   0.004145
+ 48                  0.003268
+ 27                  0.003137
+ 49                  0.003057
+ 3                   0.002822
+ 21                  0.002802
+ 6                   0.002777
+ 5                   0.002772
+ 8                   0.002757
+ 16                  0.002701
+ 23                  0.002631
+ 18                  0.002421
+ 15                  0.002265
+ 7                   0.002115
+ 14                  0.001479
+ 46                  0.000937
+ 17                  0.000787
+ 28                  0.000717
+ 26                  0.000637
+ 51                  0.000180
+ 20                  0.000160
+ 10                  0.000020
+     detailed_occupation_recode
+ 0                     0.504624
+ 2                     0.043885
+ 26                    0.039529
+ 19                    0.027130
+ 29                    0.025586
+ 36                    0.020775
+ 34                    0.020173
+ 10                    0.018459
+ 16                    0.017266
+ 23                    0.017001
+ 12                    0.016740
+ 33                    0.016665
+ 3                     0.016013
+ 35                    0.015878
+ 38                    0.015051
+ 31                    0.013527
+ 32                    0.012019
+ 37                    0.011197
+ 8                     0.010781
+ 42                    0.009613
+ 30                    0.009508
+ 24                    0.009257
+ 17                    0.008876
+ 28                    0.008325
+ 41                    0.007979
+ 44                    0.007979
+ 43                    0.006927
+ 4                     0.006836
+ 13                    0.006370
+ 18                    0.005428
+ 39                    0.005097
+ 14                    0.004671
+ 5                     0.004285
+ 15                    0.004085
+ 27                    0.003909
+ 25                    0.003844
+ 9                     0.003699
+ 7                     0.003664
+ 11                    0.003193
+ 40                    0.003092
+ 1                     0.002727
+ 21                    0.002671
+ 6                     0.002210
+ 22                    0.002060
+ 45                    0.000862
+ 20                    0.000356
+ 46                    0.000180
+                                         education
+ High school graduate                     0.242614
+ Children                                 0.237677
+ Some college but no degree               0.139433
+ Bachelors degree(BA AB BS)               0.099562
+ 7th and 8th grade                        0.040131
+ 10th grade                               0.037875
+ 11th grade                               0.034462
+ Masters degree(MA MS MEng MEd MSW MBA)   0.032783
+ 9th grade                                0.031224
+ Associates degree-occup /vocational      0.026854
+ Associates degree-academic program       0.021867
+ 5th or 6th grade                         0.016424
+ 12th grade no diploma                    0.010655
+ 1st 2nd 3rd or 4th grade                 0.009017
+ Prof school degree (MD DDS DVM LLB JD)   0.008986
+ Doctorate degree(PhD EdD)                0.006330
+ Less than 1st grade                      0.004105
+                        enroll_in_edu_inst_last_wk
+ Not in universe                          0.936950
+ High school                              0.034542
+ College or university                    0.028508
+                                  marital_stat
+ Never married                        0.433459
+ Married-civilian spouse present      0.422117
+ Divorced                             0.063702
+ Widowed                              0.052440
+ Separated                            0.017341
+ Married-spouse absent                0.007608
+ Married-A F spouse present           0.003333
+                                      major_industry_code
+ Not in universe or children                     0.504624
+ Retail trade                                    0.085554
+ Manufacturing-durable goods                     0.045183
+ Education                                       0.041514
+ Manufacturing-nondurable goods                  0.034567
+ Finance insurance and real estate               0.030798
+ Construction                                    0.029992
+ Business and repair services                    0.028323
+ Medical except hospital                         0.023471
+ Public administration                           0.023105
+ Other professional services                     0.022464
+ Transportation                                  0.021095
+ Hospital services                               0.019867
+ Wholesale trade                                 0.018023
+ Agriculture                                     0.015151
+ Personal services except private HH             0.014720
+ Social services                                 0.012775
+ Entertainment                                   0.008275
+ Communications                                  0.005919
+ Utilities and sanitary services                 0.005904
+ Private household services                      0.004736
+ Mining                                          0.002822
+ Forestry and fisheries                          0.000937
+ Armed Forces                                    0.000180
+                                        major_occupation_code
+ Not in universe                                     0.504624
+ Adm support including clerical                      0.074362
+ Professional specialty                              0.069867
+ Executive admin and managerial                      0.062624
+ Other service                                       0.060640
+ Sales                                               0.059056
+ Precision production craft &amp; repair                 0.052716
+ Machine operators assmblrs &amp; inspctrs               0.031971
+ Handlers equip cleaners etc                         0.020684
+ Transportation and material moving                  0.020148
+ Farming forestry and fishing                        0.015768
+ Technicians and related support                     0.015126
+ Protective services                                 0.008325
+ Private household services                          0.003909
+ Armed Forces                                        0.000180
+                                  race
+ White                        0.838826
+ Black                        0.102319
+ Asian or Pacific Islander    0.029245
+ Other                        0.018329
+ Amer Indian Aleut or Eskimo  0.011282
+                            hispanic_origin
+ All other                         0.861590
+ Mexican-American                  0.040492
+ Mexican (Mexicano)                0.036256
+ Central or South American         0.019522
+ Puerto Rican                      0.016605
+ Other Spanish                     0.012455
+ Cuban                             0.005643
+ NA                                0.004380
+ Do not know                       0.001534
+ Chicano                           0.001524
+              sex
+ Female  0.521163
+ Male    0.478837
+                  member_of_a_labor_union
+ Not in universe                 0.904452
+ No                              0.080362
+ Yes                             0.015186
+                        reason_for_unemployment
+ Not in universe                       0.969577
+ Other job loser                       0.010214
+ Re-entrant                            0.010119
+ Job loser - on layoff                 0.004892
+ Job leaver                            0.002997
+ New entrant                           0.002200
+                                     full_or_part_time_employment_stat
+ Children or Armed Forces                                     0.620324
+ Full-time schedules                                          0.204167
+ Not in labor force                                           0.134360
+ PT for non-econ reasons usually FT                           0.016650
+ Unemployed full-time                                         0.011583
+ PT for econ reasons usually PT                               0.006059
+ Unemployed part- time                                        0.004225
+ PT for econ reasons usually FT                               0.002631
+                               tax_filer_stat
+ Nonfiler                            0.376368
+ Joint both under 65                 0.337720
+ Single                              0.187552
+ Joint both 65+                      0.041760
+ Head of household                   0.037219
+ Joint one under 65 &amp; one 65+        0.019381
+                  region_of_previous_residence
+ Not in universe                      0.920946
+ South                                0.024503
+ West                                 0.020419
+ Midwest                              0.017918
+ Northeast                            0.013557
+ Abroad                               0.002656
+                       state_of_previous_residence
+ Not in universe                          0.920946
+ California                               0.008590
+ Utah                                     0.005328
+ Florida                                  0.004255
+ North Carolina                           0.004070
+ ?                                        0.003548
+ Abroad                                   0.003363
+ Oklahoma                                 0.003137
+ Minnesota                                0.002887
+ Indiana                                  0.002671
+ North Dakota                             0.002501
+ New Mexico                               0.002321
+ Michigan                                 0.002210
+ Alaska                                   0.001453
+ Kentucky                                 0.001223
+ Arizona                                  0.001218
+ New Hampshire                            0.001213
+ Wyoming                                  0.001208
+ Colorado                                 0.001198
+ Oregon                                   0.001183
+ West Virginia                            0.001158
+ Georgia                                  0.001138
+ Montana                                  0.001133
+ Alabama                                  0.001083
+ Ohio                                     0.001058
+ Texas                                    0.001047
+ Arkansas                                 0.001027
+ Mississippi                              0.001022
+ Tennessee                                0.001012
+ Pennsylvania                             0.000997
+ New York                                 0.000977
+ Louisiana                                0.000962
+ Vermont                                  0.000957
+ Iowa                                     0.000947
+ Illinois                                 0.000902
+ Nebraska                                 0.000892
+ Missouri                                 0.000877
+ Nevada                                   0.000872
+ Maine                                    0.000837
+ Massachusetts                            0.000757
+ Kansas                                   0.000747
+ South Dakota                             0.000692
+ Maryland                                 0.000682
+ Virginia                                 0.000632
+ Connecticut                              0.000586
+ District of Columbia                     0.000581
+ Wisconsin                                0.000526
+ South Carolina                           0.000476
+ New Jersey                               0.000376
+ Delaware                                 0.000366
+ Idaho                                    0.000155
+                                                  detailed_household_and_family_stat
+ Householder                                                                0.266877
+ Child &lt;18 never marr not in subfamily                                      0.252232
+ Spouse of householder                                                      0.208973
+ Nonfamily householder                                                      0.111331
+ Child 18+ never marr Not in a subfamily                                    0.060294
+ Secondary individual                                                       0.030683
+ Other Rel 18+ ever marr not in subfamily                                   0.009803
+ Grandchild &lt;18 never marr child of subfamily RP                            0.009362
+ Other Rel 18+ never marr not in subfamily                                  0.008661
+ Grandchild &lt;18 never marr not in subfamily                                 0.005343
+ Child 18+ ever marr Not in a subfamily                                     0.005077
+ Child under 18 of RP of unrel subfamily                                    0.003669
+ RP of unrelated subfamily                                                  0.003433
+ Child 18+ ever marr RP of subfamily                                        0.003363
+ Other Rel &lt;18 never marr child of subfamily RP                             0.003288
+ Other Rel 18+ ever marr RP of subfamily                                    0.003288
+ Other Rel 18+ spouse of subfamily RP                                       0.003198
+ Child 18+ never marr RP of subfamily                                       0.002952
+ Other Rel &lt;18 never marr not in subfamily                                  0.002927
+ Grandchild 18+ never marr not in subfamily                                 0.001879
+ In group quarters                                                          0.000982
+ Child 18+ spouse of subfamily RP                                           0.000632
+ Other Rel 18+ never marr RP of subfamily                                   0.000471
+ Child &lt;18 never marr RP of subfamily                                       0.000401
+ Spouse of RP of unrelated subfamily                                        0.000261
+ Child &lt;18 ever marr not in subfamily                                       0.000180
+ Grandchild 18+ ever marr not in subfamily                                  0.000170
+ Grandchild 18+ spouse of subfamily RP                                      0.000050
+ Child &lt;18 ever marr RP of subfamily                                        0.000045
+ Grandchild 18+ ever marr RP of subfamily                                   0.000045
+ Grandchild 18+ never marr RP of subfamily                                  0.000030
+ Other Rel &lt;18 ever marr RP of subfamily                                    0.000030
+ Other Rel &lt;18 never married RP of subfamily                                0.000020
+ Other Rel &lt;18 spouse of subfamily RP                                       0.000015
+ Child &lt;18 spouse of subfamily RP                                           0.000010
+ Grandchild &lt;18 never marr RP of subfamily                                  0.000010
+ Grandchild &lt;18 ever marr not in subfamily                                  0.000010
+ Other Rel &lt;18 ever marr not in subfamily                                   0.000005
+                                       detailed_household_summary_in_household
+ Householder                                                          0.378277
+ Child under 18 never married                                         0.252733
+ Spouse of householder                                                0.209044
+ Child 18 or older                                                    0.072322
+ Other relative of householder                                        0.048631
+ Nonrelative of householder                                           0.038096
+ Group Quarters- Secondary individual                                 0.000662
+ Child under 18 ever married                                          0.000236
+                   migration_code-change_in_msa
+ ?                                     0.499672
+ Nonmover                              0.413677
+ MSA to MSA                            0.053132
+ NonMSA to nonMSA                      0.014089
+ Not in universe                       0.007598
+ MSA to nonMSA                         0.003959
+ NonMSA to MSA                         0.003082
+ Abroad to MSA                         0.002270
+ Not identifiable                      0.002155
+ Abroad to nonMSA                      0.000366
+                                 migration_code-change_in_reg
+ ?                                                   0.499672
+ Nonmover                                            0.413677
+ Same county                                         0.049177
+ Different county same state                         0.014018
+ Not in universe                                     0.007598
+ Different region                                    0.005904
+ Different state same division                       0.004967
+ Abroad                                              0.002656
+ Different division same region                      0.002331
+                               migration_code-move_within_reg
+ ?                                                   0.499672
+ Nonmover                                            0.413677
+ Same county                                         0.049177
+ Different county same state                         0.014018
+ Not in universe                                     0.007598
+ Different state in South                            0.004877
+ Different state in West                             0.003403
+ Different state in Midwest                          0.002762
+ Abroad                                              0.002656
+ Different state in Northeast                        0.002160
+                                   live_in_this_house_1_year_ago
+ Not in universe under 1 year old                       0.507270
+ Yes                                                    0.413677
+ No                                                     0.079054
+                  migration_prev_res_in_sunbelt
+ ?                                     0.499672
+ Not in universe                       0.421275
+ No                                    0.050054
+ Yes                                   0.028999
+                         family_members_under_18
+ Not in universe                        0.722884
+ Both parents present                   0.195381
+ Mother only present                    0.064013
+ Father only present                    0.009438
+ Neither parent present                 0.008285
+                               country_of_birth_father
+ United-States                                0.797718
+ Mexico                                       0.050160
+ ?                                            0.033645
+ Puerto-Rico                                  0.013432
+ Italy                                        0.011086
+ Canada                                       0.006916
+ Germany                                      0.006796
+ Dominican-Republic                           0.006465
+ Poland                                       0.006074
+ Philippines                                  0.005784
+ Cuba                                         0.005638
+ El-Salvador                                  0.004922
+ China                                        0.004290
+ England                                      0.003974
+ Columbia                                     0.003077
+ India                                        0.002907
+ South Korea                                  0.002656
+ Ireland                                      0.002546
+ Jamaica                                      0.002321
+ Vietnam                                      0.002290
+ Guatemala                                    0.002230
+ Japan                                        0.001965
+ Portugal                                     0.001945
+ Ecuador                                      0.001900
+ Haiti                                        0.001759
+ Greece                                       0.001724
+ Peru                                         0.001679
+ Nicaragua                                    0.001579
+ Hungary                                      0.001534
+ Scotland                                     0.001238
+ Iran                                         0.001168
+ Yugoslavia                                   0.001088
+ Taiwan                                       0.000997
+ Cambodia                                     0.000982
+ Honduras                                     0.000972
+ France                                       0.000957
+ Outlying-U S (Guam USVI etc)                 0.000797
+ Laos                                         0.000772
+ Trinadad&amp;Tobago                              0.000566
+ Thailand                                     0.000536
+ Hong Kong                                    0.000531
+ Holand-Netherlands                           0.000256
+ Panama                                       0.000125
+                               country_of_birth_mother
+ United-States                                0.804313
+ Mexico                                       0.049022
+ ?                                            0.030668
+ Puerto-Rico                                  0.012395
+ Italy                                        0.009242
+ Canada                                       0.007272
+ Germany                                      0.006927
+ Philippines                                  0.006170
+ Poland                                       0.005563
+ El-Salvador                                  0.005553
+ Cuba                                         0.005553
+ Dominican-Republic                           0.005528
+ England                                      0.004526
+ China                                        0.003809
+ Columbia                                     0.003067
+ South Korea                                  0.003052
+ Ireland                                      0.003002
+ India                                        0.002912
+ Vietnam                                      0.002371
+ Japan                                        0.002351
+ Jamaica                                      0.002270
+ Guatemala                                    0.002225
+ Ecuador                                      0.001879
+ Peru                                         0.001779
+ Haiti                                        0.001769
+ Portugal                                     0.001714
+ Nicaragua                                    0.001509
+ Hungary                                      0.001489
+ Greece                                       0.001308
+ Scotland                                     0.001208
+ Taiwan                                       0.001113
+ Honduras                                     0.001093
+ France                                       0.001063
+ Iran                                         0.000992
+ Yugoslavia                                   0.000887
+ Cambodia                                     0.000787
+ Outlying-U S (Guam USVI etc)                 0.000787
+ Laos                                         0.000777
+ Thailand                                     0.000616
+ Hong Kong                                    0.000536
+ Trinadad&amp;Tobago                              0.000496
+ Holand-Netherlands                           0.000246
+ Panama                                       0.000160
+                               country_of_birth_self
+ United-States                              0.887061
+ Mexico                                     0.028904
+ ?                                          0.017006
+ Puerto-Rico                                0.007017
+ Germany                                    0.004265
+ Philippines                                0.004235
+ Cuba                                       0.004195
+ Canada                                     0.003508
+ Dominican-Republic                         0.003458
+ El-Salvador                                0.003453
+ China                                      0.002396
+ South Korea                                0.002361
+ England                                    0.002290
+ Columbia                                   0.002175
+ Italy                                      0.002100
+ India                                      0.002045
+ Vietnam                                    0.001960
+ Poland                                     0.001910
+ Guatemala                                  0.001724
+ Japan                                      0.001699
+ Jamaica                                    0.001604
+ Peru                                       0.001343
+ Ecuador                                    0.001293
+ Haiti                                      0.001143
+ Nicaragua                                  0.001093
+ Taiwan                                     0.001007
+ Portugal                                   0.000872
+ Iran                                       0.000787
+ Greece                                     0.000737
+ Honduras                                   0.000722
+ Ireland                                    0.000677
+ France                                     0.000606
+ Outlying-U S (Guam USVI etc)               0.000596
+ Thailand                                   0.000566
+ Laos                                       0.000526
+ Hong Kong                                  0.000501
+ Cambodia                                   0.000476
+ Hungary                                    0.000396
+ Scotland                                   0.000376
+ Trinadad&amp;Tobago                            0.000331
+ Yugoslavia                                 0.000331
+ Panama                                     0.000140
+ Holand-Netherlands                         0.000115
+                                              citizenship
+ Native- Born in the United States               0.887076
+ Foreign born- Not a citizen of U S              0.067165
+ Foreign born- U S citizen by naturalization     0.029345
+ Native- Born abroad of American Parent(s)       0.008801
+ Native- Born in Puerto Rico or U S Outlying     0.007613
+    own_business_or_self_employed
+ 0                       0.905520
+ 2                       0.080958
+ 1                       0.013522
+                  fill_inc_questionnaire_for_veteran's_admin
+ Not in universe                                    0.990056
+ No                                                 0.007984
+ Yes                                                0.001960
+    veterans_benefits
+ 2           0.752445
+ 0           0.237612
+ 1           0.009944
+         year
+ 94  0.500328
+ 95  0.499672
+</code></pre></div></div>
+
+<p>Some categorical features are <strong>purely nominal</strong>-having multiple modalities (with modality <strong>?</strong> for nan values) and others are <strong>ordinal columns</strong> like <strong>education</strong> and <strong>year</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Ediucation modalities
+df['education'].unique(), df['education'].nunique()
+(array([' High school graduate', ' Some college but no degree',
+        ' 10th grade', ' Children', ' Bachelors degree(BA AB BS)',
+        ' Masters degree(MA MS MEng MEd MSW MBA)', ' Less than 1st grade',
+        ' Associates degree-academic program', ' 7th and 8th grade',
+        ' 12th grade no diploma', ' Associates degree-occup /vocational',
+        ' Prof school degree (MD DDS DVM LLB JD)', ' 5th or 6th grade',
+        ' 11th grade', ' Doctorate degree(PhD EdD)', ' 9th grade',
+        ' 1st 2nd 3rd or 4th grade'], dtype=object),
+ 17)
+# Year modalities
+df['year'].unique(), df['year'].nunique()
+(array([' 95', ' 94'], dtype=object), 2)
+</code></pre></div></div>
+
+<p>We can tell Pandas about a suitable ordering of these levels like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Setting the order of education variable
+education = ' Children',' Less than 1st grade',' 1st 2nd 3rd or 4th grade',' 5th or 6th grade',\
+' 7th and 8th grade',' 9th grade',' 10th grade',' 11th grade', ' 12th grade no diploma',\
+' High school graduate', ' Associates degree-academic program',' Associates degree-occup /vocational',\
+' Prof school degree (MD DDS DVM LLB JD)',' Some college but no degree',' Bachelors degree(BA AB BS)',\
+' Masters degree(MA MS MEng MEd MSW MBA)',' Doctorate degree(PhD EdD)'
+len(education)
+17
+# Setting the order of year variaable
+year = '94', '95'
+# apply the defined ordering fot our data :
+df['education'] = df['education'].astype('category')
+df['education'].cat.set_categories(education, ordered=True, inplace=True)
+
+df['year'] = df['year'].astype('category')
+df['year'].cat.set_categories(year, ordered=True, inplace=True)
+
+#Same for test set :
+test['education'] = test['education'].astype('category')
+test['education'].cat.set_categories(education, ordered=True, inplace=True)
+
+test['year'] = test['year'].astype('category')
+test['year'].cat.set_categories(year, ordered=True, inplace=True)
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/pandas/core/arrays/categorical.py:2631: FutureWarning: The `inplace` parameter in pandas.Categorical.set_categories is deprecated and will be removed in a future version. Removing unused categories will always return a new Categorical object.
+  res = method(*args, **kwargs)
+</code></pre></div></div>
+
+<p>Lets check our continous features: The <strong>describe()</strong> method shows a summary of the numerical attributes</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df[cont].describe()
+                 age  wage_per_hour  capital_gains  capital_losses  \
+count  199523.000000  199523.000000   199523.00000   199523.000000   
+mean       34.494199      55.426908      434.71899       37.313788   
+std        22.310895     274.896454     4697.53128      271.896428   
+min         0.000000       0.000000        0.00000        0.000000   
+25%        15.000000       0.000000        0.00000        0.000000   
+50%        33.000000       0.000000        0.00000        0.000000   
+75%        50.000000       0.000000        0.00000        0.000000   
+max        90.000000    9999.000000    99999.00000     4608.000000   
+
+       dividends_from_stocks  num_persons_worked_for_employer  \
+count          199523.000000                    199523.000000   
+mean              197.529533                         1.956180   
+std              1984.163658                         2.365126   
+min                 0.000000                         0.000000   
+25%                 0.000000                         0.000000   
+50%                 0.000000                         1.000000   
+75%                 0.000000                         4.000000   
+max             99999.000000                         6.000000   
+
+       weeks_worked_in_year  
+count         199523.000000  
+mean              23.174897  
+std               24.411488  
+min                0.000000  
+25%                0.000000  
+50%                8.000000  
+75%               52.000000  
+max               52.000000  
+</code></pre></div></div>
+
+<p>The <strong>count</strong>, <strong>mean</strong>, <strong>min</strong>, and <strong>max</strong> rows are self-explanatory.The <strong>std</strong> row shows the standard deviation, which measures how dispersed the values are. The 25%, 50%, and 75% rows show the corresponding percentiles.</p>
+
+<p>We plot a histogram for each numerical attribute :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%matplotlib inline 
+import matplotlib.pyplot as plt
+df[cont].hist(bins=50, figsize=(20,15))
+plt.show()
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId25.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>We can see that these attributes have very <strong>different scales</strong>.</p>
+  </li>
+  <li>
+    <p>Some numerical varaibles are countinous like <strong>age</strong> and others are discrete and finite like <strong>weeks_worked_in_year</strong> or infinete <strong>num_persons_worked_for_employer</strong>.</p>
+  </li>
+  <li>
+    <p>Some features as <strong>wage_per_hour</strong>,<strong>capital_gains</strong>,<strong>capital_losses</strong>,<strong>dividends_from_stocks</strong> are tail-heavy: they extend much farther to the median right with high coefficient of variation :</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df[cont].boxplot(column=['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks'],
+                 figsize=(10,5))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x125ab4190&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId26.png" alt="" /></p>
+
+<p>We can see the presence of <strong>extreme values</strong> for those features.</p>
+
+<p>Using the <strong>skewness value</strong>, which explains the extent to which the data is normally distributed, in order to confirm that. Ideally, the skewness value should be between -1 and +1, and any major deviation from this range indicates the presence of extreme values.</p>
+
+<p>We can calculate the skwenss value :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># skewness value
+df[['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks']].skew()
+wage_per_hour             8.935097
+capital_gains            18.990822
+capital_losses            7.632565
+dividends_from_stocks    27.786502
+dtype: float64
+</code></pre></div></div>
+
+<p>Using the <strong>IQR score</strong>, let’s see the number of obseravtions that are not in the <code class="language-plaintext highlighter-rouge">(Q1 - 1.5 IQR) and (Q3 + 1.5 IQR)</code> range :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># IQR score
+Q1 = df[['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks']].quantile(0.25)
+Q3 = df[['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks']].quantile(0.75)
+IQR = Q3 - Q1
+print(IQR)
+wage_per_hour            0.0
+capital_gains            0.0
+capital_losses           0.0
+dividends_from_stocks    0.0
+dtype: float64
+# number of observation out of the definied range
+out = df[['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks']]
+df_out = out[((out &lt; (Q1 - 1.5 * IQR)) |(out &gt; (Q3 + 1.5 * IQR))).any(axis=1)]
+
+out.shape, df_out.shape, df_out.shape[0]/out.shape[0]
+((199523, 4), (38859, 4), 0.1947595014108649)
+</code></pre></div></div>
+
+<p>From 199.523 observation of the selcted features, 38.859 records (19%) represent extrem values.</p>
+
+<p>For <strong>weeks_worked_in_year</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['weeks_worked_in_year'].plot( kind='hist',
+                                 bins=53,
+                                 edgecolor='black',
+                                 color='blue',
+                                 title='weeks worked in a year',
+                                 figsize=(10,5))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x12311dd50&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId27.png" alt="" /></p>
+
+<p>For <strong>num_persons_worked_for_employer</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['num_persons_worked_for_employer'].plot( kind='hist',
+                                 
+                                 edgecolor='black',
+                                 color='blue',
+                                 title='num_persons_worked_for_employer',
+                                 figsize=(7,5))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x1236b43d0&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId28.png" alt="" /></p>
+
+<p>We notice an increase in the 7th bins <strong>num_persons_worked_for_employer=6</strong>. Check if this variable is capped ?</p>
+
+<h1 id="exploratory-data-analysis">Exploratory data analysis</h1>
+
+<ul>
+  <li>Starting with <strong>numerical variables</strong> :</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import seaborn as sns
+data_dia = df[dep_var]
+data = df[['age']]
+data = pd.concat([data_dia,data],axis=1)
+data = pd.melt(data,id_vars="income_level",
+                    var_name="features",
+                    value_name='value')
+plt.figure(figsize=(6,5))
+sns.violinplot(x="features", y="value", hue="income_level", data=data,split=True, inner="quartile")
+plt.xticks(rotation=90)
+(array([0]), &lt;a list of 1 Text xticklabel objects&gt;)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId30.png" alt="" /></p>
+
+<p>For the <strong>age</strong> feature, we can see that the medians of the income levels +/- 50k look separated. The income level of +50k with a median of 50 years old has a lower interquntile range (IQR) with value spread of 10 years. Whereas The income level of -50k has a median of 30 years old has and interquantile range (IQR) of 40 years. So, <strong>age</strong> can be good for classification.</p>
+
+<p>Let’s look at the <strong>weeks_worked_in_year</strong> feature :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># get the number of income class in each week
+weeks_worked_in_year = df.groupby(["weeks_worked_in_year", "income_level"])\
+                        .size()\
+                        .groupby(level=0).apply(lambda x: 100*x/x.sum()).unstack()
+
+# print the percentage class for the first and last weeks 
+weeks_worked_in_year.iloc[[0,1,2, -3,-2,-1]]
+income_level           - 50000.    50000+.
+weeks_worked_in_year                      
+0                     99.379057   0.620943
+1                     98.275862   1.724138
+2                     98.908297   1.091703
+50                    89.279514  10.720486
+51                    89.010989  10.989011
+52                    85.199249  14.800751
+weeks_worked_in_year.plot(kind='bar', 
+                          stacked=True,
+                          edgecolor='black', 
+                          figsize=(12,5))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x125e2ded0&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId31.png" alt="" /></p>
+
+<p>We can see that the propotion of people making more than 50k a year is increasing with the number of working weeks in a given year where it can reach more than 14% for those working 52 weeks . However, the -50k level of income is representing the higher propotion regardless of the number of working weeks. We notice that among those how don’t work at all, 0.6% still make more than 50k a year.</p>
+
+<p>Let’s look at <strong>num_persons_worked_for_employer</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>num_persons_worked_for_employer = df.groupby(["num_persons_worked_for_employer", "income_level"])\
+                        .size()\
+                        .groupby(level=0).apply(lambda x: 100*x/x.sum()).unstack()
+
+num_persons_worked_for_employer
+income_level                      - 50000.    50000+.
+num_persons_worked_for_employer                      
+0                                99.379057   0.620943
+1                                90.942923   9.057077
+2                                91.687333   8.312667
+3                                90.763501   9.236499
+4                                89.776758  10.223242
+5                                88.980944  11.019056
+6                                84.990825  15.009175
+num_persons_worked_for_employer.plot(kind='bar', 
+                          stacked=True,
+                          edgecolor='black', 
+                          figsize=(12,5))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x125fbe4d0&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId32.png" alt="" /></p>
+
+<p>The proportion of +50k income level increases with the number of the num_preson_worked_for_employer where it reaches <strong>16% for num_preson_worked_for_employer= 6</strong>.</p>
+
+<p>Let’s see the average of <strong>wage_per_hour</strong>,<strong>capital_gains</strong>,<strong>capital_losses</strong>,<strong>dividends_from_stocks</strong> across the income levels :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>avg = df[['wage_per_hour','capital_gains','capital_losses','dividends_from_stocks','income_level']]\
+.groupby('income_level')\
+.mean()
+
+avg.plot(kind='bar', title = 'average across income levels', figsize=(10,5))
+
+avg
+              wage_per_hour  capital_gains  capital_losses  \
+income_level                                                 
+ - 50000.         53.692526     143.848013       27.003730   
+ 50000+.          81.640284    4830.930060      193.139557   
+
+              dividends_from_stocks  
+income_level                         
+ - 50000.                107.816518  
+ 50000+.                1553.448070  
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId33.png" alt="" /></p>
+
+<p>We can see that people making more than 50k a year, have on average, <strong>higher wage per hour</strong>,<strong>higher return on capital asset</strong> and <strong>dividends from stock options</strong>.</p>
+
+<ul>
+  <li>Next, let’s analyse some <strong>categorical variables</strong> :</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Education variable
+pd.crosstab(df['income_level'], 
+            df['education'],
+            margins = True,
+           normalize = 'columns').style.format('{:.2%}')
+&lt;pandas.io.formats.style.Styler at 0x125f7b790&gt;
+pd.crosstab(df['income_level'], 
+            df['education'],
+            margins = True,
+           normalize = 'columns').plot(kind='bar',stacked=True, edgecolor='black', 
+                          figsize=(12,10))
+
+plt.legend(bbox_to_anchor=(1.5, 1.0))
+&lt;matplotlib.legend.Legend at 0x125b9d110&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId34.png" alt="" /></p>
+
+<p>We can see the effect of education on income level where more than 50% of <strong>Prof school degree</strong> and <strong>Doctorate degree</strong> earn more than 50k a year. On the other hand, the majority of people (more than 90%) with <strong>no degree</strong> earn less than 50k a year.</p>
+
+<p>Let’s further this analysis and see the effect of <strong>education</strong> and <strong>the number of working weeks</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd.crosstab(df['income_level'], 
+            df['education'],
+            values = df['weeks_worked_in_year'],
+            aggfunc = 'mean').round(2)
+education      Children   Less than 1st grade   1st 2nd 3rd or 4th grade  \
+income_level                                                               
+ - 50000.           0.0                 12.69                      15.93   
+ 50000+.            NaN                  0.00                      35.00   
+
+education      5th or 6th grade   7th and 8th grade   9th grade   10th grade  \
+income_level                                                                   
+ - 50000.                 18.56               11.12       13.01        16.23   
+ 50000+.                  39.64               39.00       43.47        42.29   
+
+education      11th grade   12th grade no diploma   High school graduate  \
+income_level                                                               
+ - 50000.           20.42                   21.59                  30.88   
+ 50000+.            46.59                   47.71                  46.53   
+
+education      Associates degree-academic program  \
+income_level                                        
+ - 50000.                                   38.48   
+ 50000+.                                    49.63   
+
+education      Associates degree-occup /vocational  \
+income_level                                         
+ - 50000.                                    37.99   
+ 50000+.                                     49.46   
+
+education      Prof school degree (MD DDS DVM LLB JD)  \
+income_level                                            
+ - 50000.                                       34.55   
+ 50000+.                                        49.88   
+
+education      Some college but no degree   Bachelors degree(BA AB BS)  \
+income_level                                                             
+ - 50000.                           33.35                        37.24   
+ 50000+.                            47.17                        48.66   
+
+education      Masters degree(MA MS MEng MEd MSW MBA)  \
+income_level                                            
+ - 50000.                                       36.94   
+ 50000+.                                        48.47   
+
+education      Doctorate degree(PhD EdD)  
+income_level                              
+ - 50000.                          34.51  
+ 50000+.                           48.23  
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.figure(figsize=(20, 4))
+sns.heatmap(
+    pd.crosstab(df['income_level'], 
+            df['education'],
+            values = df['weeks_worked_in_year'],
+            aggfunc = 'mean').round(1) 
+    ,annot = True
+    ,linewidths=.5
+    ,cmap="YlGnBu"
+    
+)
+plt.show()
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId35.png" alt="" /></p>
+
+<p>We can see that earning more than 50k a year demands high level of education but also lot of hard work !</p>
+
+<p>Let’s analyse the effect of <strong>sex</strong> and <strong>marital_stat</strong> on income level :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd.crosstab(df['income_level'], 
+            [df['sex'],df['marital_stat']],
+           margins = True,
+           normalize = 'columns').style.format('{:.2%}')
+&lt;pandas.io.formats.style.Styler at 0x123262f50&gt;
+pd.crosstab(df['income_level'], 
+            [df['sex'],df['marital_stat']]).plot(kind='bar',stacked=True, edgecolor='black',
+                                                 
+                          figsize=(12,10))
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x12932b290&gt;
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId36.png" alt="" /></p>
+
+<p>We can see that the highest proportion of people earning less than 50k a year are mostly <strong>female Married-A F spouse present</strong> or <strong>never married</strong> and <strong>seperated male</strong>. On the other hand, <strong>male Married-civilian spouse present</strong> represent the highest propotion on the +50k income level.</p>
+
+<p>We can further the analysis more as we have got many interesting features with several modalities but for now let’s see how machine learning models can help us understanding more our data.</p>
+
+<h1 id="data-preparation">Data preparation</h1>
+
+<p>We set <strong>the feature vector</strong> and <strong>the target variable</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># setting feature vector and target variable for the train set
+
+X = df.drop(['income_level'], axis = 1)
+y = df['income_level']
+
+# setting feature vector and target variable for the test set
+test_x = test.drop(['income_level'], axis = 1)
+test_y = test['income_level']
+# Cheching the result
+df.shape, X.shape, y.shape
+((199523, 41), (199523, 40), (199523,))
+</code></pre></div></div>
+
+<p>We will keep the provided <strong>test set</strong> hidden and will use it as a realtime dataset when we make our model on production in order to avoid the risk of <strong>data snooping</strong>.</p>
+
+<p>For that, we will be using a validation set derived from our training set (30%). Scikit-Learn provides a few functions to split datasets into multiple subsets in various ways. The simplest function is <strong>train_test_split()</strong>.</p>
+
+<p>Since we have an imbalanced dataset, we can’t considered purely random sampling methods. For that, we do stratified sampling based on the <strong>income level</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import train_test_split
+
+X_train, X_val, y_train, y_val = train_test_split(X, 
+                                                  y, 
+                                                  test_size=0.3, 
+                                                  random_state=12,
+                                                  stratify=y)
+# Checking the train and validation set
+X_train.shape, X_val.shape
+((139666, 40), (59857, 40))
+# Checking the income level proportion
+y_train.value_counts(normalize = True), y_val.value_counts(normalize = True)
+( - 50000.    0.937945
+  50000+.     0.062055
+ Name: income_level, dtype: float64,
+  - 50000.    0.937935
+  50000+.     0.062065
+ Name: income_level, dtype: float64)
+</code></pre></div></div>
+
+<p>What if we didn’t stratify with respect to income level ?</p>
+
+<p>We can compare the income level proportions in the <strong>overall dataset</strong>, in the <strong>test set</strong> generated with <code class="language-plaintext highlighter-rouge">stratified sampling</code>, and in <strong>a test set</strong> generated using <code class="language-plaintext highlighter-rouge">purely random sampling</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def income_cat_proportions(data):
+    return data["income_level"].value_counts() / len(data)
+
+train_set, test_set = train_test_split(df, test_size=0.3, random_state=12)
+
+train_set, test_set_strat = train_test_split(df, test_size=0.3, random_state=12,stratify=df['income_level'])
+
+compare_props = pd.DataFrame({
+    "Overall": income_cat_proportions(df),
+    "Stratified": income_cat_proportions(test_set_strat),
+    "Random": income_cat_proportions(test_set),
+}).sort_index()
+compare_props["Rand. %error"] = 100 * compare_props["Random"] / compare_props["Overall"] - 100
+compare_props["Strat. %error"] = 100 * compare_props["Stratified"] / compare_props["Overall"] - 100
+</code></pre></div></div>
+
+<p>As we can see, the test set generated using stratified sampling has income level proportions almost identical to those in the full dataset, whereas the test set generated using purely random sampling is skewed.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>compare_props
+            Overall  Stratified    Random  Rand. %error  Strat. %error
+ - 50000.  0.937942    0.937935  0.939305      0.145356      -0.000701
+ 50000+.   0.062058    0.062065  0.060695     -2.196901       0.010601
+</code></pre></div></div>
+
+<p>Now that we defined our training set, It’s time to prepare the data for our machine Learning algorithms.</p>
+
+<ul>
+  <li>Data cleaning :</li>
+</ul>
+
+<p>We have seen previously that we don’t have any <strong>missing values</strong>. For some cataegorical features, we assumed that the <strong>?</strong> modality is encoded for NaN values.</p>
+
+<ul>
+  <li>Handling Text and Categorical Attributes :</li>
+</ul>
+
+<p>Strating with the target variable <strong>income_level</strong>, we use <strong>LabelEncoder()</strong> to encode target labels with value between 0 and <code class="language-plaintext highlighter-rouge">n_classes-1 = 1</code>.</p>
+
+<p>We have seen also that we have some ordinal variable as <strong>education</strong> and <strong>year</strong>, so we use <strong>OrdinalEncoder</strong> to encode the categorical features as an integer array. The results in a single column of integers (0 to n_categories - 1) per feature.</p>
+
+<p>Since the remaining categorical features have several modalities per feature, we use also <strong>OrdinalEncoder</strong> instead of <strong>OneHotEncoder</strong>.</p>
+
+<blockquote>
+  <p>Working with <strong>OneHotEncoder</strong> leads, in our case, to high memory consumption. We can combine <strong>OneHotEncoder</strong> and <strong>PCA</strong> : The benefit in PCA is that combination of N attributes is better than any individual attribute. And the disadvantage is in harder explanation what exactly that PCA component means. Therefore, for this work, we will sacrifice a bit of predictive power to get more understandable model.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># categorical variables encoding
+from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
+
+# For the traget varaible
+le = LabelEncoder()
+y_train = le.fit_transform(y_train)  #fit on training set
+y_val = le.transform(y_val)    
+test_y = le.transform(test_y) 
+
+
+# For categorical features :
+Or = OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value = -1)
+for c in cat : 
+        X_train[c] = Or.fit_transform(np.array(X_train[c]).reshape(-1,1).astype(str))  #fit on training set
+        X_val[c] = Or.transform(np.array(X_val[c]).reshape(-1,1).astype(str))
+        test_x[c] = Or.transform(np.array(test_x[c]).reshape(-1,1).astype(str))
+
+   
+# Cheking categorical features encoding
+X_train[cat].head(3)
+        class_of_worker  detailed_industry_recode  detailed_occupation_recode  \
+88634               4.0                      31.0                        14.0   
+148296              8.0                      37.0                        12.0   
+163953              3.0                       0.0                         0.0   
+
+        education  enroll_in_edu_inst_last_wk  marital_stat  \
+88634         9.0                         2.0           2.0   
+148296       12.0                         2.0           2.0   
+163953       10.0                         2.0           4.0   
+
+        major_industry_code  major_occupation_code  race  hispanic_origin  \
+88634                   2.0                    0.0   4.0              0.0   
+148296                 12.0                    2.0   4.0              0.0   
+163953                 14.0                    6.0   4.0              0.0   
+
+        ...  migration_prev_res_in_sunbelt  family_members_under_18  \
+88634   ...                            0.0                      4.0   
+148296  ...                            2.0                      4.0   
+163953  ...                            0.0                      0.0   
+
+        country_of_birth_father  country_of_birth_mother  \
+88634                      40.0                     40.0   
+148296                     40.0                     40.0   
+163953                     40.0                     40.0   
+
+        country_of_birth_self  citizenship  own_business_or_self_employed  \
+88634                    40.0          4.0                            2.0   
+148296                   40.0          4.0                            0.0   
+163953                   40.0          4.0                            0.0   
+
+        fill_inc_questionnaire_for_veteran's_admin  veterans_benefits  year  
+88634                                          1.0                2.0   0.0  
+148296                                         1.0                2.0   0.0  
+163953                                         1.0                0.0   0.0  
+
+[3 rows x 33 columns]
+# Cheking target feature encoding
+set(y_train)
+{0, 1}
+</code></pre></div></div>
+
+<ul>
+  <li>Feature Scaling :</li>
+</ul>
+
+<p>We saw previously that out numerical inputs have different scales like the <strong>weeks_worked_in_year</strong> and <strong>capital_gains</strong>. We will be using <strong>StandardScaler</strong> since standardization is much less affected by outliers.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+for c in cont:
+    X_train[c] = scaler.fit_transform(np.array(X_train[c]).reshape(-1,1)) # fir on the train set
+    X_val[c] = scaler.transform(np.array(X_val[c]).reshape(-1,1))
+    test_x[c] = scaler.transform(np.array(test_x[c]).reshape(-1,1))
+
+#checking the standardization
+X_train[cont].head(3)
+             age  wage_per_hour  capital_gains  capital_losses  \
+88634   0.334269      -0.201648      -0.092139       -0.137611   
+148296  0.468715      -0.201648      -0.092139       -0.137611   
+163953 -1.368713      -0.201648      -0.092139       -0.137611   
+
+        dividends_from_stocks  num_persons_worked_for_employer  \
+88634               -0.069026                         1.705234   
+148296              -0.098703                        -0.405865   
+163953              -0.098703                        -0.828085   
+
+        weeks_worked_in_year  
+88634               1.177773  
+148296              1.177773  
+163953             -0.950488  
+</code></pre></div></div>
+
+<p>So far, we have handled the <strong>categorical columns</strong> and the <strong>numerical columns</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Checking the training set
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):  
+        display(X_train.head(3))
+
+X_train.shape, X_val.shape, test_x.shape
+             age  class_of_worker  detailed_industry_recode  \
+88634   0.334269              4.0                      31.0   
+148296  0.468715              8.0                      37.0   
+163953 -1.368713              3.0                       0.0   
+
+        detailed_occupation_recode  education  wage_per_hour  \
+88634                         14.0        9.0      -0.201648   
+148296                        12.0       12.0      -0.201648   
+163953                         0.0       10.0      -0.201648   
+
+        enroll_in_edu_inst_last_wk  marital_stat  major_industry_code  \
+88634                          2.0           2.0                  2.0   
+148296                         2.0           2.0                 12.0   
+163953                         2.0           4.0                 14.0   
+
+        major_occupation_code  race  hispanic_origin  sex  \
+88634                     0.0   4.0              0.0  1.0   
+148296                    2.0   4.0              0.0  0.0   
+163953                    6.0   4.0              0.0  1.0   
+
+        member_of_a_labor_union  reason_for_unemployment  \
+88634                       1.0                      3.0   
+148296                      1.0                      3.0   
+163953                      1.0                      3.0   
+
+        full_or_part_time_employment_stat  capital_gains  capital_losses  \
+88634                                 1.0      -0.092139       -0.137611   
+148296                                0.0      -0.092139       -0.137611   
+163953                                0.0      -0.092139       -0.137611   
+
+        dividends_from_stocks  tax_filer_stat  region_of_previous_residence  \
+88634               -0.069026             2.0                           3.0   
+148296              -0.098703             2.0                           3.0   
+163953              -0.098703             4.0                           3.0   
+
+        state_of_previous_residence  detailed_household_and_family_stat  \
+88634                          36.0                                37.0   
+148296                         36.0                                37.0   
+163953                         36.0                                 8.0   
+
+        detailed_household_summary_in_household  migration_code-change_in_msa  \
+88634                                       7.0                           0.0   
+148296                                      7.0                           7.0   
+163953                                      2.0                           0.0   
+
+        migration_code-change_in_reg  migration_code-move_within_reg  \
+88634                            0.0                             0.0   
+148296                           6.0                             7.0   
+163953                           0.0                             0.0   
+
+        live_in_this_house_1_year_ago  migration_prev_res_in_sunbelt  \
+88634                             1.0                            0.0   
+148296                            2.0                            2.0   
+163953                            1.0                            0.0   
+
+        num_persons_worked_for_employer  family_members_under_18  \
+88634                          1.705234                      4.0   
+148296                        -0.405865                      4.0   
+163953                        -0.828085                      0.0   
+
+        country_of_birth_father  country_of_birth_mother  \
+88634                      40.0                     40.0   
+148296                     40.0                     40.0   
+163953                     40.0                     40.0   
+
+        country_of_birth_self  citizenship  own_business_or_self_employed  \
+88634                    40.0          4.0                            2.0   
+148296                   40.0          4.0                            0.0   
+163953                   40.0          4.0                            0.0   
+
+        fill_inc_questionnaire_for_veteran's_admin  veterans_benefits  \
+88634                                          1.0                2.0   
+148296                                         1.0                2.0   
+163953                                         1.0                0.0   
+
+        weeks_worked_in_year  year  
+88634               1.177773   0.0  
+148296              1.177773   0.0  
+163953             -0.950488   0.0  
+((139666, 40), (59857, 40), (99762, 40))
+</code></pre></div></div>
+
+<h1 id="data-modeling">Data modeling</h1>
+
+<ul>
+  <li>Selecting a Performance Measure :</li>
+</ul>
+
+<p><strong>Accuracy</strong> is the simplest way to measure the effectiveness of a classification task, and it’s the percentage of correct predictions over all predictions. In other words, in a binary classification task, you can calculate this by adding the number of True Positives (TPs) and True Negatives (TNs) and dividing them by a tally of all predictions made. As with regression metrics, you can measure accuracy for both train and test to gauge <strong>overfitting</strong>.</p>
+
+<p>But, we can get an accuracy of 94%, which sounds pretty good, but it turns out we are always predicting <strong>-50k</strong>! In other words, even if we get high accuracy, it is meaningless unless we are predicting accurately for the least represented class, <strong>+50k</strong>.</p>
+
+<p>For this reasing, we will be using <strong>F1-score</strong>. The <strong>F1-score</strong> is also called the harmonic average of precision and recall because it’s calculated like this: 2TP / 2TP + FP + FN. Since it includes both precision and recall metrics, which pertain to the proportion of true positives, it’s a good metric choice to use when the dataset is <strong>imbalanced</strong>, and we don’t prefer either precision or recall.</p>
+
+<ul>
+  <li>Base model :</li>
+</ul>
+
+<p>Let’s start with <strong>Decision tree ensembles</strong>.</p>
+
+<p>A decision tree asks a series of binary (that is, yes or no) questions about the data. After each question the data at that part of the tree is split between a “yes” and a “no” branch. After one or more questions, either a prediction can be made on the basis of all previous answers or another question is required.</p>
+
+<p>We illustarte a tree classification using <strong>4 leaf nodes</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.tree import DecisionTreeClassifier, plot_tree
+
+m = DecisionTreeClassifier(max_leaf_nodes=4, random_state=14) # to plot the tree classification
+m.fit(X_train, y_train)
+DecisionTreeClassifier(max_leaf_nodes=4, random_state=14)
+# to get the class output
+m.classes_
+array([0, 1])
+!pip install pydotplus
+Requirement already satisfied: pydotplus in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (2.0.2)
+Requirement already satisfied: pyparsing&gt;=2.0.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from pydotplus) (3.0.4)
+!pip install graphviz
+Requirement already satisfied: graphviz in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (0.16)
+from sklearn.tree import export_graphviz
+from io import StringIO
+from IPython.display import Image  
+import pydotplus
+feature_cols = X_train.columns
+
+
+dot_data = StringIO()
+export_graphviz(m, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=True,feature_names = feature_cols, class_names=['0','1'])
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png())
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId39.png" alt="" /></p>
+
+<p>The top node represents the <strong>initial model</strong> before any splits have been done, when all the data is in the initial income levels. This is the simplest possible model. It is the result of asking zero questions and will always predict the more represented class which is -50k. We use the <strong>Gini method</strong> to create split points. The strategy is to select each pair of adjacent values as a possible split-point and the point with smaller gini index chosen as the splitting point. In our case, the <strong>capital gains</strong> at 1.47 was choosen first.</p>
+
+<p>Moving down and to the left, this node shows us that there were 130,999 records for income level of -50k where <strong>capital gains</strong> was less than 1.47. The class predicted is -50k in this case. Moving down and to the right from the initial model takes us to the records where <strong>capital gains</strong> was greater than 1.47. The class predicted is +50k in this case where 1370 records have an income of +50k and <strong>capital gains</strong> &gt;0.4</p>
+
+<p>The bottom row contains our leaf nodes: the nodes with no answers coming out of them, because there are no more questions to be answered.</p>
+
+<p>Returning back to the top node after the first decision point, we can see that a second binary decision split has been made, based on asking whether <strong>weeks_worked_per_year</strong> is less than or equal to 0.9. For the group where this is true, the class predicted is -50k with a gini of 0.019 and there are 85,411 records. For the records where this decision is false, the class predicted is -50k with a gini of 0.019, and there are 52,361 records. So again, we can see that the decision tree algorithm has successfully split out more records into two more groups which differ in gini value significantly.</p>
+
+<p>Now, let’s run our base model :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m = DecisionTreeClassifier(random_state=14)
+m.fit(X_train, y_train)
+DecisionTreeClassifier(random_state=14)
+</code></pre></div></div>
+
+<p>We evaluate the model on our validation set using <strong>accuracy</strong>, <strong>recall</strong> and <strong>f1 score</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.metrics import accuracy_score, f1_score, recall_score
+
+# on the train set 
+accuracy_score(y_train,m.predict(X_train)) , \
+recall_score(y_train,m.predict(X_train)), \
+f1_score(y_train,m.predict(X_train), average='binary', pos_label=1)
+(0.9996348431257428, 0.9943463712934117, 0.997049806212761)
+# on the valid set 
+accuracy_score(y_val,m.predict(X_val)) , \
+recall_score(y_val,m.predict(X_val)), \
+f1_score(y_val,m.predict(X_val), average='binary', pos_label=1) 
+(0.9307683311893346, 0.4888290713324361, 0.4670781893004115)
+</code></pre></div></div>
+
+<p>It’s seems that we are doing badly on the validation set. Let’s see houw many leaf nodes we got :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m.get_n_leaves(), len(X_train)
+(8005, 139666)
+</code></pre></div></div>
+
+<p>Sklearn’s default settings allow it to continue splitting nodes until there is only one item in each leaf node. Let’s change the stopping rule to tell sklearn to ensure every leaf node contains at least 25 records:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m = DecisionTreeClassifier(min_samples_leaf=25,random_state=14)
+m.fit(X_train, y_train)
+
+# on the train set 
+accuracy_score(y_train,m.predict(X_train)) , \
+recall_score(y_train,m.predict(X_train)), \
+f1_score(y_train,m.predict(X_train), average='binary', pos_label=1)
+
+(0.9571048071828505, 0.46198223145263645, 0.5720408600614331)
+# on the valid set 
+accuracy_score(y_val,m.predict(X_val)) , \
+recall_score(y_val,m.predict(X_val)), \
+f1_score(y_val,m.predict(X_val), average='binary', pos_label=1) 
+(0.9504986885410228, 0.42449528936742936, 0.515612228216446)
+</code></pre></div></div>
+
+<p>That looks much better. Let’s check the number of leaves again:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m.get_n_leaves(), len(X_train)
+(1533, 139666)
+</code></pre></div></div>
+
+<p>We got less leaf nodes than before. So, the more we increase the number of leaf nodes, the more is the possibility of <strong>overfitting</strong>.</p>
+
+<p>Building a <strong>decision tree</strong> is a good way to create a model of our data. It is very flexible, since it can clearly handle nonlinear relationships and interactions between variables. But we can see there is a fundamental compromise between how well it generalizes (which we can achieve by creating small trees) and how accurate it is on the training set (which we can achieve by using large trees).</p>
+
+<p>So how do we get the best of both worlds?</p>
+
+<ul>
+  <li>Ensembling :</li>
+</ul>
+
+<p>An an example of an Ensemble method is <strong>Random Forest</strong> : we can train a group of Decision Tree classifiers, each on a different random subset of the training set. The process of subseting the data is called <strong>bagging</strong> done with <strong>max_samples</strong> hyperparameter ( we set it at 100.00 samples) and the ramdom selection process this called <strong>bootsraping</strong> done by setting <strong>bootstrap = True</strong>.</p>
+
+<p>With bagging, some instances may be sampled several times for any given predictor, while others may not be sampled at all. The remaining sampled are called <strong>out-of-bag (oob) instances</strong> used as <strong>validation set</strong> in the training process and done by setting <strong>oob_score=True</strong>.</p>
+
+<p>We train a Random Forest classifier <strong>with 50 trees</strong> (each limited to <strong>minimum 5 samples per leaf</strong>). and instead of searching for the very best feature when splitting a node, we searches for the best feature among a random subset of 50% of our initial features.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(n_estimators = 50, max_samples=100_000, max_features=0.5, min_samples_leaf= 5, 
+                            bootstrap= True,oob_score = True,random_state=14)
+%%time
+rf.fit(X_train,y_train)
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+CPU times: user 29.1 s, sys: 643 ms, total: 29.7 s
+Wall time: 32.8 s
+RandomForestClassifier(max_features=0.5, max_samples=100000, min_samples_leaf=5,
+                       n_estimators=50, oob_score=True, random_state=14)
+# on the train set 
+accuracy_score(y_train,rf.predict(X_train)) , \
+recall_score(y_train,rf.predict(X_train)), \
+f1_score(y_train,rf.predict(X_train), average='binary', pos_label=1)
+(0.9670571219910358, 0.5334025614399446, 0.6677258611973712)
+# on the valid set 
+accuracy_score(y_val,rf.predict(X_val)) , \
+recall_score(y_val,rf.predict(X_val)), \
+f1_score(y_val,rf.predict(X_val), average='binary', pos_label=1) 
+(0.9546418965200394, 0.41668909825033645, 0.5327826535880227)
+</code></pre></div></div>
+
+<p>Looking at what happens to the <strong>oob error rate</strong> as we add more and more trees, we you can see that the improvement levels off quite a bit after around 40 trees:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scores =[]
+for k in range(1, 50):
+    rfc = RandomForestClassifier(n_estimators = k, max_samples=100_000, max_features=0.5, min_samples_leaf= 5, 
+                            bootstrap= True,oob_score = True,random_state=14)
+    rfc.fit(X_train, y_train)
+    #y_pred = rfc.predict(X_val)
+    #scores.append(accuracy_score(y_test, y_pred)) oob_score_
+    oob_error = 1 - rfc.oob_score_
+    scores.append(oob_error)
+
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+# plot the relationship between K and testing accuracy
+# plt.plot(x_axis, y_axis)
+plt.plot(range(1, 50), scores)
+plt.xlabel('Value of n_estimators for Random Forest Classifier')
+#plt.ylabel('Testing Accuracy')
+plt.ylabel('OOB error rate')
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/ensemble/_forest.py:554: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+  UserWarning,
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+Text(0, 0.5, 'OOB error rate')
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId40.png" alt="" /></p>
+
+<p>Let’s try to improve our model :</p>
+
+<p>We may ask <strong>which columns are the strongest predictors, which can we ignore?</strong></p>
+
+<p>It’s not normally enough just to know that a model can make accurate predictions—we also want to know how it’s making predictions. Feature importance gives us insight into this. We can get these directly from sklearn’s random forest by looking in the feature_importances_ attribute. Here’s a simple function we can use to pop them into a DataFrame and sort them:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def rf_feat_importance(m, df):
+    return pd.DataFrame({'cols':df.columns, 'imp':m.feature_importances_}
+                       ).sort_values('imp', ascending=False)
+fi = rf_feat_importance(rf, X_train)
+fi[:14]
+                               cols       imp
+16                    capital_gains  0.161368
+18            dividends_from_stocks  0.132382
+0                               age  0.094106
+3        detailed_occupation_recode  0.081452
+38             weeks_worked_in_year  0.076202
+2          detailed_industry_recode  0.056239
+12                              sex  0.054394
+4                         education  0.049652
+17                   capital_losses  0.047552
+29  num_persons_worked_for_employer  0.040222
+9             major_occupation_code  0.039596
+8               major_industry_code  0.031488
+1                   class_of_worker  0.014878
+19                   tax_filer_stat  0.013542
+</code></pre></div></div>
+
+<p>The feature importances for our model show that the first few most important columns have much higher importance scores than the rest, with (not surprisingly) <strong>capital_gains</strong> and <strong>dividends_from_stocks</strong> being at the top of the list.</p>
+
+<p>A plot of the feature importances shows the relative importances more clearly:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def plot_fi(fi):
+    return fi.plot('cols', 'imp', 'barh', figsize=(12,7), legend=False)
+
+plot_fi(fi[:30]);
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId41.png" alt="" /></p>
+
+<p>The way these importances are calculated is quite simple yet elegant. The feature importance algorithm loops through each tree, and then recursively explores each branch. At each branch, it looks to see what feature was used for that split, and how much the model improves as a result of that split. The improvement (weighted by the number of rows in that group) is added to the importance score for that feature. This is summed across all branches of all trees, and finally the scores are normalized such that they add to 1.</p>
+
+<p>It seems likely that we could use just a subset of the columns by removing the variables of low importance and still get good results. Let’s try just keeping those with a feature importance greater than <strong>0.005</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>to_keep = fi[fi.imp&gt;0.005].cols
+len(to_keep)
+25
+</code></pre></div></div>
+
+<p>We can retrain our model using just this subset of the columns:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train_imp = X_train[to_keep]
+X_val_imp = X_val[to_keep]
+m = RandomForestClassifier(n_estimators = 50, max_samples=100_000, max_features=0.5, min_samples_leaf= 5, 
+                            bootstrap= True,oob_score = True,random_state=14)
+
+m.fit(X_train_imp,y_train)
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  "X does not have valid feature names, but"
+RandomForestClassifier(max_features=0.5, max_samples=100000, min_samples_leaf=5,
+                       n_estimators=50, oob_score=True, random_state=14)
+# on the train set 
+accuracy_score(y_train,m.predict(X_train_imp)) , \
+recall_score(y_train,m.predict(X_train_imp)), \
+f1_score(y_train,m.predict(X_train_imp), average='binary', pos_label=1)
+(0.9670857617458795, 0.5334025614399446, 0.6679188037275157)
+# on the valid set 
+accuracy_score(y_val,m.predict(X_val_imp)) , \
+recall_score(y_val,m.predict(X_val_imp)), \
+f1_score(y_val,m.predict(X_val_imp), average='binary', pos_label=1) 
+(0.9543077668443123, 0.4142664872139973, 0.5295028384655084)
+</code></pre></div></div>
+
+<p>Our <strong>accuracy is about the same</strong>, but we have <strong>far fewer columns</strong> to study:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>len(X_train.columns), len(X_train_imp.columns)
+(40, 25)
+</code></pre></div></div>
+
+<p>We’ve found that generally the first step to improving a model is <strong>simplifying it</strong>—48 columns was too many for us to study them all in depth! Furthermore, in practice often a simpler, more interpretable model is easier to roll out and maintain.</p>
+
+<p>This also makes our feature importance plot easier to interpret. Let’s look at it again:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot_fi(rf_feat_importance(m, X_train_imp));
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId42.png" alt="" /></p>
+
+<p>Let’s see if we have redundent feature in our model by determining their similarities :</p>
+
+<blockquote>
+  <p>Determining Similarity: The most similar pairs are found by calculating the rank correlation, which means that all the values are replaced with their rank (i.e., first, second, third, etc. within the column), and then the correlation is calculated.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import scipy
+from scipy.cluster import hierarchy as hc
+
+def cluster_columns(df, figsize=(10,6), font_size=12):
+    corr = np.round(scipy.stats.spearmanr(df).correlation, 4)
+    corr_condensed = hc.distance.squareform(1-corr)
+    z = hc.linkage(corr_condensed, method='average')
+    fig = plt.figure(figsize=figsize)
+    hc.dendrogram(z, labels=df.columns, orientation='left', leaf_font_size=font_size)
+    plt.show()
+
+cluster_columns(X_train_imp)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId43.png" alt="" /></p>
+
+<p>Looking good! This is really not much worse than the model with all the fields. Let’s create DataFrames without these columns, and save them:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train_final = X_train_imp # train
+X_val_final = X_val_imp # valid 
+
+test_x_final = test_x[to_keep] # test set
+X_train_final.shape , X_val_final.shape, test_x_final.shape
+((139666, 25), (59857, 25), (99762, 25))
+</code></pre></div></div>
+
+<h1 id="model-assesment-">Model Assesment :</h1>
+
+<p>We have seen the <strong>DecisionTreeClassifier</strong> as our basemodel, then we tried <strong>RandomForestClassifier</strong> and finaly we tried to optimize so we can have less features for better interpretation.</p>
+
+<p>Here is the model metrics on our <strong>validation set</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>models_metrics = {'DTC': [0.95, 0.42, 0.51], 
+                 'RF': [0.96, 0.42, 0.53],
+                 'RF_less_feat': [0.95, 0.41, 0.53]
+                 
+                }
+df = pd.DataFrame(data = models_metrics)
+df.rename(index={0:'Accuracy',1:'Recall', 2: 'F1 score'}, 
+                 inplace=True)
+ax = df.plot(kind='bar', figsize = (10,5), 
+        color = ['gold', 'lightgreen','lightcoral'],
+        rot = 0, title ='Models performance',
+        edgecolor = 'grey', alpha = 0.5)
+for p in ax.patches:
+    ax.annotate(str(p.get_height()), (p.get_x() * 1.01, p.get_height() * 1.0005))
+plt.show()
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId45.png" alt="" /></p>
+
+<p>Based on <strong>F1 score</strong>, we select the <strong>RandomForestClassifier</strong> with 25 features as our best model.</p>
+
+<p>Let’s see the <strong>experiment results</strong>* of this model :</p>
+
+<p>The <strong>precision_recall_curve</strong> and <strong>roc_curve</strong> are useful tools to visualize the <strong>sensitivity-specificty</strong> tradeoff in the classifier. They help inform a data scientist where to set the decision threshold of the model to maximize either sensitivity or specificity. This is called the <strong>operating point</strong> of the model.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.metrics import roc_curve, precision_recall_curve, \
+auc, make_scorer, recall_score, accuracy_score, precision_score, confusion_matrix
+# We create an array of the class probabilites called y_scores
+y_scores = m.predict_proba(X_val_imp)[:, 1]
+
+# we enerate the precision-recall curve for the classifier:
+p, r, thresholds = precision_recall_curve(y_val, y_scores)
+
+# We calculate the  F1 scores
+f1_scores = 2*r*p/(r+p)
+</code></pre></div></div>
+
+<p>Let’s plot the <strong>decision chart</strong> of our model :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    
+    plt.figure(figsize=(8, 8))
+    plt.title("Precision, Recall Scores and F1 scores as a function of the decision threshold")
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+    plt.plot(thresholds, f1_scores[:-1], "r-", label="F1-score")
+    plt.ylabel("Score")
+    plt.xlabel("Decision Threshold")
+    plt.legend(loc='best')
+    
+plot_precision_recall_vs_threshold(p, r, thresholds)    
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId46.png" alt="" /></p>
+
+<p>We can see that the the optimal threshold to achieve the highest F1 score is set at <strong>0.30</strong> with <strong>59% F1-score</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print('Best threshold: ', thresholds[np.argmax(f1_scores)])
+print('Best F1-Score: ', np.max(f1_scores))
+Best threshold:  0.30834595959595956
+Best F1-Score:  0.5950888192267503
+</code></pre></div></div>
+
+<p>Let’s creat <strong>an animated confusion matrix</strong> where the users get to choose the <strong>threesholds</strong> and we <strong>dislpay the confusion matrix and recall vs precision curve</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install ipywidgets
+Requirement already satisfied: ipywidgets in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (7.6.5)
+Requirement already satisfied: ipython-genutils~=0.2.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (0.2.0)
+Requirement already satisfied: ipykernel&gt;=4.5.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (5.3.4)
+Requirement already satisfied: ipython&gt;=4.0.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (7.22.0)
+Requirement already satisfied: jupyterlab-widgets&gt;=1.0.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (1.0.0)
+Requirement already satisfied: nbformat&gt;=4.2.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (5.1.3)
+Requirement already satisfied: traitlets&gt;=4.3.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (5.1.1)
+Requirement already satisfied: widgetsnbextension~=3.5.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipywidgets) (3.5.1)
+Requirement already satisfied: tornado&gt;=4.2 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets) (6.1)
+Requirement already satisfied: jupyter-client in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets) (7.0.1)
+Requirement already satisfied: appnope in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets) (0.1.2)
+Requirement already satisfied: decorator in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (5.1.0)
+Requirement already satisfied: pygments in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (2.10.0)
+Requirement already satisfied: backcall in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (0.2.0)
+Requirement already satisfied: pexpect&gt;4.3 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (4.8.0)
+Requirement already satisfied: setuptools&gt;=18.5 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (58.0.4)
+Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (3.0.20)
+Requirement already satisfied: jedi&gt;=0.16 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (0.18.1)
+Requirement already satisfied: pickleshare in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets) (0.7.5)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=4.0.0-&gt;ipywidgets) (0.8.3)
+Requirement already satisfied: jupyter-core in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets) (4.9.1)
+Requirement already satisfied: jsonschema!=2.5.0,&gt;=2.4 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets) (3.2.0)
+Requirement already satisfied: pyrsistent&gt;=0.14.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (0.18.0)
+Requirement already satisfied: importlib-metadata in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (4.8.1)
+Requirement already satisfied: attrs&gt;=17.4.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (21.2.0)
+Requirement already satisfied: six&gt;=1.11.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (1.16.0)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from pexpect&gt;4.3-&gt;ipython&gt;=4.0.0-&gt;ipywidgets) (0.7.0)
+Requirement already satisfied: wcwidth in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0-&gt;ipython&gt;=4.0.0-&gt;ipywidgets) (0.2.5)
+Requirement already satisfied: notebook&gt;=4.4.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from widgetsnbextension~=3.5.0-&gt;ipywidgets) (6.4.5)
+Requirement already satisfied: prometheus-client in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.11.0)
+Requirement already satisfied: pyzmq&gt;=17 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (22.2.1)
+Requirement already satisfied: jinja2 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (2.11.3)
+Requirement already satisfied: nbconvert in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (6.1.0)
+Requirement already satisfied: terminado&gt;=0.8.3 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.9.4)
+Requirement already satisfied: argon2-cffi in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (20.1.0)
+Requirement already satisfied: Send2Trash&gt;=1.5.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (1.8.0)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jupyter-client-&gt;ipykernel&gt;=4.5.1-&gt;ipywidgets) (2.8.2)
+Requirement already satisfied: nest-asyncio&gt;=1.5 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jupyter-client-&gt;ipykernel&gt;=4.5.1-&gt;ipywidgets) (1.5.1)
+Requirement already satisfied: entrypoints in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jupyter-client-&gt;ipykernel&gt;=4.5.1-&gt;ipywidgets) (0.3)
+Requirement already satisfied: cffi&gt;=1.0.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (1.15.0)
+Requirement already satisfied: pycparser in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from cffi&gt;=1.0.0-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (2.21)
+Requirement already satisfied: typing-extensions&gt;=3.6.4 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from importlib-metadata-&gt;jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (3.10.0.2)
+Requirement already satisfied: zipp&gt;=0.5 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from importlib-metadata-&gt;jsonschema!=2.5.0,&gt;=2.4-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets) (3.6.0)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from jinja2-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (2.0.1)
+Requirement already satisfied: jupyterlab-pygments in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.1.2)
+Requirement already satisfied: mistune&lt;2,&gt;=0.8.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.8.4)
+Requirement already satisfied: testpath in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.5.0)
+Requirement already satisfied: pandocfilters&gt;=1.4.1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (1.4.3)
+Requirement already satisfied: defusedxml in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.7.1)
+Requirement already satisfied: bleach in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (4.0.0)
+Requirement already satisfied: nbclient&lt;0.6.0,&gt;=0.5.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.5.3)
+Requirement already satisfied: async-generator in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from nbclient&lt;0.6.0,&gt;=0.5.0-&gt;nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (1.10)
+Requirement already satisfied: webencodings in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from bleach-&gt;nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (0.5.1)
+Requirement already satisfied: packaging in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from bleach-&gt;nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (21.0)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from packaging-&gt;bleach-&gt;nbconvert-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets) (3.0.4)
+Note: you may need to restart the kernel to use updated packages.
+import ipywidgets as widgets
+import itertools
+def plot_confusion_matrix(cm, classes,
+                          normalize = False,
+                          title = 'Confusion matrix"',
+                          cmap = plt.cm.Blues) :
+    plt.imshow(cm, interpolation = 'nearest', cmap = cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation = 0)
+    plt.yticks(tick_marks, classes)
+
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])) :
+        plt.text(j, i, cm[i, j],
+                 horizontalalignment = 'center',
+                 color = 'white' if cm[i, j] &gt; thresh else 'black')
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    
+def adjusted_classes(y_scores, t):
+    """
+    This function adjusts class predictions based on the prediction threshold (t).
+    Will only work for binary classification problems.
+    """
+    return [1 if y &gt;= t else 0 for y in y_scores]
+
+def precision_recall_threshold(p, r, thresholds, t=0.5):
+    """
+    plots the precision recall curve and shows the current value for each
+    by identifying the classifier's threshold (t).
+    """
+    
+    # generate new class predictions based on the adjusted_classes
+    # function above and view the resulting confusion matrix.
+    y_pred_adj = adjusted_classes(y_scores, t)
+    
+    cm = confusion_matrix(y_val, y_pred_adj)
+    class_names = [0,1]
+    plt.figure()
+    plot_confusion_matrix(cm, 
+                      classes=class_names, 
+                      title='RF Confusion matrix')
+
+    plt.figure(figsize=(8,8))
+    plt.title("Precision and Recall curve ^ = current threshold")
+    plt.step(r, p, color='b', alpha=0.2,
+             where='post')
+    plt.fill_between(r, p, step='post', alpha=0.2,
+                     color='b')
+    
+    plt.xlabel('Recall');
+    plt.ylabel('Precision');
+    
+    # plot the current threshold on the line
+    close_default_clf = np.argmin(np.abs(thresholds - t))
+    plt.plot(r[close_default_clf], p[close_default_clf], '^', c='k',
+            markersize=15)
+slider = widgets.IntSlider(
+    min=0,
+    max=10,
+    step=1,
+    description='Slider:',
+    value=3 # The best threshhold for our model
+)
+display(slider)
+
+{"model_id":"64c4bfbbeb2a4242855806666b132d49","version_major":2,"version_minor":0}
+print(f'For this threshold : {slider.value/10}, the confusion matrix is as follow :')
+precision_recall_threshold(p, r, thresholds, slider.value/10)
+For this threshold : 0.3, the confusion matrix is as follow :
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId47.png" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId48.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def plot_roc_curve(fpr, tpr, label=None):
+    plt.figure(figsize=(8,8))
+    plt.title('ROC Curve')
+    plt.plot(fpr, tpr, linewidth=2, label=label)
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.axis([-0.005, 1, 0, 1.005])
+    plt.xticks(np.arange(0,1, 0.05), rotation=90)
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate (Recall)")
+    plt.legend(loc='best')
+fpr, tpr, auc_thresholds = roc_curve(y_val, y_scores)
+print(f'AUC : {auc(fpr, tpr)}') # AUC of ROC
+plot_roc_curve(fpr, tpr, 'recall_optimized')
+AUC : 0.9433941778952841
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId49.png" alt="" /></p>
+
+<p>Now, let’s test this model on our <strong>test set</strong> :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>accuracy_score(test_y,m.predict(test_x_final)) , \
+recall_score(test_y,m.predict(test_x_final)) , \
+f1_score(test_y,m.predict(test_x_final), average='binary', pos_label=1)
+(0.9546420480744171, 0.4183640478499838, 0.5335532419338213)
+</code></pre></div></div>
+
+<h1 id="results--partial-dependency-and-shap-values">Results : Partial dependency and SHAP values</h1>
+
+<p>Let’s look at <strong>partial dependence plots</strong>.</p>
+
+<p><strong>Partial dependence</strong> plots try to answer the question: if a row varied on nothing other than the feature in question, how would it impact the dependent variable?</p>
+
+<p>For instance, how does <strong>capital_gains</strong> and <strong>dividends_from_stocks</strong> impact probability of belonging to the +50k income levl, all other things being equal?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.inspection import plot_partial_dependence
+
+fig,ax = plt.subplots(figsize=(20, 8))
+plot_partial_dependence(m, X_val_final, ['capital_gains','dividends_from_stocks'], percentiles=(0,1),
+                        grid_resolution=15, ax=ax);
+/Users/rmbp/opt/anaconda3/lib/python3.7/site-packages/sklearn/utils/deprecation.py:87: FutureWarning: Function plot_partial_dependence is deprecated; Function `plot_partial_dependence` is deprecated in 1.0 and will be removed in 1.2. Use PartialDependenceDisplay.from_estimator instead
+  warnings.warn(msg, category=FutureWarning)
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId51.png" alt="" /></p>
+
+<p>Looking first at the <strong>dividends_from_stocks</strong> plot, we can see a nearly linear relationship between capital dividends_from_stocks and the probabillity of income level. Same for <strong>capital_gains</strong> at 5 standad deviation from the mean after reaching a steady state above that.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!pip install shap
+Requirement already satisfied: shap in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (0.40.0)
+Requirement already satisfied: packaging&gt;20.9 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (21.0)
+Requirement already satisfied: cloudpickle in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (2.0.0)
+Requirement already satisfied: tqdm&gt;4.25.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (4.62.3)
+Requirement already satisfied: pandas in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (1.3.4)
+Requirement already satisfied: scipy in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (1.7.1)
+Requirement already satisfied: slicer==0.0.7 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (0.0.7)
+Requirement already satisfied: numpy in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (1.21.2)
+Requirement already satisfied: numba in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (0.53.1)
+Requirement already satisfied: scikit-learn in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from shap) (1.0.1)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from packaging&gt;20.9-&gt;shap) (3.0.4)
+Requirement already satisfied: llvmlite&lt;0.37,&gt;=0.36.0rc1 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from numba-&gt;shap) (0.36.0)
+Requirement already satisfied: setuptools in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from numba-&gt;shap) (58.0.4)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from pandas-&gt;shap) (2.8.2)
+Requirement already satisfied: pytz&gt;=2017.3 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from pandas-&gt;shap) (2021.3)
+Requirement already satisfied: six&gt;=1.5 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from python-dateutil&gt;=2.7.3-&gt;pandas-&gt;shap) (1.16.0)
+Requirement already satisfied: joblib&gt;=0.11 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from scikit-learn-&gt;shap) (1.1.0)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /Users/rmbp/opt/anaconda3/lib/python3.7/site-packages (from scikit-learn-&gt;shap) (2.2.0)
+import shap
+row_to_show = 20
+data_for_prediction = test_x_final.iloc[row_to_show]  # use 1 row of data here. Could use multiple rows if desired
+# Create object that can calculate shap values
+explainer = shap.TreeExplainer(m)
+
+# Calculate Shap values
+shap_values = explainer.shap_values(data_for_prediction)
+shap.initjs()
+shap.force_plot(explainer.expected_value[1], shap_values[1], data_for_prediction)
+&lt;IPython.core.display.HTML object&gt;
+&lt;shap.plots._force.AdditiveForceVisualizer at 0x13c39bd50&gt;
+</code></pre></div></div>
+
+<p>The above explanation shows features each contributing to push the model output from the base value (the average model output over the training dataset we passed) to the model output. Features pushing the prediction higher are shown in red, those pushing the prediction lower are in blue</p>
+
+<ul>
+  <li>The base_value here is 0.062 while our predicted value is 0.0.</li>
+  <li>sex = 1 has the biggest impact on increasing the prediction, while</li>
+  <li>Weeks_worked_im_year (below the average) and Age (below the average) feature has the biggest effect in decreasing the prediction.</li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>explainer = shap.TreeExplainer(m)
+
+# calculate shap values. This is what we will plot.
+# Calculate shap_values for all of val_X rather than a single row, to have more data for plot.
+shap_values = explainer.shap_values(test_x_final.iloc[:1000,])
+
+# Make plot. Index of [1] is explained in text below.
+shap.summary_plot(shap_values[1],test_x_final.iloc[:1000,])
+</code></pre></div></div>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-11-20-US-cencus-income---Ensembles,-Bagging-and-Shap-Values/media/rId52.png" alt="" /></p>
+
+<p>For every dot:</p>
+
+<ul>
+  <li>Vertical location shows what feature it is depicting</li>
+  <li>Color shows whether that feature was high or low for that row of the dataset</li>
+  <li>Horizontal location shows whether the effect of that value caused a higher or lower prediction.</li>
+</ul>
+
+<p>For the <strong>age</strong> variable, the point in the upper left was depicts a person whose age level is less thereby reducing the prediction of income level +50k class by 0.2.</p>
+
+<h1 id="conclusion-">Conclusion :</h1>
+
+<p>In this work, we presented some techniques for dealing with a machine learning project :</p>
+
+<ul>
+  <li>
+    <p>We used Decision Tree ensembles : Random Forest are the easiest to train, because they are extremely resilient to hyperparameter choices and require very little preprocessing. They are very fast to train, and should not overfit if we have enough trees.</p>
+  </li>
+  <li>
+    <p>we used the model for feature selection and partial dependence analysis and Shap values, to get a better understanding of our data.</p>
+  </li>
+</ul>
+
+<p>For futur improvements :</p>
+
+<ul>
+  <li>
+    <p>We can try Gradient Boosting machines as in theory are just as fast to train as random forests, but in practice we will have to try lots of different hyperparameters. They can overfit, but they are often a little more accurate than random forests.</p>
+  </li>
+  <li>
+    <p>We can try OneHotEncoder with PCA to deal with the multiple modalities on our categorical variables.</p>
+  </li>
+  <li>
+    <p>We can creat new features to challenge the model performance.</p>
+  </li>
+</ul>
+
+<!-- end list -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/myportfolio/2021/11/20/US-cencus-income-Ensembles,-Bagging-and-Shap-Values.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/myportfolio/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/myportfolio/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/myportfolio/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Documenting my journey in data science.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/younesszaim" title="younesszaim"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/youness-zaim-9a344b101" title="youness-zaim-9a344b101"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#linkedin"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
