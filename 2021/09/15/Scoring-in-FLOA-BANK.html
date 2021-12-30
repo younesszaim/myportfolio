@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Scoring In Floa Bank | ML Notes</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Scoring In Floa Bank" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documenting my journey in data science." />
+<meta property="og:description" content="Documenting my journey in data science." />
+<link rel="canonical" href="https://younesszaim.github.io/myportfolio/2021/09/15/Scoring-in-FLOA-BANK.html" />
+<meta property="og:url" content="https://younesszaim.github.io/myportfolio/2021/09/15/Scoring-in-FLOA-BANK.html" />
+<meta property="og:site_name" content="ML Notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://younesszaim.github.io/myportfolio/2021/09/15/Scoring-in-FLOA-BANK.html","@type":"BlogPosting","headline":"Scoring In Floa Bank","dateModified":"2021-09-15T00:00:00-05:00","datePublished":"2021-09-15T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://younesszaim.github.io/myportfolio/2021/09/15/Scoring-in-FLOA-BANK.html"},"description":"Documenting my journey in data science.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/myportfolio/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://younesszaim.github.io/myportfolio/feed.xml" title="ML Notes" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GKNEWXEGDC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GKNEWXEGDC');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/myportfolio/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/myportfolio/">ML Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/myportfolio/about/">About Me</a><a class="page-link" href="/myportfolio/search/">Search</a><a class="page-link" href="/myportfolio/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Scoring In Floa Bank</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-15T00:00:00-05:00" itemprop="datePublished">
+        Sep 15, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      79 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image3.png" alt="" /><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image4.png" alt="Payer en 3 fois sans frais ! Avec notre partenaire Floa Bank Vous avez la possibilité de payer en plusieurs mensualités, un paiement simple et rapide : 1 Validez votre panier 2 Choisissez le mode de paiement 3x sans frais 3 Finalisez votre commande sur la ..." /><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image5.jpeg" alt="Fichier:Logo UT3.jpg — Wikipédia" /></p>
+
+<p>Real-time credit scoring in FLOA Bank</p>
+
+<p>by</p>
+
+<p><strong>Youness ZAIM</strong></p>
+
+<p>Under the guidance of</p>
+
+<p><strong>Anais LAPEYRE</strong> &amp; <strong>Christine THOMAS</strong></p>
+
+<p>Toulouse School of Economics</p>
+
+<p>Master 2 Econometrics &amp; Statistics</p>
+
+<p>Septembre 2021</p>
+
+<p><span class="underline">Toulouse School of Economics</span></p>
+
+<p>Real-time credit scoring in FLOA Bank</p>
+
+<p><span class="underline">Summary</span></p>
+
+<p>Within the framework of the Master 2 Econometrics and Statistics of Toulouse School of Economics, this report aims to review and assess methods for constructing a customized credit scoring model for online credit. We examine the process-flow involved in the scorecard modeling and highlight the probable causes of weak model performance. Such examination includes theoretical and empirical assessment of data quality, variable transformation and selection based on automated binning algorithms, statistical tests for model performances to assess its validity and practicality for implementation.</p>
+
+<p>Acknowledgements</p>
+
+<p>With boundless excitement and appreciation, I would like to express my sincere gratitude to the people who helped for the successful completion of my apprentice report:</p>
+
+<ul>
+  <li>
+    <p>To my supervisor, Anais LAPEYRE, for hiring me as an intern and giving me the opportunity to do my apprenticeship in FLOA Bank, for the continuous support during my missions, for her generous advice, immense knowledge and encouragement.<br />
+I could not have imagined having a better mentor and role model.</p>
+  </li>
+  <li>
+    <p>To my academic tutor, Christine THOMAS, for her guidance throughout the year and all members of University of Toulouse for the quality of their teaching and their daily efforts in guiding us towards a successful professional insertion.</p>
+  </li>
+  <li>
+    <p>To my manager, Virginie LANGE, for her instructions and recommendations. Her cheerful and vibrant personality has always been my inspiration.</p>
+  </li>
+  <li>
+    <p>To the beloved FLOA’s data science team:</p>
+
+    <ul>
+      <li>
+        <p>Joanna MORAIS for all her kind support, genuine advice, and patience.</p>
+      </li>
+      <li>
+        <p>Vincent GALLMANN, for his generous support and guidance through the modelling process. His kindness will always be remembered and appreciated.</p>
+      </li>
+      <li>
+        <p>Minh-Tri NGUYEN for all the fond memories and kind support.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>I would like to express my warmest thanks to all those who have contributed in all ways to the accomplishment of this work.</p>
+
+<p>Contents</p>
+
+<p>#</p>
+
+<p><a href="#introduction">I. Introduction 6</a></p>
+
+<p><a href="#presentation">1- Presentation 6</a></p>
+
+<p><a href="#organization-of-floa-bank">2- Organization of FLOA Bank 8</a></p>
+
+<p><a href="#data-platform">3- Data platform 9</a></p>
+
+<p><a href="#data-storage">3.1 Data storage 9</a></p>
+
+<p><a href="#data-ingestion">3.2 Data ingestion 11</a></p>
+
+<p><a href="#exploitation-and-processing-of-the-data">3.3 Exploitation and processing of the data 12</a></p>
+
+<p><a href="#credit-scoring">II. Credit Scoring 15</a></p>
+
+<p><a href="#types-of-credit-scores">1- Types of credit scores 15</a></p>
+
+<p><a href="#generic-vs-customized-scoring-models">2- Generic vs customized scoring models 16</a></p>
+
+<p><a href="#coup-de-pouce-upcycle">3- Coup de pouce UPCYCLE 16</a></p>
+
+<p><a href="#monitoring-machine-learning-models-in-production">4- Monitoring machine learning models in production 21</a></p>
+
+<p><a href="#upcycle-credit-score-development">III. UPCYCLE credit score development 27</a></p>
+
+<p><a href="#goal-definition">1- Goal definition 27</a></p>
+
+<p><a href="#data-collection-preparation">2- Data collection &amp; preparation 28</a></p>
+
+<p><a href="#data-collection">2.1 Data collection 28</a></p>
+
+<p><a href="#data-analysis">2.2 Data analysis 33</a></p>
+
+<p><a href="#feature-engineering">3- Feature engineering 37</a></p>
+
+<p><a href="#binning-and-weights-of-evidence">3.1 Binning and weights of evidence 37</a></p>
+
+<p><a href="#manuel-binning">3.2 Manuel binning 41</a></p>
+
+<p><a href="#cluster-binning-for-categorical-variables">3.3 Cluster Binning for Categorical Variables 42</a></p>
+
+<p><a href="#time-features">3.4 Time Features 43</a></p>
+
+<p><a href="#hamming-distance">3.5 Hamming distance 44</a></p>
+
+<p><a href="#impact-coding">3.6 Impact coding 44</a></p>
+
+<p><a href="#standard-normalization">3.7 Standard normalization 45</a></p>
+
+<p><a href="#missing-values">3.8 Missing values 45</a></p>
+
+<p><a href="#modeling">IV. Modeling 46</a></p>
+
+<p><a href="#predictive-power">1- Predictive power 46</a></p>
+
+<p><a href="#performance-metrics">2- Performance metrics 48</a></p>
+
+<p><a href="#probabilities-and-lift">3- Probabilities and lift 49</a></p>
+
+<p><a href="#hyperparameter-tuning">4- Hyperparameter tuning 51</a></p>
+
+<p><a href="#machine-learning-algorithms">5- Machine learning algorithms 51</a></p>
+
+<p><a href="#random-forest">5.1 Random Forest 52</a></p>
+
+<p><a href="#gradient-boosted-trees">5.2 Gradient Boosted Trees 52</a></p>
+
+<p><a href="#logistic-regression">5.3 Logistic Regression 53</a></p>
+
+<p><a href="#experiment-results">6- Experiment results 54</a></p>
+
+<p><a href="#confusion-matrix-and-decision-chart">6.1 Confusion matrix and decision chart 54</a></p>
+
+<p><a href="#lift-curve">6.2 Lift curve 57</a></p>
+
+<p><a href="#roc-curve">6.3 ROC Curve 60</a></p>
+
+<p><a href="#detailed-metrics">6.4 Detailed metrics 63</a></p>
+
+<p><a href="#interpretation">V. Interpretation 66</a></p>
+
+<p><a href="#feature-importance">1- Feature importance 66</a></p>
+
+<p><a href="#partial-dependence">2- Partial dependence 67</a></p>
+
+<p><a href="#subpopulation-analysis">3- Subpopulation analysis 70</a></p>
+
+<p><a href="#individual-analysis">4- Individual analysis 72</a></p>
+
+<p><a href="#conclusion">VI. Conclusion 73</a></p>
+
+<p><a href="#appendix">VII. Appendix 74</a></p>
+
+<p><a href="#bibliography">VIII. Bibliography 75</a></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<h2 id="presentation">Presentation</h2>
+
+<p>FLOA Bank is a French leader for web and mobile payment solutions by making consumers’ lives easier through payment facilities, instant loans and bank cards. FLOA is also partner to large e-tailers (Cdiscount, Oscaro, SFR, Vide dressing, etc.), key players in tourism (Selectour, Misterfly, Cdiscount Voyages, Pierre et Vacances, etc.), and fintechs (Lydia, Bankin’), for which it creates bespoke services. Its two retail banking brands are FLOA Bank for its B2C customers and FLOA Pay for its B2B partners. FLOA’s products and services stand out, as they are easy to use for customers and quick to integrate for partners. FLOA boasts more than 3 million customers and grants more than €2 billion in loans for goods and services every year. In France, FLOA was named Best Customer Service Company 2021 (<em>Service Client de l’Année 2021</em>). With operations in France, Spain and Belgium, FLOA aims to become one of Europe’s leading providers of payment solutions.</p>
+
+<p>In an e-commerce market experiencing very strong growth, associated with changing consumer habits and customer expectations with regard to payment methods, BNP Paribas, Casino Group and Crédit Mutuel Alliance Fédérale signed an exclusivity agreement for the sale of FLOA to BNP Paribas by Casino Group and Crédit Mutuel Alliance Fédérale, setting up a strategic partnership between BNP Paribas and Casino Group. This will enable FLOA to initiate a new development cycle, capitalizing on BNP Paribas’ expertise and areas of business, particularly in view of European deployment.</p>
+
+<p>FLOA Bank presents a range of innovative products divided into 4 main categories:</p>
+
+<ul>
+  <li>
+    <p>Online credit: Personal loan, revolving credit and credit insurance. More information on all the online credits: https://www.floabank.fr/credits/gamme-credits</p>
+  </li>
+  <li>
+    <p>Bank cards: Casino bank card, Cdiscount MasterCard, gold card. More info on all bank cards: https://www.floabank.fr/mastercard/gamme-cartes</p>
+  </li>
+  <li>
+    <p>Insurances: Credit and cards, family and leisure, health and providence. More info on all insurances: https://www.floabank.fr/assurances/gamme-assurances</p>
+  </li>
+  <li>
+    <p>Payment facilities: Payment in several instalments (CB3X, CB4X and CB10X) on partner sites, instant mini-loans also called “Coup de pouce” (directly or via partnerships such as Lydia, Bankin, Cdiscount).</p>
+
+    <ul>
+      <li>
+        <p>The “Coup de Pouce” credit allows Internet users to benefit from a loan repayable in less than 90 days in 3 or 4 times (3 or 4 monthly payments), with a minimum of administrative procedures and a minimum of supporting documents. This credit offer is characterized by the flexibility of managing payments with digressive fees according to the amount of the Helping Hand. They vary from 1.48% to a maximum of 3.13%. In practice:</p>
+
+        <ul>
+          <li>For a ‘Coup de Pouce’ in 3 instalments: You pay the costs of your loan on the day of your application and then pay the total amount borrowed in 3 constant instalments over a period of 90 days.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>R1 = Credit fees on the day of the order D</p>
+
+  <p>R2 = 2nd instalment (1/3 of the amount requested) =&gt; D + 30 days</p>
+
+  <p>R3 = 3rd instalment (1/3 of the amount requested) =&gt; D + 60 days</p>
+
+  <p>R4 = 4th instalment (1/3 of the amount requested) =&gt; D + 90 days</p>
+</blockquote>
+
+<ul>
+  <li>For a ‘Coup de Pouce’ in 4 instalments: You pay the costs of your credit on the day of your request and then you pay the total amount borrowed in 4 constant instalments over a period of 90 days.</li>
+</ul>
+
+<blockquote>
+  <p>R1 = Credit charges + 1st instalment (1/4 of the amount requested) on the day of the order D<br />
+R2 = 2nd instalment (1/4 of the amount requested) =&gt; D + 30 days</p>
+
+  <p>R3 = 3rd instalment (1/4 of the amount requested) =&gt; D + 60 days</p>
+
+  <p>R4 = 4th instalment (1/4 of the amount requested) =&gt; D + 90 days</p>
+</blockquote>
+
+<p>An example to illustrate how the “Coup de Pouce “ works: If your mini-loan is 600 €, you pay an amount of 18,78 €, the day of the order. Then, you pay a constant monthly payment of 200 € during the next 3 months. In total, your credit costs 618.78 €. More information on Coup de Pouce :https://www.moncoupdepouce.com/</p>
+
+<ul>
+  <li>
+    <p>Payment in instalments (Le « paiement en plusieurs fois ») allows Internet users who are customers of FLOA’s partner merchant site to pay for their purchases in one, three or four instalments (one, three or four monthly instalments) with their bank card. The Customer’s repayment schedule will begin on the day the order is validated and will be spread out as follows:</p>
+
+    <ul>
+      <li>For the “1 X deferred” and “1 X deferred FREE” Payment Service:</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>R1 = 1st instalment on D + freely chosen period of time up to a maximum of 30 days.</p>
+</blockquote>
+
+<ul>
+  <li>For the “3 X” and “3 X FREE” payment service:</li>
+</ul>
+
+<blockquote>
+  <p>R1 = 1st due date on D R2 = 2nd due date =&gt; D + 30 days<br />
+R3 = 3rd due date =&gt; D+ 60 days</p>
+</blockquote>
+
+<ul>
+  <li>For the “3 X deferred” payment service:</li>
+</ul>
+
+<blockquote>
+  <p>R1 = 1st due date on D + 30 days<br />
+R2 = 2nd due date =&gt; D+ 60 days<br />
+R3 = 3rd due date =&gt; D + 90 days</p>
+</blockquote>
+
+<ul>
+  <li>For the “4 X” and “4 X FREE” payment service:</li>
+</ul>
+
+<blockquote>
+  <p>R1 = 1st due date on D<br />
+R2 = 2nd due date =&gt; D + 30 days<br />
+R3 = 3rd due date =&gt; D + 60 days<br />
+R4 = 4th due date =&gt; D + 90 days</p>
+</blockquote>
+
+<p>An example for a purchase on one of FLOA’s partner sites for an amount of 1500€. If you use the CB3X without fees proposed by FLOA Bank, a contribution corresponding to one third of the order will be requested on the day of the order. Two monthly payments corresponding to one third of the order will be taken 30 and 60 days later. No management or file fees: More information on all payment facilities: https://www.floabank.fr/solution-paiement/gamme-solution-paiement</p>
+
+<h2 id="organization-of-floa-bank">Organization of FLOA Bank</h2>
+
+<p>##</p>
+
+<p>The Data Department in FLOA Bank is composed of four teams:</p>
+
+<ul>
+  <li>
+    <p>Data Factory under the responsibility of Benjamin Laurent: The team is in charge of feeding all data (partners, back &amp; front IS, repositories, etc.) on the data platform (Snowflake), industrializing data flows (Talend) and setting up an enterprise data model.</p>
+  </li>
+  <li>
+    <p>BI &amp; Data Analytics under the responsibility of Zouheir Azahaf: The team is in charge of the industrialization of reporting in Tableau, BI analysis for the different departments of the company, and support for the business lines on their data challenges, especially on the specification of data marts.</p>
+  </li>
+  <li>
+    <p>Data Science under the responsibility of Virginie Lange: The team is in charge of all predictive modeling for the company (risk, fraud, collection, finance, marketing, etc.) and in particular the implementation of real-time scoring on our customer paths.</p>
+  </li>
+  <li>
+    <p>Strategy &amp; Data Projects under the responsibility of François Le Nouvel: The team isresponsible for the coordination of Data subjects and transversal operating modes as well as the internal/external visibility of data at FLOA.</p>
+  </li>
+</ul>
+
+<p>The Data Department is also part of the FLOA governance with the use of Jira to help gain in efficiency, rigor, visibility, traceability and management.</p>
+
+<p>The chart below illustrates the FLOA organization:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image6.png" alt="" /></p>
+
+<p>Figure 1: Diagram of the organization of FLOA</p>
+
+<h2 id="data-platform">Data platform</h2>
+
+<p>##</p>
+
+<p>The Data platform at FLOA brings together a set of tools and services to store (via Blob Storage, Datalake, Snowflake), process/prepare (via Talend or Dataiku), govern (via DataGalaxy), visualize (via Tableau), analyze (via Tableau or Dataiku) and model (via Dataiku) data.</p>
+
+<h3 id="data-storage">Data storage</h3>
+
+<ul>
+  <li>
+    <p>The Azure Blob Storage: serves as a buffer zone for storing raw data and as a gateway to the Data platform (SI FLOA, Euro Information, Eureka, etc.). Data arriving on the blob is not intended to remain there but to be automatically migrated to Snowflake (or the Datalake in certain cases)</p>
+  </li>
+  <li>
+    <p>Data Lake: allows to store in file mode a very large quantity of data. These data can be stored in any format, in a raw way or after a reworking. They can be kept for an indefinite period of time (within the limits of RGPD). Historically, datalakes appeared in the so-called “Big Data” architectures in order to allow the analysis of huge volumes of data at a lower cost than storage on a classic database. In the meantime, databases have evolved and their cost has decreased. In addition, managing data in file mode on a Datalake has often appeared tedious and therefore costly for standard uses. This is why in FLOA, the Datalake, provided by Microsoft Azure, and is intended to be used for the storage and use of unstructured data (MongoDB) because they cannot be stored in database format (Snowflake). These data must be regularly purged to meet the RGPD rules.</p>
+  </li>
+  <li>
+    <p>Snowflake (or SNF): is a SQL data storage and analysis service offered as a SaaS software (hosted in the Azure cloud in the case of FLOA). It is the first data warehouse designed for the cloud. Its multi-cluster architecture separates data storage into three distinct functions: storage; computation (virtual warehouses); services (user authentication, management, security, query optimization).</p>
+  </li>
+</ul>
+
+<p>The tree structure in Snowflake is as follows:</p>
+
+<ul>
+  <li>
+    <p>Database</p>
+
+    <ul>
+      <li>
+        <p>Schema(s)</p>
+
+        <ul>
+          <li>
+            <p>Table(s)</p>
+          </li>
+          <li>
+            <p>View(s)</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>In FLOA, the databases correspond to the different levels of storage (ODS, DWH, DTM) but also to environments dedicated to the business (BIDS, FRAUDE, etc.). Each database will have a production version (e.g. DWH_PRD), a test version (e.g. DWH_REC) and a development version (e.g. DWH_DEV). For the schemas, it will be a logical grouping allowing to target more quickly the stored data (Ex: MASTER, FILE, CASHBACK, SCORE_ERK). The table names correspond to those defined when modeling the ODS, DWH and DTM layers.</p>
+
+<p>Snowflake is a tool whose use is intended for Data teams (DataOps, Data Science and Data Analysis):</p>
+
+<ul>
+  <li>
+    <p>Snowflake - OPERATIONAL DATA STORE (ODS): This storage phase concerns structured and semi-structured data. The ODS allows to centralize in our Snowflake database all the heterogeneous data entering the Data platform (AR, external partners, open data, etc.) This storage space allows to standardize the storage format (Snowflake) but also the format of some types of fields (Date, Number, etc.). For an input data source, a target data source is fed into the ODS. It is therefore a raw data storage with a first level of technical harmonization. This level of storage is intended to be fed by the DataOps team and used by the DataOps and potentially Data Science teams.</p>
+  </li>
+  <li>
+    <p>Snowflake - DATA WAREHOUSE (DWH): The DATA WAREHOUSE succeeds the ODS layer in Snowflake. It allows to arrange, group, consolidate the data stored in the ODS in a model corresponding to the activity of the company. These tables contain information at the finest granularity with few calculated indicators. We can talk about a tabular view of data grouped by functional family (e.g.: Instruction table in the PnF universe, Stakeholder table in the Cards\&amp;Credit universe, etc.) This level of storage is intended to be fed by the DataOps team and used by the DataOps and Data Science teams and all the company’s Data Analysts.</p>
+  </li>
+  <li>
+    <p>Snowflake - DATAMARTS (DTM): The DATAMARTS succeed the DWH layer in Snowflake. Each DATAMART corresponds to a precise business need/use. There are many of them within the company. The DATAMART will allow to consolidate the DWH layer by gathering the relevant information present in several DWH tables and by storing them in a single table. DATAMART allows a more efficient and simpler use of the data available in the DWH. The business gets what it needs, stored the way it wants and with more efficient response time performance. This level of storage is intended to be fed by the DataOps teams and used by all DATA users within FLOA.</p>
+
+    <ol>
+      <li>
+        <h3 id="data-ingestion">Data ingestion</h3>
+
+        <ol>
+          <li>
+            <h4 id="tools-used-for-data-ingestion">Tools used for data ingestion</h4>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p>The data ingestion phase consists of retrieving data from the blob storage that is stored externally, either in the FLOA SI or at Euro Information or at our partners or via open data. The data can be retrieved</p>
+
+<ul>
+  <li>
+    <p>Either by push (the data provider pushes the data to the blob storage)</p>
+  </li>
+  <li>
+    <p>Or by connecting directly to the database or to an intermediate SFTP (via Talend connectors)</p>
+  </li>
+  <li>
+    <p>Or by using a dedicated query tool, such as the Focus / Webfocus tools with Euro Information</p>
+  </li>
+</ul>
+
+<p>Different tools to support this data ingestion phase:</p>
+
+<ul>
+  <li>
+    <p>Talend: Talend is an ETL (Extract, Transform, Load) that collects data from several sources, structures it, centralizes it, and prepares it to make it available to users. Talend’s tool is used exclusively by the DataOps team to make prepared data flows available to the company</p>
+  </li>
+  <li>
+    <p>Focus / Webfocus (outside the Data platform): Focus (older technology) and Webfocus (newer technology) are tools that code queries to extract BCA data hosted in the Euro Information environment (SIDU). Eventually, the goal is to get rid of these queries by directly deporting the data uses on the platform</p>
+  </li>
+  <li>
+    <p>DataGalaxy: DataGalaxy is a web &amp; collaborative data mapping tool, essential to comply with the RGPD. The tool will eventually allow to have an exhaustive view of metadata and data processing on the Data platform, by offering search, impact analysis and data lineage functionalities. DataGalaxy also allows tagging some metadata and these tags can be used for example for the criticality level of personal data in the framework of the RGPD. DataGalaxy is a collaborative tool that will be open to all (not yet available - the opening will be done progressively) with 3 types of licenses depending on the use (steward, explorer, viewer)</p>
+  </li>
+</ul>
+
+<p>To better understand the “journey of a data”, here is an example of lineage for an EI table arriving on the platform via the Blob which is ingested (via Talend) into Snowflake’s ODS and DWH layers, on which the DTM layer is based.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image7.png" alt="" /></p>
+
+<p>Figure 2: Modeling the path of the data</p>
+
+<h4 id="processing-of-the-raw-data-during-ingestion">Processing of the raw data during ingestion</h4>
+
+<p>The data preparation includes the different steps between the ingestion of the data and its availability to the user and can be summarized in the following steps:</p>
+
+<ul>
+  <li>
+    <p>Retrieve the data from the blob storage,</p>
+  </li>
+  <li>
+    <p>Clean the data and control the quality of the data,</p>
+  </li>
+  <li>
+    <p>Structure the data (according to the data model being developed),</p>
+  </li>
+  <li>
+    <p>Enrich the data by crossing it with data from the same or another table,</p>
+  </li>
+  <li>
+    <p>Publish the data in Snowflake or in the Datalake</p>
+  </li>
+</ul>
+
+<p>The use of the data can be in real time:</p>
+
+<ul>
+  <li>
+    <p>In FLOA, our product subscription paths query production databases to store data (to retain information related to the customer’s request) and to retrieve data (e.g. customer recognition) in real time.</p>
+  </li>
+  <li>
+    <p>Other usages include calling the credit score, fraud detection with the Threatmetrix tool (TMX), identity verification with Netheos, etc.</p>
+  </li>
+</ul>
+
+<p>On the other hand, the use of data can be offline and corresponds to a usage of business monitoring or steering reports, data analysis, score modeling, marketing campaign creation, etc.</p>
+
+<h3 id="exploitation-and-processing-of-the-data">Exploitation and processing of the data</h3>
+
+<p>FLOA bank provides different tools to accompany this data exploitation phase:</p>
+
+<ul>
+  <li>Dataiku (or DSS): DSS is a Data Science tool that allows not only the analytical processing of data but also different types of modeling (prediction score, appetence, segmentations etc.) while offering a collaborative approach. The platform is composed of different environments and allows to prepare, model (Design Node environment), automate and historize the workflow (Automation Node environment), and deploy the production (API Deployer and API Node environments). For more information on the technical environment around Dataiku, please refer to:</li>
+</ul>
+
+<blockquote>
+  <p>https://www.dataiku.com/</p>
+
+  <p>The use cases of Dataiku DSS are numerous. The platform can be used for scoring, marketing / appetence analysis, fraud detection, data management, demand forecasting, etc. Dataiku brings us the possibility:</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>To work on more data (in terms of volume and variety),</p>
+  </li>
+  <li>
+    <p>To do more “modern” modeling with the use of new methods like neural networks,</p>
+  </li>
+  <li>
+    <p>To be more agile in the evolution of scores thanks to machine learning, the objective being always to play with the acceptance/risk trade-off.</p>
+  </li>
+</ul>
+
+<p>Dataiku is a tool that is intended for use by data scientists and accounts for:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image8.png" alt="" /></p>
+
+<p>Figure 3: Dataiku usage in FLOA</p>
+
+<ul>
+  <li>Tableau: Tableau is the tool that has been selected by FLOA bank in the data platform as a data visualization tool (DataViz). DataViz refers to all visual representations of data in order to help the user better understand complex and numerous information or data and to ensure a better understanding of the data and the issues related to it. Tableau is one of the world leaders in the market with Power BI (Microsoft) and QlikSense (QlikView). It uses a file structure of workbooks and sheets similar to Microsoft Excel. A workbook contains sheets. A sheet can be a spreadsheet (also called a view), a dashboard or a story.</li>
+</ul>
+
+<p>There are 3 types of licenses to access Tableau depending on the use - the tool is intended to be open to all:</p>
+
+<ul>
+  <li>
+    <p>Creator: for advanced uses; this status allows to connect to any data source outside the data platform</p>
+  </li>
+  <li>
+    <p>Explorer: allows you to create your own workbook from enterprise data made available on the data platform</p>
+  </li>
+  <li>
+    <p>Viewer: allows you to access the visualizations created by Creators &amp; Explorers and to customize the visualization according to your own needs (alerts, views, etc.)</p>
+  </li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image9.png" alt="" /></p>
+
+<p>Figure 4: Data platform in FLOA</p>
+
+<h1 id="credit-scoring">Credit Scoring</h1>
+
+<h2 id="types-of-credit-scores">Types of credit scores</h2>
+
+<p>Scoring is one of FLOA’s main activities. Based on quantitative and qualitative data, such as a user’s behavior on a website or the frequency and value of his purchases, scoring consists of assigning a score to determine the probability of response to an offer or the risk of non-payment.</p>
+
+<p>The Data Scientists use different types of scores:</p>
+
+<ul>
+  <li>
+    <p>Credit score or risk score: deciding from data derived from the client’s application and public data, whether FLOA accepts or rejects the order based on the risk estimate which the probability of default. These scores are all intended to be internalized in the Dataiku tool.</p>
+  </li>
+  <li>
+    <p>Credit default recovery score: to evaluate whether it is more relevant to propose an automatic “self care” path or to go through an advisor for a person entering into a credit default recovery. The objective here is to optimize the contact strategy according to the past behavior of customers in the same group to restore their unpaid situation. The right treatment for each profile will allow FLOA to save money and focus its efforts on those most in need of further treatment.</p>
+  </li>
+  <li>
+    <p>Fraud score: detect (a priori or a posteriori) if a request seems to correspond to a fraud.</p>
+  </li>
+  <li>
+    <p>Appetence score: used in direct marketing and which reflects the probability that a prospect will become a consumer of the product or service being promoted or that he will respond favorably to the offer made to him.</p>
+  </li>
+  <li>
+    <p>Attrition score: used in customer portfolio management and translates the probability that a customer or subscriber will switch to a competitor or terminate his contract.</p>
+  </li>
+</ul>
+
+<p>A score is first modeled with a learning database population to answer a given problem and validated by the achievement of one or more KPIs (e.g.: acceptance rate and risk rate for a grant score). This score can then be used:</p>
+
+<ul>
+  <li>
+    <p>Real time scoring: Real-time scoring involves using the model to make predictions on individual rows of data via an API.</p>
+  </li>
+  <li>
+    <p>Batch scoring: Batch scoring involves using the model to make predictions on multiple rows of data at a given frequency.</p>
+  </li>
+</ul>
+
+<p>In addition to scoring activities, the automation of decisional reporting has many advantages in the face of the multiplication of needs and allows for significant time savings on a daily basis. At the request of the various Data Science/Finance/Risk and Fraud teams, the role of the analysts is to create dashboards with precise KPIs into which the data will be automatically integrated. These dashboards are then published on Tableau Server as activity monitoring.</p>
+
+<p>Some examples:</p>
+
+<ul>
+  <li>
+    <p>Cards and Credits universe: Operational monitoring of collections, acceptance/refusal rates, KPI’s Granting, KPI’s Risk.</p>
+  </li>
+  <li>
+    <p>PNF Universe: Monitoring of Pnf and Coup de Pouce scores in terms of acceptance and breakage (unpaid).</p>
+  </li>
+  <li>
+    <p>Marketing and customer knowledge: Customer activity monitoring, campaign assessment.</p>
+  </li>
+</ul>
+
+<h2 id="generic-vs-customized-scoring-models">Generic vs customized scoring models</h2>
+
+<p>In FLOA Bank, there are two types of credit scoring models:</p>
+
+<ul>
+  <li>
+    <p>Generic credit scoring model: based on an overall behavior of different customers. The goal is to have a general model that aims to rank order the risk appropriately and simultaneously define the borrower characteristics, for a specific product’s offering, that best predict future behavior in the repayment of the loan.</p>
+  </li>
+  <li>
+    <p>Customized credit scoring model: based on a particular population and the outcome of the lending decisions that captures the behavioral and other characteristics of the subprime population targeted.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>In order for the customized scoring to be meaningful and aligned to the needs, it is necessary that there is sufficient information on the credit lending product.</p>
+</blockquote>
+
+<h2 id="coup-de-pouce-upcycle">Coup de pouce UPCYCLE</h2>
+
+<p>Coup de Pouce UPCYCLE is one of several Coup de Pouce offers in FLOA. Based on Coup de Pouce production in first trimester of 2021, UPCYCLE presents 3.5% of total production behind Coup de Pouce Cdiscount (65.5%), Direct (19.5%) and Lydia (10.2%). In the other hand, UPCYCLE default cases presents 6.7% of the overall default’s cases across different Coup de Pouce providers.</p>
+
+<p>It aims at proposing an alternative offer, which corresponds to 500€ or 1000€, to refusals of large amounts ranging from 5.000€ to 15.000€ (PPR / PPC). The UPCYCLE idea intent at testing the potential customers on a new product like Coup de Pouce, which is based on smaller amounts, and then possibly cross sell or potentially let them in for a large credit. Coup de Pouce UPCYCLE scoring model is in production since December 2019. It is a generic credit scoring model based on customer’s behavior from different Coup de Pouce partners.</p>
+
+<p>Generally, generic credit scoring models do not accurately predict the level of the risk. Thus, banks that use generic models should not assume that their loss rates will be the same as those reflected in the industry odds charts. How accounts ultimately perform depends on a number of factors, including account management techniques used, the size of loan granted, and so forth. However, the development and implementation of scoring models and the review of these models present inherent challenges.</p>
+
+<p>In that context, my first mission in FLOA Bank aimed at creating a new Tableau dashboard that allow the risk management unit as well as data scientists to monitor the production of the scoring models from a risk perspective and to simulate the future default rates.</p>
+
+<p>Using different KPIs, we analyze the production behavior and the robustness of the score model based on:</p>
+
+<ul>
+  <li>
+    <p>The distribution of orders by profile (UNKNOWN/TRUSTED/WHITELIST detailed in following chapters) and offers (3X/4X) over time.</p>
+  </li>
+  <li>
+    <p>The distribution of orders by scores over time.</p>
+  </li>
+  <li>
+    <p>The average basket per score over time.</p>
+  </li>
+  <li>
+    <p>The default rate by score: theoretical rate vs observed rate</p>
+  </li>
+  <li>
+    <p>The simulation of default rate for the next 6 weeks.</p>
+  </li>
+</ul>
+
+<p>From the Tableau dashboard, we illustrate the scoring model behavior on all customer’s profile of Coup de Pouce UPCYCLE. The chart below illustrates that the generic score model for Upcycle is not properly distinguishing the bad from the good payers. The default rates, as the percentage of unpaid loans i.e Coup de Pouce, varies widely across the risk scores and does not follow the theoretical trend of the model. On one hand, we notice higher default rate on good scores: default rate of 12% on score of 20 vs default rate of 10% on score of 14 and it reaches 15% on score of 4 but rises to 17% rate on score of 12. On the other hand, the default rate for each score should virtually be the same or close in accordance with the model in theory as the higher the score, the lower the credit risk. However, on score of 20, the model simulates 1.3% theoretical default rate whereas, in production, the default rate reaches 13%.<br />
+Finally, regardless of the risk score, the average default rate remains very high close to 14% comparing to other Coup de Pouce partners with a customized scoring model.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image10.png" alt="" /></p>
+
+<p>Figure 4: Default rate by score for UPCYCLE</p>
+
+<p>In order to illustrate the performance of a customized scoring model, we take as an example the credit score model of Coup de Pouce CDISCOUNT, one of FLOA largest Coup de Pouce providers.</p>
+
+<p>We notice that the risk level across the risk scores is decreasing alongside the theoretical default rate. The volume of orders is equally distributed according to the risk level: Higher volume on good scores beneath the average default rate at 5% and lower volume on bad scores with default rates slightly above the average but remain below the theoretical risk in each score. And regardless of the risk score, the average default rate remains close to 5%.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image11.png" alt="" /></p>
+
+<p>Figure 5: Default rate by score for CDISCOUNT</p>
+
+<p>Furthermore, the following chart displays the overall trend of the default rate varying over a wide range from 7% to 23%. The projection of the default rate on the last weeks of production, according to different empirical assumptions, indicates a continuous trend of the default.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image12.png" alt="" /></p>
+
+<p>Figure 6: Historical and projected default rate for UPCYCLE</p>
+
+<p>In addition, the following chart describes the proportion of Coup de Pouce Upcycle orders by score ranging from 1 (High risk) to 20 (Low risk). We see that most of the orders are on low score, from 1 to 5, meaning that the Upcycle population is risky.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image13.png" alt="" /><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image14.png" alt="" /></p>
+
+<p>Figure 7: Distribution of Coup de Pouce orders by score for UPCYCLE</p>
+
+<p>From this analysis, regarding the evaluation and the ongoing monitoring, we deduce that the population of Coup de Pouce Upcycle is risky and that we may identify concerns about the generic model performance of Coup de Pouce UPCYCLE.</p>
+
+<h2 id="monitoring-machine-learning-models-in-production">Monitoring machine learning models in production</h2>
+
+<p>Determining the perfect time to upgrade a generic model can be challenging. The Tableau dashboard of risk monitoring can help to illustrate the decision making by comparing the theoretical model results and the risk level of the model in production. The default rate projection for the last weeks of production can also be a good indicator for the expected default rate.</p>
+
+<p>In addition, once we reached more than 1.000 default cases on a product, the management can feel confident that it may be the time to challenge the generic model with a customized one. In our case, for Upcycle scoring model, until July first, the default reached 1567 cases which corresponds to 1M€ loss. The total orders attained 11.500 which corresponds to 7.6M€.</p>
+
+<p>Switching to a specific model brings good benefits regarding having a closer look to the data population and automating the model lifecycle ensuring that the data as well as the models are up to date.</p>
+
+<p>Monitoring Customized credit scoring models in production is an important, but often tedious task for data scientists. Conventional model retraining strategies are often based on monitoring model metrics. However, for many use cases, monitoring model metrics, such as AUC, may be insufficient. This may be particularly true in cases where long periods of time pass before receiving feedback on the accuracy of the model’s predictions. Over time, a machine Learning model gradually loses its predictive power. This is commonly known as “drift”. If this phenomenon is not detected quickly, it can have a significant impact on the performance of our models. It is therefore important to set up a loop that allows us to refresh our models when they degrade too much.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image15.png" alt="C:\Users\ZAIMYO\Downloads\image2020-11-5_10-15-21.png" /></p>
+
+<p>Figure 6: Model quality of static models vs refreshed models</p>
+
+<p>In general, such deviation may occur for two possible reasons: Concept Drift and Data Drift.</p>
+
+<ul>
+  <li>
+    <p>Concept drift corresponds to a change in the statistical properties of the target variable.</p>
+  </li>
+  <li>
+    <p>Data drift, on the other hand, corresponds to a change in the statistical properties of the explanatory variables.</p>
+  </li>
+</ul>
+
+<p>In FLOA Bank, data scientists define several possible strategies:</p>
+
+<ul>
+  <li>
+    <p>Re-train the customized model on more recent data and monitor the performance indicators (AUC, Lift, F1-score, …). If these indicators drop by a certain percentage, it is a sign that there is a drift in our data. Although this methodology may be correct, changing a model on production based on the performance metrics is risky. It may not go well as planned as we usually have to wait several days or even several months to see if the event has taken place.</p>
+  </li>
+  <li>
+    <p>Monitor the evolution of the statistical properties of the variables can be more useful by looking at the recent data the model has had to score, and statistically compare it with the data on which the model was evaluated in the training phase. If these datasets are too different, the model may need to be retrained.</p>
+  </li>
+</ul>
+
+<p>Dataiku developed a plugin used by the data science team called “model drift monitoring” which aims at providing views to analyze the potential drift of machine learning models. With this plugin, we can measure Drift by examining if new data waiting to be scored has diverged from the training data. If this new data is significantly different from the data used to train the model, it is likely that the model will no longer perform well, and may need to be retrained.</p>
+
+<p>To detect drift between the original test dataset used by the model and the new data, the plugin stacks the two datasets and train a RandomForest (RF) classifier that aims at predicting data’s origin. This is called the domain classifier in the literature.</p>
+
+<p>To have a balanced train set for this RF model, we take the first n samples from the original dataset and the new one, where n is the size of the smallest dataset.</p>
+
+<p>If this model is successful in its task, it implies that data used at training time and new data can be distinguished, we can then say that the new data has drifted.</p>
+
+<p>The plugin provides a new model view with the following visual elements:</p>
+
+<ul>
+  <li>Drift score:</li>
+</ul>
+
+<p>The plugin applies a binomial test on the accuracy of the domain classifier. The null hypothesis being there is no drift. There are two types of information that are computed:</p>
+
+<ul>
+  <li>
+    <p>The p-value which gives the probability of having at least the computed accuracy under the null hypothesis.</p>
+  </li>
+  <li>
+    <p>The confidence interval of the computed accuracy given the sample size. </p>
+  </li>
+</ul>
+
+<p>The confidence interval gives us an index about the reliability of the drift score. If we get an accuracy score of 0.65 ± 0.2, the score is not very reliable as it overlaps with 0.5, which means no drift.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image16.png" alt="https://www.dataiku.com/wp-content/uploads/2019/12/Screenshot-2020-12-28-at-16.05.44.png" /></p>
+
+<p>Figure 7: Drift score</p>
+
+<ul>
+  <li>Fugacity:</li>
+</ul>
+
+<p>In addition to a drift score, the plugin provides a number of other insights. The Fugacity table expresses the difference between expected and observed samples. It compares the proportion of samples predicted in each class when applying the model on both the test and the input datasets.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image17.png" alt="../../_images/kb-drift-fugacity.png" /></p>
+
+<p>Figure 8: Fugacity table</p>
+
+<ul>
+  <li>Density chart:</li>
+</ul>
+
+<p>The density chart is the probability density estimation for a given prediction class when scoring both the test dataset and the new input dataset. Visually different probability density estimations indicate high data drift. The inverse is not true, as we can have a high drift score but a similar predicted probability density estimation. One such situation is when we have high drift of a feature that is not important in the original model.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image18.png" alt="https://www.dataiku.com/wp-content/uploads/2019/12/Screenshot-2020-12-28-at-16.11.32.png" /></p>
+
+<p>Figure 9: Density chart</p>
+
+<ul>
+  <li>Scatter plot:</li>
+</ul>
+
+<p>It is important to consider the data drift score in the context of the importance of certain features. For example, if the data drift score is high, but the features responsible for the drift are of low importance, the behavior of the model may remain the same.</p>
+
+<p>The scatter plot shows feature importance for the original model on the x-axis versus feature importance for the (data classifying) drift model on the y-axis. Features in the top right quadrant of this scatter plot are highly drifted (i.e. they are powerful in distinguishing test data from new observations), but also of high importance for the original model. In this situation, you can expect the performance of the model to degrade as the model does not apply to your new observations.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image19.png" alt="https://www.dataiku.com/wp-content/uploads/2019/12/Screenshot-2020-12-28-at-16.14.21.png" /></p>
+
+<p>Figure 10: Scatter plot for feature drift</p>
+
+<p>Second, by computing data drift between two dataset that have the same schema. The goal is to evaluate the same population, using the same KPIs, between different time stages. This recipe aims at data scientist who mostly build scoring models from data for a customized scoring model, each day when new data comes in they want to have a tool to assess whether or not the new data is “different”. It provides 2 types of information: </p>
+
+<ul>
+  <li>
+    <p>Drift score: Data scientists can create a custom check with their own threshold and put these in a scenario for drift monitoring.</p>
+  </li>
+  <li>
+    <p>Most drifted features: if the drift score is the threshold defined, we can define the features behind this drift.</p>
+  </li>
+</ul>
+
+<p>Our thanks go to Vincent GALLMANN, senior data scientist in FLOA and one of Dataiku power users, for helping us to understand these technics as well as providing its different illustrations in Dataiku DSS as below:</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image20.png" alt="C:\Users\ZAIMYO\Downloads\image2021-6-28_11-55-10.png" /></p>
+
+<p>Figure 11: Dataiku flow for drift application</p>
+
+<p>In conclusion, when properly designed, customized models are usually more reliable than generic subjective or judgmental methods. However, development and implementation of scoring models and review of these models present inherent challenges. These models will never be perfectly right and are only good if users understand them completely. Further, errors in model construction can lead to inaccurate scoring and consequently to booking riskier accounts than intended and/or to a failure to properly identify and address heightened credit risk within the loan portfolio. Errors in construction can range from basic formula errors to sample-bias to use of inaccurate and erroneous data. The impact on the score could be substantial.</p>
+
+<h1 id="upcycle-credit-score-development">UPCYCLE credit score development</h1>
+
+<h2 id="goal-definition">Goal definition</h2>
+
+<p>##</p>
+
+<p>A credit scoring project starts with understanding the business objectives. With the assistance of Anais LAPEYRE, we had several exchanges with the risk and commercial teams to highlight a new plan for Upcycle scoring model. Alongside the risk team and after defining the new budget starting from June 2021, we set a 21% theoretical default and an approval rate of 70%. On the other hand, the marketing team brought insights about the user’s types, the origins of the orders and the business strategy. Hence, the new scoring model will cover:</p>
+
+<ul>
+  <li>
+    <p>Refusals of FLOA personal loans up to 15.000 € (PPRTOCDP): It covers the major part of Upcycle clients since its launch.</p>
+  </li>
+  <li>
+    <p>Refusals of FLOA personal loans ranging from 7.000 € to 10.000 € (PPCTOCDP).</p>
+  </li>
+  <li>
+    <p>Business providers (Refus PPR Leadin): LEADIN.</p>
+  </li>
+  <li>
+    <p>FLOA credit card: The Upcycle model is set to score potential clients for the credit card Casino-Cdiscount starting late August 2021.</p>
+  </li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image21.png" alt="" /></p>
+
+<p>Figure 12: Order’s origin of Coup de Pouce UPCYCLE</p>
+
+<p><em>*Reconnexion modality refers following PPC or PPR request but whose origin has been lost</em></p>
+
+<p>Once the scope of the business is defined, the machine learning engineering part starts. The figure below illustrates the following stages of a scoring project life cycle and consists of: 1) goal definition, 2) data collection &amp; preparation, 3) feature engineering, 4) model training, 5) model evaluation, 6) model deployment, 7) model serving, 8) model monitoring, 9) model maintenance. At some stages (indicated by dashed arrows), a decision can be made to go back in the process and either collect more data or collect different data and revise features.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image22.png" alt="C:\Users\ZAIMYO\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\Y2PNOVVH\Capture décran 2021-08-20 à 05.20.01.png" /></p>
+
+<p>Figure 13: Machine learning life cycle</p>
+
+<ol>
+  <li>
+    <h2 id="data-collection--preparation">Data collection &amp; preparation</h2>
+
+    <ol>
+      <li>
+        <h3 id="data-collection">Data collection</h3>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p>Dataiku DSS allows data scientists in FLOA Bank to deploy predictive models for real-time scoring using its Dataiku API node. The API node provides all the necessary features for scoring in production as input and allows users to query predictions as output.</p>
+
+<p>Example of input of features data in real-time for Upcycle scoring:</p>
+
+<p><em>{ “clt_address_1”: “string”,</em></p>
+
+<p><em>“clt_address_2”: “string”,</em></p>
+
+<p><em>“clt_address_3”: “string”,</em></p>
+
+<p><em>“clt_address_4”: “string”,</em></p>
+
+<p><em>“clt_birth_date”: “2019-10-25”,</em></p>
+
+<p><em>“clt_birth_zip_code”: “string”,</em></p>
+
+<p><em>“clt_cell_phone_number”: “string”,</em></p>
+
+<p><em>“clt_city”: “string”,</em></p>
+
+<p><em>“clt_civility”: “string”,</em></p>
+
+<p><em>“clt_country”: “string”,</em></p>
+
+<p><em>“clt_customer_ref”: “string”,</em></p>
+
+<p><em>“clt_email”: “user@example.com”,</em></p>
+
+<p><em>“clt_first_name”: “string”,</em></p>
+
+<p><em>“clt_last_name”: “string”,</em></p>
+
+<p><em>“clt_maiden_name”: “string”,</em></p>
+
+<p><em>“clt_nationality”: “string”,</em></p>
+
+<p><em>“clt_phone_number”: “string”,</em></p>
+
+<p><em>“clt_zip_code”: “string”,</em></p>
+
+<p><em>“nav_ip_address”: “string”,</em></p>
+
+<p><em>“nav_origin”: “string”,</em></p>
+
+<p><em>“nav_user_type”: “string”,</em></p>
+
+<p><em>“nav_visit”: “string”,</em></p>
+
+<p><em>“ppr_decision_bris_cd1”: “string”,</em></p>
+
+<p><em>“ppr_decision_bris_cd2”: “string”,</em></p>
+
+<p><em>“ppr_decision_bris_cd3”: “string”,</em></p>
+
+<p><em>“ppr_decision_bris_cd4”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_cod_reaf”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_hn1”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_hn2”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_hn3”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_hn4”: “string”,</em></p>
+
+<p><em>“ppr_decision_cha_not”: “string”,</em></p>
+
+<p><em>“ppr_decision_sco_note”: 0,</em></p>
+
+<p><em>“ppr_journey_contract”: “string”,</em></p>
+
+<p><em>“ppr_journey_revenue”: 0,</em></p>
+
+<p><em>“ppr_journey_shelter”: “string”,</em></p>
+
+<p><em>“request_date”: “2019-10-25T15:08:38.701000Z”,</em></p>
+
+<p><em>“request_id”: “string”,</em></p>
+
+<p><em>“request_partner_code”: “string”,</em></p>
+
+<p><em>“request_score_type”: “string”,</em></p>
+
+<p><em>“white_list”: “string” }</em></p>
+
+<p>Example of output data predictions in real-time for Upcycle scoring:</p>
+
+<p><em>{“__meta__”:</em></p>
+
+<p><em>{“api_context”:</em></p>
+
+<p><em>{“endpointId”: “traitement_output_cdp_refus_ppr”,</em></p>
+
+<p><em>“serviceGeneration”: “RANDOM_FOREST_V10”,</em></p>
+
+<p><em>“serviceId”: “SCORE_RISQUE_CDP_REFUS_PPR”},</em></p>
+
+<p><em>“dss_timing”:</em></p>
+
+<p><em>{“execution”: 26350,</em></p>
+
+<p><em>“functionInternal”: 25651,</em></p>
+
+<p><em>“preProcessing”: 0,</em></p>
+
+<p><em>“wait”: 24}},</em></p>
+
+<p><em>“decision”: “R”,</em></p>
+
+<p><em>“input_score”: {</em></p>
+
+<p><em>“request_date”: “2019-10-25T15:08:38.701000Z”,</em></p>
+
+<p><em>“request_id”: “string”,</em></p>
+
+<p><em>“request_partner_code”: “string”,</em></p>
+
+<p><em>“request_score_type”: “string”,</em></p>
+
+<p><em>“white_list”: “string”</em></p>
+
+<p><em>},</em></p>
+
+<p><em>“request_date”: “2020-10-25T15:08:38.701000Z”,</em></p>
+
+<p><em>“request_id”: “string”,</em></p>
+
+<p><em>“score_called_api_context”: {</em></p>
+
+<p><em>“endpointId”: “SCORE_RISQUE_CDP_REFUS_PPR”,</em></p>
+
+<p><em>“serviceGeneration”: “RANDOM_FOREST_V10”,</em></p>
+
+<p><em>“serviceId”: “SCORE_RISQUE_CDP_REFUS_PPR”},</em></p>
+
+<p><em>“score_called_result”:</em></p>
+
+<p><em>{“ignored”: false,</em></p>
+
+<p><em>“prediction”: “1”,</em></p>
+
+<p><em>“probaPercentile”: 92,</em></p>
+
+<p><em>“probas”: {</em></p>
+
+<p><em>“0”: 0.6326911449614383,</em></p>
+
+<p><em>“1”: 0.36730885503856175}},</em></p>
+
+<p><em>“score_called_timing”:</em></p>
+
+<p><em>{“enrich”: 11,</em></p>
+
+<p><em>“postProcessing”: 30,</em></p>
+
+<p><em>“preProcessing”: 38,</em></p>
+
+<p><em>“prediction”: 1095,</em></p>
+
+<p><em>“preparation”: 19590,</em></p>
+
+<p><em>“wait”: 17 },</em></p>
+
+<p><em>“score_note”: 2,</em></p>
+
+<p><em>“score_point”: 0,</em></p>
+
+<p><em>“score_proba”: 0.36730885503856175,</em></p>
+
+<p><em>“seuil”: 0.2624</em></p>
+
+<p><em>}</em></p>
+
+<p>The model is built from features of the input data which contains the following types of information:</p>
+
+<ul>
+  <li>
+    <p>Client information: Age, first name, last name, maiden name, city, address, zip code, email, country, nationality and phone number.</p>
+  </li>
+  <li>
+    <p>Order information: origin of the demand, user type, visit type.</p>
+  </li>
+  <li>
+    <p>Personal loan scoring information (PPR / PPC): decision score, revenue, shelter and contract.</p>
+  </li>
+</ul>
+
+<p>In addition, open datasets can be used to enrich the input data to build predictive models. This process takes a column containing a French department code and outputs several columns with demographic data about this department such as:</p>
+
+<ul>
+  <li>
+    <p>Basic demography data (population, households, births, deaths, …)</p>
+  </li>
+  <li>
+    <p>Housing data (households, second homes, …)</p>
+  </li>
+  <li>
+    <p>Fiscal/Revenue data (number of ‘foyers fiscaux’, average revenue, …)</p>
+  </li>
+  <li>
+    <p>Employment data (number of jobs, unemployment rate, …)</p>
+  </li>
+  <li>
+    <p>Companies data (number of companies, breakdown by industry sector, breakdown by size, …)</p>
+  </li>
+</ul>
+
+<p>For Coup de Pouce product, we define potential clients based on several modalities determined as follows:</p>
+
+<ul>
+  <li>
+    <p>Unknown: Clients signing up for a Coup de Pouce loan for the first time.</p>
+  </li>
+  <li>
+    <p>Trusted prospect: Non-repeaters clients who had done at most only one coup de Pouce before without default or had been eligible for the loan but didn’t validate their order over the last 70 days.</p>
+  </li>
+  <li>
+    <p>Trusted client: Repeaters clients who had done at least more than one Coup de Pouce before without default.</p>
+  </li>
+  <li>
+    <p>Whitelist: VIPs and good clients.</p>
+  </li>
+</ul>
+
+<p>In production, the score is used only for Unknown clients. Therefore, it is recommended to train a scoring model on at least 1.000 default cases of Unknown clients in order to build a robust model for future unknown clients.</p>
+
+<p>In our case, our data set will cover the period starting from 2019/11/13 to 2021/05/23. The frequency distribution of Upcycle Coup de Pouce client ‘s modalities and default cases by modality is as follow:</p>
+
+<p><span class="chart">[CHART]</span></p>
+
+<p><span class="chart">[CHART]</span></p>
+
+<p>Figure 14: Coup de Pouce UPCYCLE client’s modalities</p>
+
+<p>Unfortunately, we have only 475 unknown clients with a default, representing 14% default rate in this client modality, which won’t be representative in our data set for the new model. As a result, we need to add another close modality to reach 1000 default cases: We add the trusted prospect clients.</p>
+
+<p>To test whether the default rate of the two population (Unknown and Trusted prospect) is equal, we proceed by Student t-test at 90%, 95% and 99% confidence level:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Samples</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><em>Client Modality</em></td>
+      <td> </td>
+      <td><em>Count</em></td>
+      <td><em>Mean</em></td>
+    </tr>
+    <tr>
+      <td>Unknown</td>
+      <td> </td>
+      <td>3384</td>
+      <td>14,04%</td>
+    </tr>
+    <tr>
+      <td>Trusted Prospect</td>
+      <td> </td>
+      <td>6039</td>
+      <td>14,19%</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td> </td>
+      <td>9423</td>
+      <td>14,14%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="chart">[CHART]</span></p>
+
+<p>Figure 15: Proportion of Unknown vs Trusted prospect</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hypothesis</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><em>Tested hypothesis</em></td>
+      <td><em>Default rate means are identical in both populations</em></td>
+    </tr>
+    <tr>
+      <td><em>Significance level</em></td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <td><em>Significance level</em></td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <td><em>Significance level</em></td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <td>Results</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><em>𝘵-statistic</em></td>
+      <td>-0.206431921</td>
+    </tr>
+    <tr>
+      <td><em>𝘱-value</em></td>
+      <td>0.8364579992</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>At confidence level of 90%, 95% and 99%: We deduce non-significant difference in means among both populations. Therefore, our data set will cover Unknown and Trusted prospect clients, representing 9432 validated orders with 1332 (14.13%) default cases.</p>
+
+<p>We donate our target variable “casse_r2” a binary variable representing the default event as 1 in the case of default and 0 otherwise. The prediction type is “Two-class classification” and the proportion of the target classes is as follow:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image23.png" alt="" /></p>
+
+<p>Figure 16: Proportion of default cases on the data set</p>
+
+<h3 id="data-analysis">Data analysis</h3>
+
+<p>Starting with the proportion of validated orders and default cases by client’s modality. We notice a stable distribution of validated orders and default cases by modality, mostly from Trusted-Prospect clients, across the period selected for the modeling.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image24.png" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image25.png" alt="" /></p>
+
+<p>Figure 17: Proportion of validated and default loans by client’s modalities</p>
+
+<p>The waterfall chart helps uderstanding the the gradual transition of Upcycle score path. From 448k request orders, only 13k are granted. The score refuted 215k request order where as 188K clients have abondenned their Coup de Pouce demand.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image26.png" alt="" /></p>
+
+<p>Figure 18: Waterfall chart of UPCYCLE scoring process</p>
+
+<p>Among the validated orders, we can see that their distribution is stable, ranging from 400 to 700 commands per month. The average default rate remains high and also stable ranging between 13% and 16% default rate.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image27.png" alt="" />Figure 19: Granted Coup de Pouce loans by average default</p>
+
+<p>The variable ‘ppr_journey_contract’ describes the client’s employment contracts: CDI, CDD, Intermittent contract… Most of Upcycle clients don’t fill in their employment contract status. A large proportion of clients are on CDI and the rest on CDD, INT or others employment forms.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image28.png" alt="" /></p>
+
+<p>Figure 20: Client’s employment contracts</p>
+
+<p>The variable ‘ppr_journey_shelter’ describes the housing occupancy status of the client: Locataire, propriétaire, logé par la famille, etc.. As seen below, most of Upcycle clients also don’t fill their housing status. A large proportion of clients are Locataire.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image29.png" alt="" /></p>
+
+<p>Figure 21: Client’s housing status</p>
+
+<p>The variable ‘ppr_decision_sco_note’ describes the score given by the credit score loan PPR of the original client demand. Unfortunately, this variable is not well mapped in our logs as it is usually missing.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image30.png" alt="" /></p>
+
+<p>Figure 22: Client’s credit score on larger loans PPR/PPC</p>
+
+<h2 id="feature-engineering">Feature engineering</h2>
+
+<p>After data collection and preparation, feature engineering is the second most important activity in score modeling. We illustrate several techniques used for our scoring model:</p>
+
+<h3 id="binning-and-weights-of-evidence">Binning and weights of evidence</h3>
+
+<p>The reasons to discretize a real-valued numerical feature can be numerous. A successful discretization adds useful information to learning algorithm when the training is relatively small and may increase the performance of the model (Szepannek,2007)</p>
+
+<p>Binning of numeric variables is often considered to be the most relevant part of score modeling. In general, cluster analysis centers around reducing the Euclidean-distance of within cluster variation of observations, while maximizing the segregation among the different cluster groups/bins. However, the Euclidean distance is the “ordinary” distance between two points. To solve the problem, we propose to cluster the factor observations based on their Weight of Evidence</p>
+
+<p>[\text{WO}E_{i} = \log\left( \frac{\text{\ Dist.\ Good\ }<em>{i}}{\text{\ Dist.\ }\text{\ Bad\ }</em>{i}} \right)]</p>
+
+<p>The Weight of Evidence (WoE) is widely used in credit scoring to separate good and bad clients. It compares the proportion of good accounts to bad accounts at each attribute level, and measure the strength of the attributes of an independent variable in separating good and bad accounts. As we cluster the factor attributes based on their corresponding WoE, the resulting bins would be analogous to default risk, regardless the fact that unsupervised learning methods don’t take any response variable into consideration.</p>
+
+<p>Using the ‘smbinning’ package in R, this method uses Recursive Partitioning through conditional inference trees approach and can be summarized as follows:</p>
+
+<ol>
+  <li>Evaluate which variable is most significant by the following line code:</li>
+</ol>
+
+<p><em>filter(smbinning.sumiv(df = mydataset, y = “good”),Process==”Numeric binning OK”)</em></p>
+
+<ol>
+  <li>Evaluate the best split of a continuous variable through the Chi-square decision tree approach: When binning a continuous variable, we are predicting the target variable using only our one continuous variable in the conditional inference tree. It evaluates if the variable is significant at predicting the target variable. If so, it finds the most significant statistical split using Chi-square tests in between each value of the continuous variable and then comparing the two groups formed by this split. After finding the most significant split we have two continuous variables - one below the split and one above. The process repeats itself until the algorithm can no longer find significant splits leading to the definition of the bins.</li>
+</ol>
+
+<!-- end list -->
+
+<ul>
+  <li>
+    <p>Count the number of default and non-default events for each attribute levels in the factor variable.</p>
+  </li>
+  <li>
+    <p>Calculate WoE of each levels of attributes (WoE for the fine classes).</p>
+  </li>
+  <li>
+    <p>Cluster the attributes based on their calculated WoE.</p>
+  </li>
+  <li>
+    <p>Form the final bins according to the cluster groups.</p>
+  </li>
+</ul>
+
+<p>The ‘smbinning’ function inside the smbinning package is the primary function to bin continuous variables and takes as the following arguments:</p>
+
+<ul>
+  <li>
+    <p><em>df</em> : Data frame</p>
+  </li>
+  <li>
+    <p><em>y</em> : Binary response variable (0,1). In our case, the default variable ‘casse_r2’.</p>
+  </li>
+  <li>
+    <p><em>x</em> : Continuos characteristics</p>
+  </li>
+  <li>
+    <p><em>p</em> : Percentage of records per bin. We set the default 5%.</p>
+  </li>
+</ul>
+
+<p>In our case study, the predictor variables defined by the function ‘smbinning’ set to be binned are:</p>
+
+<ul>
+  <li>
+    <p>clt_age: Client’s age.</p>
+  </li>
+  <li>
+    <p>insee_owner_rate: Owner rate giving a postal code.</p>
+  </li>
+  <li>
+    <p>insee_dss_ets_indus_2010: Number of industrial establishments giving a postal code in 2010</p>
+  </li>
+  <li>
+    <p>insee_dss_ets_construc_2010 : Number of establishments in the construction sector giving a postal code in 2010</p>
+  </li>
+  <li>
+    <p>clt_email_digits_length: Length of digit numbers used in mail address.</p>
+  </li>
+  <li>
+    <p>insee_dss_ets_10plus_201 : Number establishments with 10 or more employees giving a postal code in 2010</p>
+  </li>
+  <li>
+    <p>insee_pop1564: Total population between 15 and 64 years old giving a postal code.</p>
+  </li>
+  <li>
+    <p>insee_pop: Total population giving a postal code.</p>
+  </li>
+  <li>
+    <p>insee_chom1564: Number of unemployed giving a postal code.</p>
+  </li>
+  <li>
+    <p>insee_1564_rate: Unemployment rate giving a postal code.</p>
+  </li>
+</ul>
+
+<p>In our report, we choose the variable ‘clt_age’ to illustrate this method. The ‘ivtable’ method in ‘smbinning’ package gives a summary of the splits as well as some information regarding each split. Working from left to right, the columns represent the number of observations in each bin, the number of goods (non-defaulters) and bads (defaulters) in each bin, as well as the cumulative versions of all of the above. Next comes the percentage of observations that are in the bin as well as percentage of observations in the bin that are both good and bad. Finally, the table lists the odds, natural log of the odds, weight of evidence (WoE), and information value component (which we are going to detail in following chapters).</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image31.emf" alt="" /></p>
+
+<p>From the chart below, we can deduce higher proportion of default cases among young clients under 27 years old where the default rate is above the average 14.14%. Whereas, the proportion of good loans are among clients older than 39 years old.</p>
+
+<p>Moreover, WoE summarizes the separation between the event of default and non-default (bad and good loans) as shown in the graph below. For WoE we are looking for large differences in WoE between bins. Ideally, we would like to see monotonic increases for variables that have ordered bins. This isn’t always required as long as the WoE pattern in the bins makes business sense. However, if a variable’s bins go back and forth between positive and negative WoE values across bins, then the variable typically has trouble separating goods and bad loans.<br />
+WoE approximately zero, client’s age between 39 and 48 years old, implies percentages of non-default (good loans) are approximately equal to percentages of default (bad loans) so that bin doesn’t separate well the default and non-default events. WoE of positives values, client’s age above 48 years old, implies the bin identifies observations that are non-default (good loan), while WoE of negative values, client’s age below 27 years old, implies bin identifies observations that are events (bad loans).</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image32.png" alt="C:\Users\ZAIMYO\Desktop\index.png" /></p>
+
+<p>Figure 23: Smbining graphs</p>
+
+<p>We then create a new categorical variable which contains age classes defined by the ‘smbinning’ and we call it ‘flg_age_risky2’: Class 1- Under 24, Class 2- between 24 and 27, Class 3- between 27 and 39, Class 4- between 39 and 48, Class 5- above 4_ years old.</p>
+
+<p>In the other hand, based on the average rate of default cases in the ‘ivtable’ below, we can construct a new variable, called ‘flg_age_risky’ that takes two classes: Class 1- negative WoE and Class 2- positive WoE.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image33.png" alt="C:\Users\ZAIMYO\Desktop\index.png" /></p>
+
+<p>Figure 24: Weight of evidence cut off</p>
+
+<p>Another approach is to use the WoE for encoding where we can replace the classes with their associated WoE values. However, this method had several drawbacks and results to overfitting as we manipulate the effect of variables according to how categories are created.</p>
+
+<h3 id="manuel-binning">Manuel binning</h3>
+
+<p>Manual binning offers detailed and tailored solution to classification within variables in line with business sense. For example, a variable can be binned according to the target group study by the firm, and such binning will make more business sense than some random classification based on equal size or equal weight binning. Especially for categorical variables, employing local expert knowledge has clear advantage over automated binning.<br />
+We illustrate this method with the variable ‘nav_origin’. This variable describes business providers of Coup de Pouce Upcycle and contains multiple modalities that are not stable across the study period:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image34.png" alt="" /></p>
+
+<p>Figure 25: Navigator origin’s modalities of Coup de Pouce UPCYCLE demand</p>
+
+<p>The marketing team has more knowledge on characteristics within this variable and a proposal solution was to define whether the demand is from FLOA client or a new potential client based on origin that stars with</p>
+
+<ul>
+  <li>
+    <p>‘CS’=cross sell, and ‘Bel’= banque en ligne : defines FLOA clients.</p>
+  </li>
+  <li>
+    <p>‘Comp’ : defines potentiel clients.</p>
+  </li>
+  <li>
+    <p>‘Email’ : could define either clients or potential clients.</p>
+  </li>
+  <li>
+    <p>‘CDP’ = coup de pouce et ‘Cdis’= cdiscount : could define either clients or potential clients.</p>
+  </li>
+</ul>
+
+<p>Based on this, we can define a new variable ‘nav_origin_group’ that takes three modalities ‘Client’, ‘Potential client’ or ‘Potential client or Client’.</p>
+
+<p>We proceed by Chi-square test to check the dependency between our new variable ‘nav_origin_group’ and the target variable ‘casse_r2’ to evaluate the binning proposal:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hypothesis</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tested hypothesis</td>
+      <td><span class="underline">nav_origin_group</span> and <span class="underline">casse_r2</span> are independent</td>
+    </tr>
+    <tr>
+      <td>Significance level</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <td>Results</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Chi-square statistic</td>
+      <td>7.3692719671</td>
+    </tr>
+    <tr>
+      <td>Degrees of freedom</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>𝘱-value</td>
+      <td>0.0251063122</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>From this test, we conclude that variables ‘nav_origin_group’ and ‘casse_r2’ are not independent. Hence this method results in precise binning of the variable by groups with similar characteristics.<br />
+However, manual binning is a tedious and time-consuming process, especially when the number of predictor variables is large.</p>
+
+<h3 id="cluster-binning-for-categorical-variables">Cluster Binning for Categorical Variables</h3>
+
+<p>Using Python, we compute the target proportion in each modality of qualitative features and assess the significance of the difference from the average target proportion. The proportion of each modality must be representative (&gt;1% of total records) and the difference from the average using chi-square / ANOVA test has to be statistically significant at 5% confidence level.</p>
+
+<p>We illustrate this method using email address variable ‘clt_email_domain_0’. The output is as follow:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image35.emf" alt="" /></p>
+
+<p>Based on that, we can define two dummy variables ‘clt_email_1’ which refers to less risky domain emails (default rate below the average 14% denoted by green dotes) and takes 1 if email is containing ‘waradoo, free, sfr, orange’ and ‘clt_email_2’ which refers to more risky domain emails (default rate above the average 14% denoted by red dotes) and takes 1 if email is containing ‘outlook, gmail’.</p>
+
+<h3 id="time-features">Time Features</h3>
+
+<p>From the date of the order ‘request_date’, we can extract valuable information such as:</p>
+
+<ul>
+  <li>
+    <p>Order month: Ranging from 1 to 12.</p>
+  </li>
+  <li>
+    <p>Order day of the year: From 1 to 356.</p>
+  </li>
+  <li>
+    <p>Order day of the week: From 1 to 7.</p>
+  </li>
+  <li>
+    <p>Order day of the month: From 1 to 30.</p>
+  </li>
+  <li>
+    <p>Order hour: From 1 to 24.</p>
+  </li>
+  <li>
+    <p>Order date zone.</p>
+  </li>
+  <li>
+    <p>If the order was on school holiday or on bank holiday, etc..</p>
+  </li>
+</ul>
+
+<p>The following charts illustrate the frequency distribution among the day of the week, hour of the day and the day of the month. We can see that most Coup de Pouce Upcycle demands are done mostly on mornings, during weekdays at the beginning of each month.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image36.png" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image37.png" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image38.png" alt="" /></p>
+
+<p>Figure 26: Distribution of order by time modalities</p>
+
+<h3 id="hamming-distance">Hamming distance</h3>
+
+<p>A distance between two strings of equal length is the number of positions at which the corresponding symbols are different. In other words, it measures the minimum number of <em>substitutions</em> required to change one string into the other, or the minimum number of <em>errors</em> that could have transformed one string into the other.</p>
+
+<p>We calculate the distance between the username in the email and the first / last name of the client in order to detect similarity between them.</p>
+
+<h3 id="impact-coding">Impact coding</h3>
+
+<p>When the number of categories becomes very large, dummy encoding may become inconvenient. An alternative method to clustering or truncation of categories consists in characterizing the categories by the link they have with the target variable y: this is impact encoding. This method is also known as likelihood encoding, target coding, conditional-probability encoding.</p>
+
+<p>For a target variable y and categorical variable X with K modalities (m_{1})<em>,….</em>(\ m_{k}), each modality (m_{k}) is encoded by its impact:</p>
+
+<p>[\text{impact}\left( m_{k} \right) = \mathbb{E}\left\lbrack y \mid X = m_{k} \right\rbrack - \mathbb{E}\lbrack y\rbrack</p>
+
+<p>]</p>
+
+<h3 id="standard-normalization">Standard normalization</h3>
+
+<p>During the process of the feature engineering part, we used the standard normalization. It is the procedure during which the feature values are rescaled so that they have the properties of a standard normal distribution by subtracting the empirical mean and dividing by the standard deviation. It’s helpful to apply simple mathematical transformation to the feature values which includes taking the logarithm of the feature, squaring it, or extracting the square root of the feature. The idea is to obtain a distribution as close to a normal distribution as possible.</p>
+
+<h3 id="missing-values">Missing values</h3>
+
+<p>There are a few choices for handling missing values in categorical features:</p>
+
+<ul>
+  <li>
+    <p>Treat as a regular value treats missing values as a distinct category.</p>
+  </li>
+  <li>
+    <p>Replace missing values with the specified value and used for randomly missing data that are missing due to random noise by imputing the median value.</p>
+  </li>
+</ul>
+
+<h1 id="modeling">Modeling</h1>
+
+<h2 id="predictive-power">Predictive power</h2>
+
+<p>As seen in previous chapters, Weight of Evidence summarizes the individual categories or bins of a variable. However, we need a measure of how well a variable do at separating the events from non-events. For that, we use the information value criteria (IV) as a measure of the predictive power of our variables.</p>
+
+<p>In credit modeling, IV is used in some instances to actually select which variables belong in the model. Here are some typical IV ranges for determining the strength of a predictor variable at predicting the target variable:</p>
+
+<ul>
+  <li>
+    <p>0 ≤ IV &lt;0.02 : Not predictor.</p>
+  </li>
+  <li>
+    <p>0.02≤ IV &lt;0.1 : Weak predictor.</p>
+  </li>
+  <li>
+    <p>0.1≤ IV &lt;0.25 : Moderate (medium) predictor.</p>
+  </li>
+  <li>
+    <p>0.25 ≤ IV : Strong predictor.</p>
+  </li>
+</ul>
+
+<p>For categorical variables, IV uses the WOE from each category as a piece of its calculation:</p>
+
+<p>[IV = \sum_{i = 1}^{L}\mspace{2mu}\left( \text{\ Dist.\ }\text{\ Good\ }<em>{i} - \text{\ Dist.\ }\text{Ba}d</em>{i} \right) \times \log\left( \frac{\text{\ Dist.\ \ Good\ }}{\text{\ Dist.\ Bad\ }} \right)]</p>
+
+<p>To illustrate the predictive power of our categorical variables, we set an IV of 0.02 as a threshold as variables with information values less than 0.02 are typically not predictors in the scoring model.</p>
+
+<p><span class="chart">[CHART]</span></p>
+
+<p>Figure 27: Features by decreasing IV</p>
+
+<p>As we can see, most of our variables are considered by the IV criteria as weak variables. The client department of residence and birth and client address are expected to have good predictive power in the model. In previous chapters, when defining the ‘smbinning’ package, we derive two variables from client’s age based on WoE: ‘clt_age_risky2’ taking the classes output of the function and ‘clt_age_risky’ where we define two classes based on the average default rate. From the chart above, we can see that classes defined by the ‘smbinning’ function have higher information value and thus more predictive power. As a result, we choose the following variable to integrate it in our model.</p>
+
+<p>For numeric variables, we use Pearson correlation as a measure of their predictive power. We set a correlation threshold of 1.2%, in absolute value, with the target rate ‘casse_r2’ and we set correlation threshold between the dependent variables to 80%.</p>
+
+<p><img src="assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image39.png" alt="C:\Users\ZAIMYO\Desktop\index.png" /></p>
+
+<p>Figure 28: Pearson correlation matrix</p>
+
+<h2 id="performance-metrics">Performance metrics</h2>
+
+<p>The most common way to get a good model is to compare different models by calculation a performance metric on the holdout data. For classification, one way to assess the classification model performance is to use the “confusion matrix”, which summarizes how successful the classification model by comparing actual values (from the test dataset) to predicted values.</p>
+
+<p>The confusion matrix is used to calculate the following performance metrics:</p>
+
+<ul>
+  <li><strong>Precision</strong> is the ratio of true predictions to the overall number of positive predictions</li>
+</ul>
+
+<p>[\text{Precision\ } = \frac{\text{tp}}{tp + fp}]</p>
+
+<ul>
+  <li><strong>Recall</strong> is the ratio of true predictions to the overall number of positive examples</li>
+</ul>
+
+<p>[\text{Recall\ } = \frac{\text{tp}}{tp + fn}]</p>
+
+<p>In practice, we choose between high precision or high recall by varying the decision threshold for algorithms that return the prediction scores or by tuning the hyper parameters to maximize either precision or recall. This is called precision-recall tradeoff.</p>
+
+<ul>
+  <li><strong>F1-score</strong> is the harmonic mean of precision and recall</li>
+</ul>
+
+<p>[F = 2 \cdot \frac{\text{\ precision\ } \cdot \text{\ recall\ }}{\text{\ precision\ } + \text{\ recall\ }}]</p>
+
+<ul>
+  <li><strong>Accuracy</strong> is given by the number of correctly classified examples, divided by the total number of classified examples. In terms of confusion matrix, it is given by:</li>
+</ul>
+
+<p>[\text{Accuracy\ } = \frac{\text{tp} + \text{tn}}{\text{tp} + \text{tn} + \text{fp} + \text{fn}}]</p>
+
+<ul>
+  <li><strong>Hamming loss</strong> is the fraction of labels that are incorrectly predicted</li>
+</ul>
+
+<p>[\text{Hamming\ Loss\ } = \frac{1}{\text{nL}}\sum_{i = 1}^{n}\mspace{2mu}\sum_{j = 1}^{L}\mspace{2mu} I\left( y_{i}^{j} \neq {\widehat{y}}_{i}^{j} \right)]</p>
+
+<p>Where (I) denotes the indicator function. Practically the smaller the value of hamming loss, the better the performance of the learning algorithm.</p>
+
+<ul>
+  <li>Roc curve: The Receiver Operating Characteristic (or ROC) curve shows the true positive rate TP/(TP+TN) versus the false positive rate FP/(FP+TN) resulting from different cutoffs in the predictive model. The “faster” the curve climbs, the better it is. On the contrary, a curve close to the diagonal line corresponds to a model with bad predictive power.</li>
+</ul>
+
+<h2 id="probabilities-and-lift">Probabilities and lift</h2>
+
+<p>A binary classifier produces a probability that a given record is “positive” (here, that casse_r2 is 1).<br />
+The lift is the ratio between the results of the chosen model and the results obtained with a random model. Lift curves are particularly useful for “targeting” kinds of problems which will be the bad clients in our case. In FLOA Bank, the lift is one of the main criteria in the validation process of a model as we can focus on the region of scores where the cut-off is expected and, at a given level of rejection, we can measure how the scoring model is better than random selection. In practice, the calculation is done for Lift corresponding to 10%, 20%,,100% of clients with the worst score. For Upcycle score, we set a lift corresponding to 30% of bad clients.</p>
+
+<p>The paper of Martin and František ŘEZÁČ – “How to Measure the Quality of Credit Scoring Models” helps expressing Lift by means of the cumulative distribution functions of the scores of bad and all clients. The empirical cumulative distribution functions (CDFs) of the scores of good (bad) clients are given by the relationships</p>
+
+<p>(\begin{matrix}
+F_{n.\text{GOOD}}(a) = \frac{1}{n}\sum_{i = 1}^{n}\mspace{2mu} I\left( s_{i} \leq a \land D_{K} = 1 \right) <br />
+F_{m \cdot \text{BAD}}(a) = \frac{1}{m}\sum_{i = 1}^{m}\mspace{2mu} I\left( s_{i} \leq a \land D_{K} = 0 \right)a \in \lbrack L,H\rbrack <br />
+\end{matrix})</p>
+
+<p>where (s_{t}) is the score of the (i_{th}) client, n is the number of good clients, m is the number of bad clients, and (I) is the indicator function, where (I) (true) = 1 and (I) (false) = 0. (L) is the minimum value of a given score, (H) is the maximum value.</p>
+
+<p>The empirical distribution function of the scores of all clients is given by</p>
+
+<p>(F_{N,\text{ALL}}(a) = \frac{1}{N}\sum_{i = 1}^{N}\mspace{2mu} I\left( s_{i} \leq a \right)a \in \lbrack L,H\rbrack)</p>
+
+<p>The lift is defined as:</p>
+
+<p>(\text{Lift}(a) = \frac{F_{n \cdot \text{BAD}}(a)}{F_{N \cdot \text{ALL}}(a)}a \in \lbrack L,H\rbrack)</p>
+
+<p>And the lift at a score level is defined as:</p>
+
+<p>(\text{Li}f_{q} = \frac{F_{n,\text{BAD}}\left( F_{N.\text{ALL}}^{- 1}(q) \right)}{F_{N \cdot \text{ALL}}\left( F_{N.\text{ALL}}^{- 1}(q) \right)} = \frac{1}{q}F_{n \cdot \text{BAD}}\left( F_{N.\text{ALL}}^{- 1}(q) \right))</p>
+
+<p>where q represents the score level of 100q% of the worst scores and (F_{N.\text{ALL}}^{- 1}\left( q \right)\ )can be computed as (F_{N.\text{ALL}}^{- 1}(q) = \min\left{ a \in \lbrack L,H\rbrack,F_{N,\text{ALL}}(a) \geq q \right}).</p>
+
+<p>Since the expected rejection rate is usually between 5% and 20%, (q) is typically assumed to be equal to 0.1 (10%), i.e., we are interested in the discriminatory power of a scoring model at the point of 10% of the worst scores. In our case, we set 30% lift, so we have (\text{Li}f_{30\%} = 30 \cdot F_{n \cdot \text{BAD}}\left( F_{N.\text{ALL}}^{- 1}(0.3) \right))</p>
+
+<p>We illustrate the results by two charts:</p>
+
+<ul>
+  <li>Cumulative Lift Curve chart</li>
+</ul>
+
+<p>The goal of this curve is to visualize the benefits of using a model for targeting a subset of the population. On the horizontal axis, we show the percentage of the population which is targeted and on the vertical axis the percentage of found positive records.<br />
+A <strong>dotted diagonal</strong> illustrates a random model (i.e., targeting 40% of the population will find 40% of the positive records).</p>
+
+<p>A <strong>wizard curve above</strong> shows a perfect model (there are 15% positive records in our test set, so a perfect model would target only this)</p>
+
+<p>The actual percentage of actual positives found by this model. The steeper the curve, the better.</p>
+
+<ul>
+  <li>Per-bin lift chart</li>
+</ul>
+
+<p>This chart sorts the observations by deciles of decreasing predicted probability. It shows the <strong>lift</strong> in each of the bins.</p>
+
+<p>If there is 20% of positives in our test set, but 60% in the first bin of probability then the lift of this first bin is 3.</p>
+
+<p>This means that targeting only the observations in this bin would yield 3 times as many positive results as a random sampling (equally sized bars at the level of the dotted line).</p>
+
+<p>The bars should decrease progressively from left to right, and the higher the bars on first probability decile, the better.</p>
+
+<h2 id="hyperparameter-tuning">Hyperparameter tuning</h2>
+
+<p>Hyperparametrs is an important role on the model process. Some hyperparameters influence the speed of training. We use the Ramdom search and the metrics used to rank hyperparameter points are computed by cross-validation. In K-fold cross-validation the dataset is partitioned into k equally sized subsets. We select k=5 and then, 4 subsets are used as folded train sets while the remaining subset is retained to validate the model.<br />
+This process is then repeated 5 times, once for each fold defined by the subset used as validation set.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image40.png" alt="" /></p>
+
+<p>Figure 28: K-fold cross validation</p>
+
+<h2 id="machine-learning-algorithms">Machine learning algorithms</h2>
+
+<p>We partition our dataset into 70% of the data for the training and 30% for testing. The training set is used by the machine learning algorithm to train the model and the test set is used for reporting the upcoming performance results: During the training phase, DSS “holds out” on the test set, and the model is only trained on the train set. Once the model is trained, DSS evaluates its performance on the test set. This ensures that the evaluation is done on data that the model has “never seen before”.</p>
+
+<p>We optimize our model hyperparameters for the <span class="underline">cumulative lift</span> and we optimize the threshold for <span class="underline">the F1 score</span>. We compute the lift at 30% and we define a cost matrix, which evaluates a ‘gain’ brought by this model based on the following hypothesis:</p>
+
+<ul>
+  <li>
+    <p>If the model predicts that the target variable ‘casse_r2’ is true:</p>
+
+    <ul>
+      <li>
+        <p>And it is indeed true, the gain is 1</p>
+      </li>
+      <li>
+        <p>But it is not true, the gain is -0.3</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>If the model predicts that ‘casse_r2’ is false:</p>
+
+    <ul>
+      <li>
+        <p>And it is indeed false the gain is 0</p>
+      </li>
+      <li>
+        <p>But it is actually true, the gain is 0</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>The algorithms selected for the training need to be in accordance with the following main properties:</p>
+
+<ul>
+  <li>
+    <p>Explainability: The model require explanation for a non-technical audience. The most accurate machine learning algorithms and models are called ‘black boxes’. They make very few prediction errors but it may be difficult to understand and harder to explain. Examples of such models are deep neural networks or Ensemble models. In contrast, linear regression or decision tree learning algorithms are easy to interpret by a non-expert.</p>
+  </li>
+  <li>
+    <p>Number of features and examples: Some algorithms can handle a huge number of examples and millions of features. Others can be relatively modest in their capacity.</p>
+  </li>
+  <li>
+    <p>Training speed: Simple algorithms like random forest and logistic regression are robust and faster in the training. Others are slow to train and may need retraining frequently.</p>
+  </li>
+  <li>
+    <p>Prediction speed: Selected models will be used in production where very high throughput is required when generating predictions.</p>
+
+    <ol>
+      <li>
+        <h3 id="random-forest">Random Forest</h3>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><strong>Random Forest</strong> is made of many decision trees. Each tree in the forest predicts a record, and each tree “votes” for the final answer of the forest. The forest chooses the class having the most votes. It’s a simple algorithm which builds a decision tree. Each node of the decision tree includes a condition on one of the input features. When “growing” (ie, training) the forest:</p>
+
+<ul>
+  <li>
+    <p>for each tree, a random sample of the training set is used. We set number of trees between 100 and 700. The maximum depth of tree is between 1 and 3. And the minimum samples per leaf is set between 14 and 50.</p>
+  </li>
+  <li>
+    <p>for each decision point in the tree, a random subset of the input features is considered. The algorithm default is set by selecting the square root of the number of features.</p>
+  </li>
+</ul>
+
+<p>Random Forests generally provide good results, at the expense of explainability of the model.</p>
+
+<h3 id="gradient-boosted-trees">Gradient Boosted Trees</h3>
+
+<p><strong>Gradient boosting</strong> is a technique which produces a prediction model in the form of an ensemble of “weak” prediction models (small decision trees). The concept is to train a set of decision trees (weak learners) to create a final strong learner. This is an iterative method. After each tree is trained, the data is reweighted: samples that were misclassified gain weight while the correctly classified ones lose weight. This allows future weak learners to focus on the “difficult” examples that the previous weak learners missed.</p>
+
+<p><em>Gradient Boosted Trees</em> is a generalization of boosting to arbitrary differentiable loss functions. GBT is an accurate and effective off-the-shelf procedure that can be used for both regression and classification problems. We set the number of boosting stages between 80 and 300. The feature sampling strategy is set to automatic mode by selecting 30% of the features and the learning rate is between 0.05 and 0.5. The advantages of GBRT are:</p>
+
+<ul>
+  <li>
+    <p>Natural handling of data of mixed type (= heterogeneous features)</p>
+  </li>
+  <li>
+    <p>Predictive power</p>
+  </li>
+  <li>
+    <p>Robustness to outliers in output space (via robust deviance loss functions) and over-fitting</p>
+  </li>
+</ul>
+
+<p>Due to the iterative nature of boosting, it is not very parallelizable and is less scalable than other algorithms.</p>
+
+<h3 id="logistic-regression">Logistic Regression</h3>
+
+<p><strong>Logistic Regression</strong> is a classification algorithm using a linear model (i.e., it computes the target feature as a linear combination of input features). Logistic Regression minimizes a specific cost function (called <em>logit</em> or <em>sigmoid</em> function), which makes it appropriate for classification.<br />
+A simple Logistic regression algorithm is prone to overfitting and sensitive to errors in the input dataset. To address these issues, it is possible to use a <em>penalty</em> (or <em>regularization term</em>) to the weights. This implementation can use either ‘L1’ or ‘L2’ regularization terms. We choose the L2 regularization with the corresponding inverse of the regularization parameter between 0.01 and 100.</p>
+
+<h2 id="experiment-results">Experiment results</h2>
+
+<p>The obtained results are presented as follow:</p>
+
+<h3 id="confusion-matrix-and-decision-chart">Confusion matrix and decision chart</h3>
+
+<ul>
+  <li>Random forest:</li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image41.tiff" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image42.png" alt="" /></p>
+
+<p>Figure 29: Confusion matrix and decision chart – Random forest</p>
+
+<p>The optimal thresold to achieve the highest F1 score is set at 0.150 where we achieve 71% accuracy and 29% F1-score. Based on the model, the bank will lose customers who were denied a Coup de Pouce loan based on the model’s prediction that they would be defaulters.</p>
+
+<ul>
+  <li>Gradiant boosting :</li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image43.tiff" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image44.png" alt="" /></p>
+
+<p>Figure 30: Confusion matrix and decision chart – Gradiant boosting</p>
+
+<p>The optimal thresold to achieve the highest F1 score is set at 0.125 where we achieve 52% accuracy and 27% F1-score. The model correctly identifying True Positives at 60% rate. The precision is low at 18%.</p>
+
+<ul>
+  <li>Logistic regression:</li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image45.tiff" alt="" /></p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image46.png" alt="" /></p>
+
+<p>Figure 31: Confusion matrix and decision chart – Logistic regression</p>
+
+<p>The optimal thresold to achieve the highest F1 score is set at 0.075 where we achieve 33% accuracy and 27% F1-score. The model correctly identifies 83% of default cases. The precision is low at 18%.</p>
+
+<h3 id="lift-curve">Lift curve</h3>
+
+<ul>
+  <li>Random forest:</li>
+</ul>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image47.png" alt="" /></p>
+
+<p>Figure 32: Cumulative Lift Curve chart – Random forest</p>
+
+<p>This chart describes the ‘gain’ in targeting a given percentage of the total number of customers using the highest modelled probabilities of default, rather than targeting them at random.<br />
+This model suggests that the top 30% (decile 1, 2 and 3) of customers with the highest predicted probabilities of default contain approximately 45% of non-payers rather than capturing 30% of non-payers.</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image48.png" alt="" /></p>
+
+<p>Figure 33: Per-bin lift chart – Random forest</p>
+
+<p>The lift curve of this model is extended highly into the first decile. At decile group 1, 2 and 3, we have a lift of 1.49 which corresponds with there being 1.49 the number of non-payers captured compared with the number we would expect at random.</p>
+
+<ul>
+  <li>Gradient boosting:</li>
+</ul>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image49.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 34: Cumulative Lift Curve chart – Gradient boosting</p>
+
+<p>This model suggests that the top 30% (decile 1, 2 and 3) of customers with the highest predicted probabilities of default contain approximately 35% of non-payers rather than capturing 30% of non-payers.</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image50.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 35: Per-bin lift chart – Gradient boosting</p>
+
+<p>On the other hand, targeting 30% of population by decreasing probability would results at identifying only 1.238 of the number of non-payers compared by a random model. The lift curve is not decreasing by decile as a good classifier has to give us a high lift when we act on only a few cases and as we include more cases the lift has to be decreasing.<br />
+Also, the lift curve for the best possible classifier has to overlap the existing curve at the start which is not the case at the third decile where the lift is at 0.97.</p>
+
+<ul>
+  <li>Logistic regression:</li>
+</ul>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image51.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 36: Cumulative Lift Curve chart – Logistic regression</p>
+
+<p>This model suggests that the top 30% (decile 1, 2 and 3) of customers with the highest predicted probabilities of default contain approximately also 35% of non-payers rather than capturing 30% of non-payers.</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image52.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 37: Per-bin lift chart – Logistic regression</p>
+
+<p>On the other hand, targeting 30% of population by decreasing probability would results at identifying only 1.222 of the number of non-payers compared to a random model. Same as before, the lift curve is not decreasing by decile and overlay at the third decile with a lift of 0.99.</p>
+
+<h3 id="roc-curve">ROC Curve</h3>
+
+<ul>
+  <li>Random forest:</li>
+</ul>
+
+<p>The AUC (Area Under the Curve) for this model is 0.612, which is fair.</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image53.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 38: ROC Curve – Random forest</p>
+
+<ul>
+  <li>Gradient boosting trees:</li>
+</ul>
+
+<blockquote>
+  <p>The AUC (Area Under the Curve) for this model is 0.571, which is not very good.</p>
+
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image54.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 39: ROC Curve – Gradient boosting</p>
+
+<ul>
+  <li>Logistic regression:</li>
+</ul>
+
+<blockquote>
+  <p>The AUC (Area Under the Curve) for this model is 0.570, which is not very good.</p>
+
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image55.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 40: ROC Curve – Logistic regression</p>
+
+<h3 id="detailed-metrics">Detailed metrics</h3>
+
+<ul>
+  <li>Random forest:</li>
+</ul>
+
+<table>
+<thead>
+<tr class="header">
+<th>Threshold-dependent (current threshold = 0.1500)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Accuracy</strong> Proportion of correct predictions (positive and negative) in the test set</td>
+<td><strong>0.7094</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Precision</strong> Proportion of positive predictions that were indeed positive (in the test set)</td>
+<td><strong>0.2259</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Recall</strong> Proportion of actual positive values found by the classifier</td>
+<td><strong>0.3877</strong></td>
+</tr>
+<tr class="even">
+<td><strong>F1 Score</strong> Harmonic mean between Precision and Recall</td>
+<td><strong>0.2855</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Hamming loss</strong> Fraction of labels that are incorrectly predicted (the lower the better)</td>
+<td><strong>0.2906</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Cost matrix gain</strong> Average gain per record that the test set (2825 rows) would yield given the specified gain for each outcome. Specified gains: TP = 1, TN = 0, FP = -0.3, FN = 0.</td>
+<td><strong>-0.0016</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Matthews Correlation Coefficient</strong> Correlation coefficient between actual and predicted values.<br />
++1 = perfect, 0 = no correlation, -1 = perfect anti-correlation</td>
+<td><strong>0.1255</strong></td>
+</tr>
+<tr class="even">
+<td>Threshold-independent</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Log loss</strong> Error metric that takes into account the predicted probabilities (the lower the better)</td>
+<td><strong>0.4175</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ROC - AUC Score</strong> Area under the ROC; from 0.5 (random model) to 1 (perfect model)</td>
+<td><strong>0.6118</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Calibration loss</strong> Average distance between calibration curve and diagonal.<br />
+From 0 (perfectly calibrated) up to 0.5.</td>
+<td><strong>0.0118</strong></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+  <li>Gradient boosting trees:</li>
+</ul>
+
+<table>
+<thead>
+<tr class="header">
+<th>Threshold-dependent (current threshold = 0.1250)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Accuracy</strong> Proportion of correct predictions (positive and negative) in the test set</td>
+<td><strong>0.5242</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Precision</strong> Proportion of positive predictions that were indeed positive (in the test set)</td>
+<td><strong>0.1773</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Recall</strong> Proportion of actual positive values found by the classifier</td>
+<td><strong>0.5981</strong></td>
+</tr>
+<tr class="even">
+<td><strong>F1 Score</strong> Harmonic mean between Precision and Recall</td>
+<td><strong>0.2735</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Hamming loss</strong> Fraction of labels that are incorrectly predicted (the lower the better)</td>
+<td><strong>0.4758</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Cost matrix gain</strong> Average gain per record that the test set (2825 rows) would yield given the specified gain for each outcome. Specified gains: TP = 1, TN = 0, FP = -0.3, FN = 0.</td>
+<td><strong>-0.0351</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Matthews Correlation Coefficient</strong> Correlation coefficient between actual and predicted values.<br />
++1 = perfect, 0 = no correlation, -1 = perfect anti-correlation</td>
+<td><strong>0.0780</strong></td>
+</tr>
+<tr class="even">
+<td>Threshold-independent</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Log loss</strong> Error metric that takes into account the predicted probabilities (the lower the better)</td>
+<td><strong>0.4292</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ROC - AUC Score</strong> Area under the ROC; from 0.5 (random model) to 1 (perfect model)</td>
+<td><strong>0.5706</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Calibration loss</strong> Average distance between calibration curve and diagonal.<br />
+From 0 (perfectly calibrated) up to 0.5.</td>
+<td><strong>0.0285</strong></td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+  <li>Logistic regression:</li>
+</ul>
+
+<table>
+<thead>
+<tr class="header">
+<th>Threshold-dependent (current threshold = 0.0750)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Accuracy</strong> Proportion of correct predictions (positive and negative) in the test set</td>
+<td><strong>0.3292</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Precision</strong> Proportion of positive predictions that were indeed positive (in the test set)</td>
+<td><strong>0.1621</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Recall</strong> Proportion of actual positive values found by the classifier</td>
+<td><strong>0.8345</strong></td>
+</tr>
+<tr class="even">
+<td><strong>F1 Score</strong> Harmonic mean between Precision and Recall</td>
+<td><strong>0.2714</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Hamming loss</strong> Fraction of labels that are incorrectly predicted (the lower the better)</td>
+<td><strong>0.6708</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Cost matrix gain</strong> Average gain per record that the test set (2825 rows) would yield given the specified gain for each outcome. Specified gains: TP = 1, TN = 0, FP = -0.3, FN = 0.</td>
+<td><strong>-0.0688</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Matthews Correlation Coefficient</strong> Correlation coefficient between actual and predicted values.<br />
++1 = perfect, 0 = no correlation, -1 = perfect anti-correlation</td>
+<td><strong>0.0635</strong></td>
+</tr>
+<tr class="even">
+<td>Threshold-independent</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Log loss</strong> Error metric that takes into account the predicted probabilities (the lower the better)</td>
+<td><strong>0.4331</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ROC - AUC Score</strong> Area under the ROC; from 0.5 (random model) to 1 (perfect model)</td>
+<td><strong>0.5703</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Calibration loss</strong> Average distance between calibration curve and diagonal.<br />
+From 0 (perfectly calibrated) up to 0.5.</td>
+<td><strong>0.0411</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p>Based on this analysis, the best model is Random forest which the highest 30% lift of 1.49: We illustrate the performance metrics on the Train and Test set:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><em>TEST_precision</em></th>
+      <th><em>TEST_recall</em></th>
+      <th><em>TEST_auc</em></th>
+      <th><em>TEST_f1</em></th>
+      <th><em>TEST_accuracy</em></th>
+      <th><em>TEST_lift</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.2258</td>
+      <td>0.3877</td>
+      <td>0.6118</td>
+      <td>0.2854</td>
+      <td>0.7093</td>
+      <td>1.490</td>
+    </tr>
+    <tr>
+      <td><em>TRAIN_precision</em></td>
+      <td><em>TRAIN_recall</em></td>
+      <td><em>TRAIN_auc</em></td>
+      <td><em>TRAIN_f1</em></td>
+      <td><em>TRAIN_accuracy</em></td>
+      <td><em>TRAIN_lift</em></td>
+    </tr>
+    <tr>
+      <td>0.2619</td>
+      <td>0.4884</td>
+      <td>0.6931</td>
+      <td>0.3410</td>
+      <td>0.7399</td>
+      <td>1.7788</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can identify if the model has overfit by first evaluating the model on the training dataset and then evaluating the same model on a holdout test dataset. If the performance of the model on the training dataset is significantly better than the performance on the test dataset, by computing the difference between the metrics obtained on Train and Test set, then the model may have overfit the training dataset. By looking at the difference ratio on AUC and Lift, we conclude that we model have a good performance and doesn’t overfit.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><em>Diff_Lift</em></th>
+      <th><em>Diff_AUC</em></th>
+      <th><em>Diff_precision</em></th>
+      <th><em>Diff_recal</em></th>
+      <th><em>Diff_accuracy</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.28</td>
+      <td>0.08</td>
+      <td>0.03</td>
+      <td>0.10</td>
+      <td>0.03</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="interpretation">Interpretation</h1>
+
+<h2 id="feature-importance">Feature importance</h2>
+
+<p>##</p>
+
+<p>Several measures are available for feature importance in Random Forests:</p>
+
+<p>Gini Importance <strong>or</strong> Mean Decrease in Impurity (MDI) calculates each feature importance as the sum over the number of splits (across all tress) that include the feature, proportionally to the number of samples it splits. Dataiku DSS extract feature importance provided by the fitted attribute feature_importances_ of Scikit-Learn and outputs the following result:</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image56.png" alt="" /></p>
+
+<p>Figure 41: Feature importance</p>
+
+<h2 id="partial-dependence">Partial dependence</h2>
+
+<p>A partial dependence plot shows the dependence of the predicted response on a single feature. The x axis displays the value of the selected feature, while the y axis displays the partial dependence.<br />
+The value of the partial dependence is by how much the log-odds are higher or lower than those of the average probability. In other words, the partial dependence value shows how the probability of being in the default class changes across different values of the feature.</p>
+
+<p>The log-odds for a probability <em>p</em> are defined as <em>log(p / (1 - p)).</em> They are strictly increasing, ie. higher log odds means higher probability of default. We illustrate this method with several variables:</p>
+
+<ul>
+  <li>clt_depart_str</li>
+</ul>
+
+<p>We represent 30 most frequent modalities of ‘clt_dep_str’, computed on 2825 rows (the full test set)</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image57.png" alt="" /></p>
+
+<p>Figure 42: Partial dependency of client’s department</p>
+
+<p>The client department is considered to be the most important feature by the model. We notice that several departments increase the probability of default whereas other departments are less likeliy to do so. The department of Val-de-Marne (94) representing 3.2% of the data increases the probability of default. In the other hand, the department of Gironde (33) representing 2.5% of the data decreases the probability of default.</p>
+
+<ul>
+  <li>Insee_prop_pop25</li>
+</ul>
+
+<p>We represent 50 bins for ‘insee_prop_pop25p’, computed on 2825 rows (the full test set)</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image58.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 43: Partial dependency of the proportion of Insee population under 25 years old</p>
+
+<p>The proportion of population under 25 years old ‘insee_prop_pop25’ is considered as an important feature in the model. Let’s investigate the following question: “To what extent does a client’s chances of defaulting depend on the proportion of the proportion of population under 25 years?”</p>
+
+<p>Let’s first examine the trend line. We can see that as the proportion rate increases, the clients are steadily less likely to default. In addition to the trend line, we also have the distribution of the variable. We notice that the proportion of population under 25 years between 30% and 40% represents a major part of the data and we might be surprised that the probability of default goes up as this proportion exceed 50% but the small amount of data in this bracket could be a reason for the small dip.</p>
+
+<ul>
+  <li>request_date_day_str</li>
+</ul>
+
+<p>We represent 30 most frequent modalities of ‘request_date_day_str’, computed on 2825 rows (the full test set)</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image59.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 44: Partial dependency of the request day</p>
+
+<p>The day of the request is also considered to be an important feature by the model. We notice that orders done on first days of the month representing 16% of the data decreases the likelihood of default. On the other hand, orders done on the second part of the month, between 15 to 30, representing 15% of the data increases the likelihood of default.</p>
+
+<h2 id="subpopulation-analysis">Subpopulation analysis</h2>
+
+<p>In this part, we investigate whether our model behaves identically across different subpopulation using different metrics like the lift, AUC, precision and the recall. We illustrate this method with the following variables:</p>
+
+<ul>
+  <li>clt_sex:</li>
+</ul>
+
+<p>We have two modalities for ‘clt_sex’ (Femme,Homme), computed on <strong>2825</strong> rows (test set).</p>
+
+<p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image60.png" alt="" /></p>
+
+<p>For the two largest subgroups in this case, common metrics like lift, ROC AUC, accuracy, precision, and recall appear to be quite close. The female modality represents 55% of the data with 14% of default cases, 1% below the average default rate, among this modality. The model predicts 26% of unpaid loans among females which is 5% below the average predicated default rate. On the other hand, the male modality represents 45% of the data with 16% of default cases, 1% above the average default rate, among this modality. However, the model predicts 32% of unpaid loans among males which is 6% above the average predicated default rate.</p>
+
+<ul>
+  <li>clt_marie:</li>
+</ul>
+
+<p>We have three modalities for ‘clt_marie’ (Non marié, Marié, and Non renseigné), computed on <strong>2825</strong> rows (test set).</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image61.png" alt="" /></p>
+</blockquote>
+
+<p>As seen before, common metrics like lift, ROC AUC, accuracy, precision, and recall appear to be quite close. The model predicts more default cases for non-married clients whereas for married clients seem less likely to default (only 6% of predict default cases among this modality).</p>
+
+<ul>
+  <li>tracabilite:</li>
+</ul>
+
+<p>This variable describes the origin of the demand, detailed in previous chapters, computed on <strong>2825</strong> rows (test set).</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image62.png" alt="" /></p>
+</blockquote>
+
+<p>We notice that the model struggles to define the default from demands coming from ‘Refus PPR Leadin’ or where the origin is unknown. However, ‘PPRTOCDP’, which represents the large proportion of Coup de Pouce Upcucle demands, the model seems to better define the default event.</p>
+
+<h2 id="individual-analysis">Individual analysis</h2>
+
+<p>Individual prediction explanations are feature importance specific to a given sample. When the model is linear (logistic regression, OLS…), the explanation for one feature is simply the impact of the feature on the prediction with the mean feature value as a baseline: coefficient * (feature value - mean feature value). As a generalization, the explanation is the difference between the prediction value and the average of prediction values obtained by replacing the feature value by values drawn from the test dataset. This method approximates Shapley values, trading off speed against both bias and variance.</p>
+
+<p>For classification problems, the explanations are computed probability log-odd ratios: <em>log(p / (1 - p)).</em></p>
+
+<p>Using DSS Dataiku, we can compute the explanations for the most influential features for extreme probabilities using the method: Shapley Additive exPlanations. The goal of SHAP is to explain the prediction of an instance x by computing the contribution of each feature to the prediction. The SHAP explanation method computes Shapley values from coalitional game theory.</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image63.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 45: Probability density and predicted probability</p>
+
+<p>We illustrate 4 examples with the most influential features of below the average of default probability (non-payment loan event) and above the average of default probability (payment loan event)</p>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image64.png" alt="" /><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image65.png" alt="" /></p>
+</blockquote>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>In conclusion, one limitation of a credit scoring model is that the model output is only as good as the input that is used. If data going into the scoring model is inaccurate (for instance, client’s score on PPR and PPC loans or the origin of Coup de Pouce UPCYCLE demand, etc..), the model’s score output will be erroneous. Depending on how the erroneous information is weighted in the scoring formula, the impact on the score could be substantial.</p>
+
+<p>The effectiveness of the model score output can also be constrained by factors such as changing economic conditions and business environments. As illustrated in previous chapters, business providers, managed by the commercial team, can vary frequently and bring different client’s profiles.</p>
+
+<p>A model is typically developed for a certain target population and may be difficult to adapt to other populations. In most cases, a credit scoring model should only be used for the product, range of loan size, and market that it was developed for. Granting small loans like 500€ or 1000€ to refusals whose original loan’s demand is ranging between 5.000€ and 15.000€ can be challenging. When a bank tries to adapt the model to a different population, performance of that population may likely deviate from expectation.</p>
+
+<p>Moreover, models are calibrated using historical data (in our case, we had to add a different modality, which is not going to be evaluated by the model in the production environment, in our credit score modeling). So, if relevant un-modeled conditions change, the model can have trouble forecasting out of sample.</p>
+
+<h1 id="appendix">Appendix</h1>
+
+<blockquote>
+  <p><img src="https://younesszaim.github.io/myportfolio/assets/img/2021-09-15-Scoring-in-FLOA-BANK/media/image66.png" alt="" /></p>
+</blockquote>
+
+<p>Figure 46: Dataiku flux of UPCYCLE score modeling</p>
+
+<h1 id="bibliography">Bibliography</h1>
+
+<p><a href="https://databricks.com/blog/2019/09/18/productionizing-machine-learning-from-deployment-to-drift-detection.html">https://databricks.com/blog/2019/09/18/productionizing-machine-learning-from-deployment-to-drift-detection.html</a></p>
+
+<p>G. Szepannek. On the practical relevance of modern machine learning algorithms for credit scoringapplications.WIAS Report Series, 29:88–96, 2017.</p>
+
+<p><a href="https://doi.org/10.20347/wias.report.29">https://doi.org/10.20347/wias.report.29</a></p>
+
+<p><a href="https://journal.fsv.cuni.cz/storage/1228_rezac.pdf">https://journal.fsv.cuni.cz/storage/1228_rezac.pdf</a></p>
+
+<p>https://www.mwsug.org/proceedings/2013/AA/MWSUG-2013-AA14.pdf</p>
+
+<p><a href="https://sundarstyles89.medium.com/weight-of-evidence-and-information-value-using-python-6f05072e83eb">https://sundarstyles89.medium.com/weight-of-evidence-and-information-value-using-python-6f05072e83eb</a></p>
+
+<p><a href="https://www2.deloitte.com/content/dam/Deloitte/global/Documents/Financial-Services/gx-be-aers-fsi-credit-scoring.pdf">https://www2.deloitte.com/content/dam/Deloitte/global/Documents/Financial-Services/gx-be-aers-fsi-credit-scoring.pdf</a></p>
+
+<p><a href="https://medium.com/crim/manipuler-les-variables-cat%C3%A9goriques-dans-un-jeu-de-donn%C3%A9es-6973c54c9827">https://medium.com/crim/manipuler-les-variables-cat%C3%A9goriques-dans-un-jeu-de-donn%C3%A9es-6973c54c9827</a></p>
+
+<p><a href="https://cran.r-project.org/web/packages/smbinning/smbinning.pdf">https://cran.r-project.org/web/packages/smbinning/smbinning.pdf</a></p>
+
+<p><a href="https://www.ariclabarr.com/credit-modeling.html">https://www.ariclabarr.com/credit-modeling.html</a></p>
+
+<p><a href="http://papersjds14.sfds.asso.fr/submission_48.pdf">http://papersjds14.sfds.asso.fr/submission_48.pdf</a></p>
+
+<p><a href="https://www.fdic.gov/regulations/examinations/credit_card/pdf_version/ch8.pdf">https://www.fdic.gov/regulations/examinations/credit_card/pdf_version/ch8.pdf</a></p>
+
+<p><a href="https://arxiv.org/pdf/2006.11835.pdf">https://arxiv.org/pdf/2006.11835.pdf</a></p>
+
+<p><a href="https://www.researchgate.net/publication/309727706_Application_Scorecard_Modeling_Techniques_and_Performance">https://www.researchgate.net/publication/309727706_Application_Scorecard_Modeling_Techniques_and_Performance</a></p>
+
+<p><a href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html">https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html</a></p>
+
+<p><a href="http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_R_Python_PDP.pdf">http://eric.univ-lyon2.fr/~ricco/tanagra/fichiers/fr_Tanagra_R_Python_PDP.pdf</a></p>
+
+<p><a href="https://www.aquiladata.fr/insights/shap-mieux-comprendre-linterpretation-de-modeles/">https://www.aquiladata.fr/insights/shap-mieux-comprendre-linterpretation-de-modeles/</a></p>
+
+<p><a href="https://christophm.github.io/interpretable-ml-book/shap.html">https://christophm.github.io/interpretable-ml-book/shap.html</a></p>
+
+  </div><a class="u-url" href="/myportfolio/2021/09/15/Scoring-in-FLOA-BANK.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/myportfolio/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/myportfolio/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/myportfolio/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Documenting my journey in data science.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/younesszaim" target="_blank" title="younesszaim"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/youness-zaim-9a344b101" target="_blank" title="youness-zaim-9a344b101"><svg class="svg-icon grey"><use xlink:href="/myportfolio/assets/minima-social-icons.svg#linkedin"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
